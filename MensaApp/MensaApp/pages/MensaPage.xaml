@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MensaApp.pages.MensaPage"
+             Title="{Binding MensaName}"
+             IsBusy="{Binding IsBusy}"
+             BackgroundColor="White">
+  <ContentPage.Padding>
+    30, 20, 20, 0
+  </ContentPage.Padding>
+  <ContentPage.ToolbarItems>
+    <!--<ToolbarItem Name="Previous Day" Order="Primary" Priority="0" />
+    <ToolbarItem Name="Today" Order="Primary" Priority="1" Activated="ToolBarTodayClicked" />
+    <ToolbarItem Name="Next Day" Order="Primary" Priority="2" />-->
+    <ToolbarItem Name="Test" Order="Secondary" Priority="0" />
+  </ContentPage.ToolbarItems>
+      <StackLayout Orientation="Vertical" VerticalOptions="Fill" Spacing="5" HorizontalOptions="Fill">
+        <Label FontAttributes="Bold" FontSize="Large" VerticalOptions="CenterAndExpand" Text="{Binding MensaName}" HorizontalOptions="Center" TextColor="Blue" />
+        <StackLayout Orientation="Vertical" Padding="2, 2, 1, 5" HorizontalOptions="CenterAndExpand" IsVisible="{Binding IsBusy}">
+          <Label Text="{Binding Status}" TextColor="Black" />
+          <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" />
+        </StackLayout>
+        <Label TextColor="Red" Text="{Binding ErrorMessage}" IsVisible="{Binding HasErrorMessage}" />
+        <StackLayout VerticalOptions="StartAndExpand" HorizontalOptions="CenterAndExpand" Orientation="Vertical" IsVisible="{Binding HasData}">
+          <Label FontSize="Large" Text="Dishes" HorizontalOptions="Center" TextColor="Blue" />
+          <ListView VerticalOptions="Start" ItemsSource="{Binding Items}" HasUnevenRows="True">
+            <ListView.ItemTemplate>
+              <DataTemplate>
+                <!--<TextCell Text="{Binding Name}" Detail="{Binding Kind}" />-->
+                <ViewCell>
+                  <ViewCell.View>
+                    <!--<StackLayout Orientation="Horizontal" VerticalOptions="Fill" HorizontalOptions="Fill">
+                      <StackLayout Orientation="Vertical" HorizontalOptions="StartAndExpand">
+                        <Label FontAttributes="Bold" Text="{Binding Name}" />
+                        <Label FontSize="Small" Text="{Binding Kind}" />
+                      </StackLayout>
+                      <Label FontAttributes="Italic" FontSize="Small" VerticalOptions="Center" HorizontalOptions="EndAndExpand" Text="{Binding Price}" />
+                    </StackLayout>-->
+                    <StackLayout Orientation="Vertical" HorizontalOptions="StartAndExpand">
+                      
+                        <Label FontAttributes="Bold" Text="{Binding Name}" TextColor="Blue" />
+                        <StackLayout Orientation="Horizontal">
+                          <Label FontSize="Small" Text="{Binding Kind}" TextColor="Black" />
+                          <Label FontSize="Small" FontAttributes="Italic" Text="{Binding Price}" TextColor="Gray" />
+                        </StackLayout>
+                      <Label FontSize="Small" Text=" " />
+                      <!-- Just add for some padding in here -->
+                      
+                    </StackLayout>
+                  </ViewCell.View>
+                </ViewCell>
+              </DataTemplate>
+            </ListView.ItemTemplate>
+          </ListView>
+          <Label HorizontalOptions="Center" Text="{Binding DateAsString}" TextColor="Black" />
+        </StackLayout>
+      </StackLayout>
+</ContentPage>

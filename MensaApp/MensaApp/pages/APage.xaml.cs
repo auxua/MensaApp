@@ -14,7 +14,8 @@ namespace MensaApp.pages
 		{
 			InitializeComponent ();
 
-            MensaAdapter.CatchMensaDataAsync();
+            //MensaAdapter.CatchMensaDataAsync();
+            string test = Localization.Localize("TestText", "Just testing");
 		}
 	}
 }

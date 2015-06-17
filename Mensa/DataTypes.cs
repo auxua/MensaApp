@@ -19,7 +19,7 @@ namespace Mensa
 
             public Dish(string name, string kind, DateTime date, string mensa)
             {
-                Name = RemoveSups(name);
+                Name = RemoveTags(name);
                 Kind = kind;
                 Date = date;
                 Mensa = mensa;
@@ -35,7 +35,7 @@ namespace Mensa
                 return (Price == null);
             }
 
-            private string RemoveSups(string input)
+            private string RemoveTags(string input)
             {
                 while (input.Contains("<sup>"))
                 {
@@ -43,6 +43,8 @@ namespace Mensa
                     int end = input.IndexOf("</sup>");
                     input = input.Remove(start, (end - start)+6);
                 }
+                input.Replace("<span class=\"or\">", "");
+                input.Replace("</span>", "");
                 input.Replace("  ", " ");
                 input.Trim();
                 return input;

@@ -12,7 +12,7 @@ namespace MensaApp
 		public App ()
 		{
 			// The root page of your application
-            MainPage = new pages.APage();
+            MainPage = new NavigationPage(new pages.MensaPage());
 		}
 
 		protected override void OnStart ()
