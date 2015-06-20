@@ -13,14 +13,38 @@ namespace MensaApp.pages
 		public MensaPage ()
 		{
 			InitializeComponent ();
-            this.BindingContext = new ViewModels.MensaPageViewModel("Academica", new DateTime(2015, 06, 16));
-            
+            var vm = new ViewModels.MensaPageViewModel("Ahornstrasse", new DateTime(2015, 06, 16));
+            this.BindingContext = vm;
+            /*
+            // previous Day
+            var prevGesture = new TapGestureRecognizer();
+            prevGesture.Tapped += (s,e) => vm.GetPrevDayCommand.Execute(null);
+            this.prevDayLabel.GestureRecognizers.Add(prevGesture);
+            // next Day
+            var nextGesture = new TapGestureRecognizer();
+            nextGesture.Tapped += (s, e) => vm.GetNextDayCommand.Execute(null);
+            this.nextDayLabel.GestureRecognizers.Add(nextGesture);
+            // Previous Mensa
+            var prevMensaGesture = new TapGestureRecognizer();
+            prevMensaGesture.Tapped += (s, e) => vm.GetPrevMensaCommand.Execute(null);
+            this.PrevMensaLabel.GestureRecognizers.Add(prevMensaGesture);
+            // Next Mensa
+            var nextMensaGesture = new TapGestureRecognizer();
+            nextMensaGesture.Tapped += (s, e) => vm.GetNextMensaCommand.Execute(null);
+            this.NextMensaLabel.GestureRecognizers.Add(nextMensaGesture);
+             */
+            this.PrevMensaButton.Clicked += (s, e) => vm.GetPrevMensaCommand.Execute(null);
+            this.NextMensaButton.Clicked += (s, e) => vm.GetNextMensaCommand.Execute(null);
+            this.NextDayButton.Clicked += (s, e) => vm.GetNextDayCommand.Execute(null);
+            this.PrevDayButton.Clicked += (s, e) => vm.GetPrevDayCommand.Execute(null);
 		}
 
-        void ToolBarTodayClicked(object sender, EventArgs e)
+        void ConfigClicked(object sender, EventArgs e)
         {
-            ViewModels.MensaPageViewModel vm = (ViewModels.MensaPageViewModel)this.BindingContext;
+            /*ViewModels.MensaPageViewModel vm = (ViewModels.MensaPageViewModel)this.BindingContext;
+            vm.GetNextDayCommand.Execute(null);*/
             // do sth.
+            Navigation.PushAsync(new pages.APage());
         }
 	}
 }

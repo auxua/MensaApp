@@ -6,6 +6,7 @@ using System.Text;
 using System.Windows.Input;
 using System.Threading;
 using Xamarin.Forms;
+using System.Globalization;
 
 namespace MensaApp.ViewModels
 {
@@ -42,10 +43,30 @@ namespace MensaApp.ViewModels
             {
                 this.isCreated = value;
                 RaisePropertyChanged("IsCreated");
+                /*if (value)
+                {
+                    this.LoadAllDataCommand.Execute(null);
+                }*/
+            }
+        }
+
+        private bool needsUpdate;
+
+        public bool NeedsUpdate
+        {
+            get
+            {
+                return this.needsUpdate;
+            }
+            set
+            {
+                this.needsUpdate = value;
+                RaisePropertyChanged("NeedsUpdate");
                 if (value)
                 {
                     this.LoadAllDataCommand.Execute(null);
                 }
+                this.needsUpdate = false;
             }
         }
 
@@ -141,7 +162,9 @@ namespace MensaApp.ViewModels
             {
                 this.date = value;
                 RaisePropertyChanged("Date");
-                this.DateAsString = value.Date.DayOfWeek.ToString() + "\n" + value.Date.ToShortDateString();
+                var culture = new CultureInfo(Localization.Locale());
+                var day = culture.DateTimeFormat.GetDayName(value.Date.DayOfWeek);
+                this.DateAsString = day + "\n" + value.Date.ToShortDateString();
             }
         }
 
@@ -191,6 +214,10 @@ namespace MensaApp.ViewModels
             }
         }
 
+        #endregion
+
+        #region commands
+
         private ICommand loadAllDataCommand;
 
         public ICommand LoadAllDataCommand
@@ -211,6 +238,45 @@ namespace MensaApp.ViewModels
             }
         }
 
+        private ICommand getNextDayCommand;
+
+        public ICommand GetNextDayCommand
+        {
+            get
+            {
+                return this.getNextDayCommand;
+            }
+        }
+
+        private ICommand getPrevDayCommand;
+
+        public ICommand GetPrevDayCommand
+        {
+            get
+            {
+                return this.getPrevDayCommand;
+            }
+        }
+
+        private ICommand getPrevMensaCommand;
+
+        public ICommand GetPrevMensaCommand
+        {
+            get
+            {
+                return this.getPrevMensaCommand;
+            }
+        }
+
+        private ICommand getNextMensaCommand;
+
+        public ICommand GetNextMensaCommand
+        {
+            get
+            {
+                return this.getNextMensaCommand;
+            }
+        }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -224,11 +290,163 @@ namespace MensaApp.ViewModels
 
         #endregion
 
+        #region Localization Strings
+
+        private string dishesString;
+
+        public string DishesString
+        {
+            get
+            {
+                return this.dishesString;
+            }
+            set
+            {
+                if (string.IsNullOrEmpty(value))
+                {
+                    this.dishesString = "";
+                }
+                else
+                {
+                    this.dishesString = value;
+                }
+                RaisePropertyChanged("DishesString");
+            }
+        }
+
+        private string nextDayString;
+
+        public string NextDayString
+        {
+            get
+            {
+                return this.nextDayString;
+            }
+            set
+            {
+                if (string.IsNullOrEmpty(value))
+                {
+                    this.nextDayString = ">";
+                }
+                else
+                {
+                    this.nextDayString = value;
+                }
+                RaisePropertyChanged("NextDayString");
+            }
+        }
+
+        private string previousDayString;
+
+        public string PreviousDayString
+        {
+            get
+            {
+                return this.previousDayString;
+            }
+            set
+            {
+                if (string.IsNullOrEmpty(value))
+                {
+                    this.previousDayString = "<";
+                }
+                else
+                {
+                    this.previousDayString = value;
+                }
+                RaisePropertyChanged("PreviousDayString");
+            }
+        }
+
+        private string previousMensaString;
+
+        public string PreviousMensaString
+        {
+            get
+            {
+                return this.previousMensaString;
+            }
+            set
+            {
+                if (string.IsNullOrEmpty(value))
+                {
+                    this.previousMensaString = "<";
+                }
+                else
+                {
+                    this.previousMensaString = value;
+                }
+                RaisePropertyChanged("PreviousMensaString");
+            }
+        }
+
+        private string nextMensaString;
+
+        public string NextMensaString
+        {
+            get
+            {
+                return this.nextMensaString;
+            }
+            set
+            {
+                if (string.IsNullOrEmpty(value))
+                {
+                    this.nextMensaString = ">";
+                }
+                else
+                {
+                    this.nextMensaString = value;
+                }
+                RaisePropertyChanged("NextMensaString");
+            }
+        }
+
+        private string configString;
+
+        public string ConfigString
+        {
+            get
+            {
+                return this.configString;
+            }
+            set
+            {
+                if (string.IsNullOrEmpty(value))
+                {
+                    this.configString = "Config";
+                }
+                else
+                {
+                    this.configString = value;
+                }
+                RaisePropertyChanged("ConfigString");
+            }
+        }
+
+        private void getLocalizedStrings()
+        {
+            //this.DishesString = "DishTest";
+            this.DishesString = Localization.Localize("DishesString");
+            //this.PreviousDayString = Localization.Localize("PreviousDayString");
+            //this.NextDayString = Localization.Localize("NextDayString");
+
+            this.PreviousDayString = "<";
+            this.NextDayString = ">";
+            this.PreviousMensaString = "<";
+            this.NextMensaString = ">";
+
+            this.ConfigString = Localization.Localize("ConfigString");
+        }
+
+        #endregion
+
         public MensaPageViewModel(string MensaName, DateTime dt)
         {
             this.MensaName = MensaName;
             this.Date = dt.Date;
             this.Status = "Creating Page";
+            this.getLocalizedStrings();
             this.items = new ObservableCollection<Mensa.DataTypes.Dish>();
             this.IsBusy = false;
 
@@ -260,6 +478,7 @@ namespace MensaApp.ViewModels
                 Status = "Populating Data";
                 var queryData = new Mensa.MenuDB.QueryBuilder().ByDate(this.Date).ByMensa(this.MensaName).ExecuteQuery();
                 //TODO: not querying weekends and stuff...
+                this.Items.Clear();
                 foreach (var dish in queryData)
                 {
                     this.Items.Add(dish);
@@ -268,7 +487,44 @@ namespace MensaApp.ViewModels
                 IsBusy = false;
             });
 
+            this.getNextDayCommand = new Command(async () =>
+            {
+                IsBusy = true;
+                DateTime next = Mensa.MenuDB.Instance.getNextAvailableDay(this.Date);
+                this.Date = next;
+                this.NeedsUpdate = true;
+                IsBusy = false;
+            });
+
+            this.getPrevDayCommand = new Command(async () =>
+            {
+                IsBusy = true;
+                DateTime next = Mensa.MenuDB.Instance.getPreviousAvailableDay(this.Date);
+                this.Date = next;
+                this.NeedsUpdate = true;
+                IsBusy = false;
+            });
+
+            this.getNextMensaCommand = new Command(async () =>
+            {
+                IsBusy = true;
+                string next = MensaAdapter.getNextMensaName(this.MensaName);
+                this.MensaName = next;
+                this.NeedsUpdate = true;
+                IsBusy = false;
+            });
+
+            this.getPrevMensaCommand = new Command(async () =>
+            {
+                IsBusy = true;
+                string next = MensaAdapter.getPreviousMensaName(this.MensaName);
+                this.MensaName = next;
+                this.NeedsUpdate = true;
+                IsBusy = false;
+            });
+
             this.IsCreated = true;
+            this.NeedsUpdate = true;
         }
 
     }

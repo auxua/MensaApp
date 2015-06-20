@@ -43,10 +43,10 @@ namespace Mensa
                     int end = input.IndexOf("</sup>");
                     input = input.Remove(start, (end - start)+6);
                 }
-                input.Replace("<span class=\"or\">", "");
-                input.Replace("</span>", "");
-                input.Replace("  ", " ");
-                input.Trim();
+                input = input.Replace("<span class=\"or\">", "");
+                input = input.Replace("</span>", "");
+                input = input.Replace("  ", " ");
+                input = input.Trim();
                 return input;
             }
         }        

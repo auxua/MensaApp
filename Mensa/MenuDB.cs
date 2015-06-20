@@ -89,6 +89,7 @@ namespace Mensa
                 return this;
             }*/
 
+
             public IList<DataTypes.Dish> ExecuteQuery()
             {
                 // Get all items matching the Query
@@ -116,7 +117,7 @@ namespace Mensa
             }
         }
 
-        #endregion
+        #endregion     
 
         #region Importer
 
@@ -186,7 +187,7 @@ namespace Mensa
             foreach (Match m in matches)
             {
                 //Console.WriteLine(m.Groups[1].Value.Trim() + ": " + m.Groups[2].Value.Trim());
-                DataTypes.Dish dish = new DataTypes.Dish(m.Groups[1].Value.Trim(), m.Groups[1].Value.Trim(), date, MensaName);
+                DataTypes.Dish dish = new DataTypes.Dish(m.Groups[2].Value.Trim(), m.Groups[1].Value.Trim(), date, MensaName);
                 list.Add(dish);
             }
             return list;
@@ -249,14 +250,71 @@ namespace Mensa
         }
 
         #endregion
-    
+
+        public DateTime getNextAvailableDay(DateTime dt)
+        {
+            DateTime now = dt.AddMonths(1);
+            
+            List<DataTypes.Dish> list = MenuDB.Instance.Dishes.FindAll((x) =>
+            {
+                
+                // If Query-Date is set and the item is not matching
+                if (DateTime.Compare(dt,x.Date) <0)
+                {
+                    if (DateTime.Compare(now,x.Date) > 0)
+                    {
+                        now = x.Date;
+                    }
+                    return true;
+                }
+                return false;
+            });
+
+            if (now.Equals(dt.AddMonths(1)))
+            {
+                now = dt;
+            }
+            return now;
+        }
+
+        public DateTime getPreviousAvailableDay(DateTime dt)
+        {
+            //DateTime dt_back = dt;
+            dt = dt.Date;
+            DateTime now = dt.Date.AddMonths(-2);
+            //now = now.AddDays(-1);
+
+            List<DataTypes.Dish> list = MenuDB.Instance.Dishes.FindAll((x) =>
+            {
+
+                // If Query-Date is set and the item is not matching
+                if (DateTime.Compare(dt, x.Date) > 0)
+                {
+                    if (DateTime.Compare(now, x.Date) < 0)
+                    {
+                        now = x.Date;
+                    }
+                    return true;
+                }
+                return false;
+            });
+
+            /*if (DateTime.Compare(now, dt) == 0)
+                return dt_back;*/
+
+            if (DateTime.Compare(now, dt.Date.AddMonths(-1))<0)
+                return dt;
+
+            return now;
+        }
+        
         public bool isOutdated()
         {
             if (MenuDB.Instance.Dishes.Count == 0)
                 return true;
-            return MenuDB.Instance.Dishes.Any((x) =>
+            return !MenuDB.Instance.Dishes.Any((x) =>
                 {
-                    return (DateTime.Compare(x.Date, DateTime.Now) >= 0);
+                    return (DateTime.Compare(x.Date, DateTime.Now.Date) >= 0);
                 });
             
         }

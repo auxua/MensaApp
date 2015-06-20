@@ -18,14 +18,14 @@ namespace MensaApp
             return DependencyService.Get<ILocale>().GetCurrent();
         }
 
-        public static string Localize(string key, string comment)
+        public static string Localize(string key)
         {
-
+#if DEBUG
             // FOR DEBUGGING
             var assembly = typeof(Localization).GetTypeInfo().Assembly;
             foreach (var res in assembly.GetManifestResourceNames())
                 System.Diagnostics.Debug.WriteLine("found resource: " + res);
-
+#endif
             var netLanguage = Locale();
 
             //ResourceManager temp = new ResourceManager("MensaApp.MensaAppResources", typeof(Localization).GetTypeInfo().Assembly);

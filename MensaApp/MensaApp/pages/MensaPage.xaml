@@ -4,7 +4,7 @@
              x:Class="MensaApp.pages.MensaPage"
              Title="{Binding MensaName}"
              IsBusy="{Binding IsBusy}"
-             BackgroundColor="White">
+             BackgroundColor="#FFFFFF">
   <ContentPage.Padding>
     30, 20, 20, 0
   </ContentPage.Padding>
@@ -12,17 +12,21 @@
     <!--<ToolbarItem Name="Previous Day" Order="Primary" Priority="0" />
     <ToolbarItem Name="Today" Order="Primary" Priority="1" Activated="ToolBarTodayClicked" />
     <ToolbarItem Name="Next Day" Order="Primary" Priority="2" />-->
-    <ToolbarItem Name="Test" Order="Secondary" Priority="0" />
+    <!--<ToolbarItem Name="Next Day" Order="Primary" Priority="0" Activated="ConfigClicked" Icon="settingsPadded.png" />-->
   </ContentPage.ToolbarItems>
       <StackLayout Orientation="Vertical" VerticalOptions="Fill" Spacing="5" HorizontalOptions="Fill">
-        <Label FontAttributes="Bold" FontSize="Large" VerticalOptions="CenterAndExpand" Text="{Binding MensaName}" HorizontalOptions="Center" TextColor="Blue" />
+        <StackLayout Orientation="Horizontal" Spacing="15" HorizontalOptions="CenterAndExpand">
+          <Button FontAttributes="Bold" FontSize="Large" VerticalOptions="CenterAndExpand" Text="{Binding PreviousMensaString}" HorizontalOptions="Center" TextColor="#00549f" x:Name="PrevMensaButton" BackgroundColor="#FFFFFF" />
+          <Label FontAttributes="Bold" FontSize="Large" VerticalOptions="CenterAndExpand" Text="{Binding MensaName}" HorizontalOptions="Center" TextColor="#00549f" />
+          <Button FontAttributes="Bold" FontSize="Large" VerticalOptions="CenterAndExpand" Text="{Binding NextMensaString}" HorizontalOptions="Center" TextColor="#00549f" x:Name="NextMensaButton" BackgroundColor="#FFFFFF" />
+        </StackLayout>
         <StackLayout Orientation="Vertical" Padding="2, 2, 1, 5" HorizontalOptions="CenterAndExpand" IsVisible="{Binding IsBusy}">
           <Label Text="{Binding Status}" TextColor="Black" />
           <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" />
         </StackLayout>
         <Label TextColor="Red" Text="{Binding ErrorMessage}" IsVisible="{Binding HasErrorMessage}" />
         <StackLayout VerticalOptions="StartAndExpand" HorizontalOptions="CenterAndExpand" Orientation="Vertical" IsVisible="{Binding HasData}">
-          <Label FontSize="Large" Text="Dishes" HorizontalOptions="Center" TextColor="Blue" />
+          <Label FontSize="Large" Text="{Binding DishesString}" HorizontalOptions="Center" TextColor="#00549f" />
           <ListView VerticalOptions="Start" ItemsSource="{Binding Items}" HasUnevenRows="True">
             <ListView.ItemTemplate>
               <DataTemplate>
@@ -38,7 +42,7 @@
                     </StackLayout>-->
                     <StackLayout Orientation="Vertical" HorizontalOptions="StartAndExpand">
                       
-                        <Label FontAttributes="Bold" Text="{Binding Name}" TextColor="Blue" />
+                        <Label FontAttributes="Bold" Text="{Binding Name}" TextColor="#00549f" />
                         <StackLayout Orientation="Horizontal">
                           <Label FontSize="Small" Text="{Binding Kind}" TextColor="Black" />
                           <Label FontSize="Small" FontAttributes="Italic" Text="{Binding Price}" TextColor="Gray" />
@@ -52,7 +56,12 @@
               </DataTemplate>
             </ListView.ItemTemplate>
           </ListView>
-          <Label HorizontalOptions="Center" Text="{Binding DateAsString}" TextColor="Black" />
+          <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand" Spacing="30">
+            <Button HorizontalOptions="Start" VerticalOptions="Center" Text="{Binding PreviousDayString}" TextColor="Black" FontSize="Large" BackgroundColor="#FFFFFF" x:Name="PrevDayButton" />
+            <Label HorizontalOptions="Center" VerticalOptions="Center" Text="{Binding DateAsString}" TextColor="Black" />
+            <Button HorizontalOptions="End" VerticalOptions="Center" Text="{Binding NextDayString}" TextColor="Black" FontSize="Large" BackgroundColor="#FFFFFF" x:Name="NextDayButton" />
+          </StackLayout>
+          
         </StackLayout>
       </StackLayout>
 </ContentPage>

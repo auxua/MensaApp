@@ -15,7 +15,7 @@ namespace MensaApp
         {
             // First, Load the Data from persistent storage
             AppLoadStoreMenuDB sl = new AppLoadStoreMenuDB();
-            Mensa.MenuDB.Instance.LoadDB(sl);
+            //Mensa.MenuDB.Instance.LoadDB(sl);
 
             // Check the latest Day of the data
             if (!Mensa.MenuDB.Instance.isOutdated())
@@ -39,6 +39,64 @@ namespace MensaApp
             { "Ahornstrasse", new Uri("http://www.studentenwerk-aachen.de/speiseplaene/ahornstrasse-w.html")},  
         };
 
+        public static string getNextMensaName(string name)
+        {
+            // Idea: iterate thhrough the dict and get the first item, that is after the name-mensa
+            bool flag = false;
+            string newMensa = null;
+            foreach (var mens in Mensen.Keys)
+            {
+                if (flag)
+                {
+                    newMensa = mens;
+                    break;
+                }
+                // add config-cehck here
+                if (mens == name)
+                    flag = true;
+            }
+
+            if (newMensa != null)
+                return newMensa;
+
+            foreach (var mens in Mensen.Keys)
+            {
+                // add config-Check here
+                return mens;
+            }
+
+            // every Mensa is deactivated...
+            return name;
+        }
+
+        public static string getPreviousMensaName(string name)
+        {
+            // Idea: iterate thhrough the dict and get the first item, that is before the name-mensa
+            string newMensa = null;
+            foreach (var mens in Mensen.Keys)
+            {
+                if (mens == name)
+                    break;
+
+                // Add config-check here
+                newMensa = mens;
+            }
+
+            if (newMensa != null)
+                return newMensa;
+
+            newMensa = name;
+
+            foreach (var mens in Mensen.Keys)
+            {
+                // add config-Check here
+                newMensa = mens;
+            }
+
+            // every Mensa is deactivated...
+            return newMensa;
+        }
+
         private async static Task<Dictionary<string, string>> getSourcesAsync(Dictionary<string, Uri> urls)
         {
             // Policy (input): urls.keys == MensaName, urls.Value == Uri of the plan
@@ -51,6 +109,7 @@ namespace MensaApp
             foreach (KeyValuePair<string, Uri> tuple in urls)
             {
                 WebClient client = new WebClient();
+				client.Encoding = Encoding.UTF8;
                 //client.DownloadStringCompleted += client_DownloadStringCompleted;
                 client.DownloadStringCompleted += ((object sender, DownloadStringCompletedEventArgs e) =>
                     {
@@ -70,8 +129,11 @@ namespace MensaApp
             }
 
             // Wait for the actions to complete
-            while (dict.Count != urls.Count)
-                await Task.Delay(200);
+			while (dict.Count != urls.Count)
+			{
+				await Task.Delay (200);
+				//Thread.Sleep(200);
+			}
 
             return dict;
 
