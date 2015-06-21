@@ -10,10 +10,13 @@ namespace MensaApp.pages
 {
 	public partial class MensaPage : ContentPage
 	{
-		public MensaPage ()
+        ViewModels.MensaPageViewModel vm;
+        
+        public MensaPage ()
 		{
 			InitializeComponent ();
-            var vm = new ViewModels.MensaPageViewModel("Ahornstrasse", new DateTime(2015, 06, 16));
+            string mensa = MensaAdapter.getNextMensaName("Forum Cafete");
+            vm = new ViewModels.MensaPageViewModel(mensa, DateTime.Now.Date);
             this.BindingContext = vm;
             /*
             // previous Day
@@ -44,7 +47,8 @@ namespace MensaApp.pages
             /*ViewModels.MensaPageViewModel vm = (ViewModels.MensaPageViewModel)this.BindingContext;
             vm.GetNextDayCommand.Execute(null);*/
             // do sth.
-            Navigation.PushAsync(new pages.APage());
+            Navigation.PushAsync(new pages.ConfigPage(vm));
         }
+
 	}
 }

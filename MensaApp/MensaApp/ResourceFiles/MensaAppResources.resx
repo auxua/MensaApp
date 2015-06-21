@@ -123,7 +123,19 @@
   <data name="DishesString" xml:space="preserve">
     <value>Dishes</value>
   </data>
+  <data name="FilterTitle" xml:space="preserve">
+    <value>Apply Filters</value>
+  </data>
+  <data name="MainDishesOnly" xml:space="preserve">
+    <value>Only Main Dishes</value>
+  </data>
+  <data name="MensenTitle" xml:space="preserve">
+    <value>(De)Activate Canteens</value>
+  </data>
   <data name="TestText" xml:space="preserve">
     <value>This is a simple Test</value>
+  </data>
+  <data name="VegieOnly" xml:space="preserve">
+    <value>Only Vegetarian Dishes</value>
   </data>
 </root>

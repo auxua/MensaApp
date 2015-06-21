@@ -8,11 +8,11 @@
   <ContentPage.Padding>
     30, 20, 20, 0
   </ContentPage.Padding>
-  <ContentPage.ToolbarItems>
+  <ContentPage.ToolbarItems BackgroundColor="#00549f">
     <!--<ToolbarItem Name="Previous Day" Order="Primary" Priority="0" />
     <ToolbarItem Name="Today" Order="Primary" Priority="1" Activated="ToolBarTodayClicked" />
     <ToolbarItem Name="Next Day" Order="Primary" Priority="2" />-->
-    <!--<ToolbarItem Name="Next Day" Order="Primary" Priority="0" Activated="ConfigClicked" Icon="settingsPadded.png" />-->
+    <ToolbarItem Name="Next Day" Order="Primary" Priority="0" Activated="ConfigClicked" Icon="settingsPadded.png" />
   </ContentPage.ToolbarItems>
       <StackLayout Orientation="Vertical" VerticalOptions="Fill" Spacing="5" HorizontalOptions="Fill">
         <StackLayout Orientation="Horizontal" Spacing="15" HorizontalOptions="CenterAndExpand">

@@ -30,5 +30,56 @@ namespace MensaApp
 		{
 			// Handle when your app resumes
 		}
+
+        
+        #region Settings/Config
+
+        public static bool MensaActive(string name)
+        {
+            if (Application.Current.Properties.ContainsKey(name))
+            {
+                string value = Application.Current.Properties[name] as string;
+                return (value == "True");
+            }
+            Application.Current.Properties[name] = "True";
+            return true;
+        }
+
+        public static void MensaActivate(string name)
+        {
+            Application.Current.Properties[name] = "True";
+        }
+
+        public static void MensaDeactivate(string name)
+        {
+            Application.Current.Properties[name] = "False";
+        }
+
+        public static bool getConfig(string name)
+        {
+            if (Application.Current.Properties.ContainsKey(name))
+            {
+                string value = Application.Current.Properties[name] as string;
+                return (value == "True");
+            }
+            Application.Current.Properties[name] = "False";
+            return false;
+        }
+
+        public static void setConfig(string name, bool value)
+        {
+            string v;
+            if (value)
+            {
+                v = "True";
+            }
+            else
+            {
+                v = "False";
+            }
+            Application.Current.Properties[name] = v;
+        }
+
+        #endregion
 	}
 }

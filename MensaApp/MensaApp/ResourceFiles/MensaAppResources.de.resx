@@ -123,7 +123,19 @@
   <data name="DishesString" xml:space="preserve">
     <value>Gerichte</value>
   </data>
+  <data name="FilterTitle" xml:space="preserve">
+    <value>Filter anwenden</value>
+  </data>
+  <data name="MainDishesOnly" xml:space="preserve">
+    <value>Nur Hauptgerichte</value>
+  </data>
+  <data name="MensenTitle" xml:space="preserve">
+    <value>Mensen (de)aktivieren</value>
+  </data>
   <data name="TestText" xml:space="preserve">
     <value>Dies ist ein einfacher Test</value>
+  </data>
+  <data name="VegieOnly" xml:space="preserve">
+    <value>Nur vegetarische Gerichte</value>
   </data>
 </root>

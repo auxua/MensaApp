@@ -476,8 +476,17 @@ namespace MensaApp.ViewModels
             {
                 IsBusy = true;
                 Status = "Populating Data";
-                var queryData = new Mensa.MenuDB.QueryBuilder().ByDate(this.Date).ByMensa(this.MensaName).ExecuteQuery();
-                //TODO: not querying weekends and stuff...
+
+                var query = new Mensa.MenuDB.QueryBuilder().ByDate(this.Date).ByMensa(this.MensaName);
+
+                if (App.getConfig("VegieOnly"))
+                    query = query.ByKind("Vegetarisch");
+
+                if (App.getConfig("MainDishesOnly"))
+                    query = query.NoSideDishes();
+
+                var queryData = query.ExecuteQuery();
+                
                 this.Items.Clear();
                 foreach (var dish in queryData)
                 {

@@ -99,7 +99,7 @@ namespace Mensa
                         if ((this.date != default(DateTime)) && (!this.date.Equals(x.Date)))
                             return false;
 
-                        if ((this.Kind != null) && (!(this.Kind == x.Kind)))
+                        if ((this.Kind != null) && (!(this.Kind == x.Kind)) && (!(x.isSideDish())))
                             return false;
 
                         if ((!this.MainDishes) && (!x.isSideDish()))

@@ -33,10 +33,16 @@ namespace MensaApp
             }
         }
         
-        static Dictionary<string, Uri> Mensen = new Dictionary<string, Uri>()
+        public static Dictionary<string, Uri> Mensen = new Dictionary<string, Uri>()
         {
             { "Academica", new Uri("http://www.studentenwerk-aachen.de/speiseplaene/academica-w.html")},
             { "Ahornstrasse", new Uri("http://www.studentenwerk-aachen.de/speiseplaene/ahornstrasse-w.html")},  
+            { "Bistro", new Uri("http://www.studentenwerk-aachen.de/speiseplaene/templergraben-w.html")}, 
+            { "Bayernallee", new Uri("http://www.studentenwerk-aachen.de/speiseplaene/bayernallee-w.html")},
+            { "Eupener Straße", new Uri("http://www.studentenwerk-aachen.de/speiseplaene/eupenerstrasse-w.html")},
+            { "Gastro Goethe", new Uri("http://www.studentenwerk-aachen.de/speiseplaene/goethestrasse-w.html")},
+            { "Mensa Vita", new Uri("http://www.studentenwerk-aachen.de/speiseplaene/vita-w.html")},
+            { "Forum Cafete", new Uri("http://www.studentenwerk-aachen.de/speiseplaene/forum-w.html")},
         };
 
         public static string getNextMensaName(string name)
@@ -48,10 +54,12 @@ namespace MensaApp
             {
                 if (flag)
                 {
+                    // add config-cehck here
+                    if (!App.MensaActive(mens))
+                        continue;
                     newMensa = mens;
                     break;
                 }
-                // add config-cehck here
                 if (mens == name)
                     flag = true;
             }
@@ -62,7 +70,8 @@ namespace MensaApp
             foreach (var mens in Mensen.Keys)
             {
                 // add config-Check here
-                return mens;
+                if (App.MensaActive(mens))
+                    return mens;
             }
 
             // every Mensa is deactivated...
@@ -79,6 +88,8 @@ namespace MensaApp
                     break;
 
                 // Add config-check here
+                if (!App.MensaActive(mens))
+                    continue;
                 newMensa = mens;
             }
 
@@ -90,7 +101,8 @@ namespace MensaApp
             foreach (var mens in Mensen.Keys)
             {
                 // add config-Check here
-                newMensa = mens;
+                if (App.MensaActive(mens))
+                    newMensa = mens;
             }
 
             // every Mensa is deactivated...
@@ -140,4 +152,5 @@ namespace MensaApp
         }
 
     }
+
 }
