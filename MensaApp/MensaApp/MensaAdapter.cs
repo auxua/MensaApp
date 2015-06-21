@@ -15,7 +15,7 @@ namespace MensaApp
         {
             // First, Load the Data from persistent storage
             AppLoadStoreMenuDB sl = new AppLoadStoreMenuDB();
-            //Mensa.MenuDB.Instance.LoadDB(sl);
+            Mensa.MenuDB.Instance.LoadDB(sl);
 
             // Check the latest Day of the data
             if (!Mensa.MenuDB.Instance.isOutdated())
@@ -25,7 +25,9 @@ namespace MensaApp
             try
             {
                 Dictionary<string, string> dict = await getSourcesAsync(Mensen);
-                return Mensa.MenuDB.Instance.ImportFromSources(dict);
+                var res =  Mensa.MenuDB.Instance.ImportFromSources(dict);
+                Mensa.MenuDB.Instance.StoreDB(sl);
+                return res;
             }
             catch (Exception ex)
             {
@@ -33,6 +35,9 @@ namespace MensaApp
             }
         }
         
+        /// <summary>
+        /// All known canteens and the corrsponding URL
+        /// </summary>
         public static Dictionary<string, Uri> Mensen = new Dictionary<string, Uri>()
         {
             { "Academica", new Uri("http://www.studentenwerk-aachen.de/speiseplaene/academica-w.html")},
@@ -45,6 +50,10 @@ namespace MensaApp
             { "Forum Cafete", new Uri("http://www.studentenwerk-aachen.de/speiseplaene/forum-w.html")},
         };
 
+        /// <summary>
+        /// Gets the next Mensa (sorted by the dictionary) of the provided one.
+        ///     Checks for enabled canteens
+        /// </summary>
         public static string getNextMensaName(string name)
         {
             // Idea: iterate thhrough the dict and get the first item, that is after the name-mensa
@@ -78,6 +87,10 @@ namespace MensaApp
             return name;
         }
 
+        /// <summary>
+        /// Gets the previous Mensa (sorted by the dictionary) of the provided one.
+        ///     Checks for enabled canteens
+        /// </summary>
         public static string getPreviousMensaName(string name)
         {
             // Idea: iterate thhrough the dict and get the first item, that is before the name-mensa
@@ -109,6 +122,9 @@ namespace MensaApp
             return newMensa;
         }
 
+        /// <summary>
+        /// creates a dictionary of the web source text and the MensaName
+        /// </summary>
         private async static Task<Dictionary<string, string>> getSourcesAsync(Dictionary<string, Uri> urls)
         {
             // Policy (input): urls.keys == MensaName, urls.Value == Uri of the plan

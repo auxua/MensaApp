@@ -9,7 +9,9 @@ namespace MensaApp
 {
 	public class App : Application
 	{
-		public App ()
+        public readonly static string Version = "1.0.0";
+        
+        public App ()
 		{
 			// The root page of your application
             MainPage = new NavigationPage(new pages.MensaPage());

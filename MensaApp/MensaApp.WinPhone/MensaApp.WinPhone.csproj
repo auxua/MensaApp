@@ -121,6 +121,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Icon%402x.png" />
+    <Content Include="Icon-76%402x.png" />
+    <Content Include="Icon-76.png" />
+    <Content Include="iTunesArtwork%402x.png" />
     <Content Include="settings.png" />
     <Content Include="README_FIRST.txt" />
     <Content Include="settingsPadded.png" />

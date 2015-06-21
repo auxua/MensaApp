@@ -14,10 +14,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)ILocale.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Localization.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)MensaAdapter.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)pages\APage.xaml.cs">
-      <DependentUpon>APage.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)pages\ConfigPage.xaml.cs">
       <DependentUpon>ConfigPage.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -29,10 +25,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\MensaPageViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="$(MSBuildThisFileDirectory)pages\APage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)ResourceFiles\MensaAppResources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
     </EmbeddedResource>

@@ -26,7 +26,7 @@ namespace MensaApp.pages
             string FilterTitle = Localization.Localize("FilterTitle");
             string MainDishesOnly = Localization.Localize("MainDishesOnly");
             string VegieOnly = Localization.Localize("VegieOnly");
-
+            string FurtherInfoTitle = Localization.Localize("FurtherInfoTitle");
 
             Title = ConfigTitle;
 
@@ -81,8 +81,42 @@ namespace MensaApp.pages
             sectionFilters.Add(VegieSwitch);
             sectionFilters.Add(DishesSwitch);
 
-            root.Add(sectionMensen);
+
+            TableSection sectionInfo = new TableSection(FurtherInfoTitle);
+
+            
+            TextCell InfoCell = new TextCell
+            {
+                Text = Localization.Localize("InfoCellText"),
+                Detail = Localization.Localize("InfoCellDetail"),
+            };
+            InfoCell.Tapped += async (s, e) =>
+                {
+                    await DisplayAlert("Info", Localization.Localize("AboutText"), "OK");
+                };
+
+            TextCell versionCell = new TextCell
+            {
+                Text = "Version",
+                Detail = App.Version
+            };
+
+            sectionInfo.Add(InfoCell);
+            sectionInfo.Add(versionCell);
+
             root.Add(sectionFilters);
+            root.Add(sectionMensen);
+            root.Add(sectionInfo);
+
+            
+
+            /*StackLayout stack = new StackLayout
+            {
+                Orientation = StackOrientation.Vertical,
+                Children = { new TableView(root), }
+            };*/
+
+
             Content = new TableView
             {
                 Root = root

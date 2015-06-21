@@ -30,11 +30,16 @@ namespace Mensa
                 Price = price;
             }
 
+            public Dish() { }
+
             public bool isSideDish()
             {
                 return (Price == null);
             }
 
+            /// <summary>
+            /// Removes the HTML-Tags inside the text
+            /// </summary>
             private string RemoveTags(string input)
             {
                 while (input.Contains("<sup>"))

@@ -117,6 +117,12 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AboutText" xml:space="preserve">
+    <value>Diese App wurde entwickelt von Arno Schmetz und ist Open Source.
+ Der Quelltext liegt auf Github (https://github.com/auxua/MensaApp). 
+
+ Diese Software nutzt die json.NET library, die under MIT-Lizenz steht. (Lizenz: https://raw.githubusercontent.com/JamesNK/Newtonsoft.Json/master/LICENSE.md)</value>
+  </data>
   <data name="ConfigString" xml:space="preserve">
     <value>Einstellungen</value>
   </data>
@@ -125,6 +131,15 @@
   </data>
   <data name="FilterTitle" xml:space="preserve">
     <value>Filter anwenden</value>
+  </data>
+  <data name="FurtherInfoTitle" xml:space="preserve">
+    <value>Weitere Infos</value>
+  </data>
+  <data name="InfoCellDetail" xml:space="preserve">
+    <value>Antippen für mehr Infos</value>
+  </data>
+  <data name="InfoCellText" xml:space="preserve">
+    <value>Über die App</value>
   </data>
   <data name="MainDishesOnly" xml:space="preserve">
     <value>Nur Hauptgerichte</value>

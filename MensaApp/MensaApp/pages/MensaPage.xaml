@@ -12,13 +12,14 @@
     <!--<ToolbarItem Name="Previous Day" Order="Primary" Priority="0" />
     <ToolbarItem Name="Today" Order="Primary" Priority="1" Activated="ToolBarTodayClicked" />
     <ToolbarItem Name="Next Day" Order="Primary" Priority="2" />-->
-    <ToolbarItem Name="Next Day" Order="Primary" Priority="0" Activated="ConfigClicked" Icon="settingsPadded.png" />
+    <!---<ToolbarItem Name="Config" Order="Primary" Priority="0" Activated="ConfigClicked" Icon="settingsPadded.png" />-->
+    <ToolbarItem Name="Filter" Order="Primary" Priority="0" Activated="ConfigClicked" />
   </ContentPage.ToolbarItems>
       <StackLayout Orientation="Vertical" VerticalOptions="Fill" Spacing="5" HorizontalOptions="Fill">
         <StackLayout Orientation="Horizontal" Spacing="15" HorizontalOptions="CenterAndExpand">
-          <Button FontAttributes="Bold" FontSize="Large" VerticalOptions="CenterAndExpand" Text="{Binding PreviousMensaString}" HorizontalOptions="Center" TextColor="#00549f" x:Name="PrevMensaButton" BackgroundColor="#FFFFFF" />
+          <Button FontAttributes="Bold" FontSize="Large" VerticalOptions="CenterAndExpand" Text="{Binding PreviousMensaString}" HorizontalOptions="Center" TextColor="#00549f" x:Name="PrevMensaButton" BackgroundColor="#FFFFFF" IsEnabled="{Binding HasData}" />
           <Label FontAttributes="Bold" FontSize="Large" VerticalOptions="CenterAndExpand" Text="{Binding MensaName}" HorizontalOptions="Center" TextColor="#00549f" />
-          <Button FontAttributes="Bold" FontSize="Large" VerticalOptions="CenterAndExpand" Text="{Binding NextMensaString}" HorizontalOptions="Center" TextColor="#00549f" x:Name="NextMensaButton" BackgroundColor="#FFFFFF" />
+          <Button FontAttributes="Bold" FontSize="Large" VerticalOptions="CenterAndExpand" Text="{Binding NextMensaString}" HorizontalOptions="Center" TextColor="#00549f" x:Name="NextMensaButton" BackgroundColor="#FFFFFF" IsEnabled="{Binding HasData}" />
         </StackLayout>
         <StackLayout Orientation="Vertical" Padding="2, 2, 1, 5" HorizontalOptions="CenterAndExpand" IsVisible="{Binding IsBusy}">
           <Label Text="{Binding Status}" TextColor="Black" />

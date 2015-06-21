@@ -29,7 +29,8 @@ namespace MensaApp
             var netLanguage = Locale();
 
             //ResourceManager temp = new ResourceManager("MensaApp.MensaAppResources", typeof(Localization).GetTypeInfo().Assembly);
-            ResourceManager temp = new ResourceManager("MensaApp."+ProjectInfix()+".MensaAppResources", typeof(Localization).GetTypeInfo().Assembly);
+            ResourceManager temp = new ResourceManager("MensaApp."+ProjectInfix()+".ResourceFiles.MensaAppResources", typeof(Localization).GetTypeInfo().Assembly);
+			//ResourceManager temp = new ResourceManager("MensaApp."+ProjectInfix()+".MensaAppResources", typeof(Localization).GetTypeInfo().Assembly);
 
             string result = temp.GetString(key, new CultureInfo(netLanguage));
 
