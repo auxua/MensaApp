@@ -1,0 +1,109 @@
+﻿<Page
+    x:Name="pageRoot"
+    x:Class="MensaAppWinHub.HubPage"
+    DataContext="{Binding DefaultViewModel, RelativeSource={RelativeSource Self}}"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:MensaAppWinHub"
+    xmlns:data="using:MensaAppWinHub.Data"
+    xmlns:common="using:MensaAppWinHub.Common"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="White">
+
+    <Page.Resources>
+        <!-- Rastergeeignete Elementvorlage mit 310 x 260 Pixeln, siehe Abschnitt 4 -->
+        <DataTemplate x:Key="Standard310x260ItemTemplate">
+            <Grid Height="250" Width="310" Margin="5,10,5,10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Border Background="{ThemeResource ListViewItemPlaceholderBackgroundThemeBrush}" Height="150">
+                    <Image Source="{Binding ImagePath}" Stretch="UniformToFill" AutomationProperties.Name="{Binding Title}"/>
+                </Border>
+                <StackPanel Grid.Row="1" Margin="0,10,0,0">
+                    <TextBlock Text="{Binding Title}" Style="{StaticResource TitleTextBlockStyle}" TextWrapping="NoWrap"/>
+                    <TextBlock Text="{Binding Description}" Style="{StaticResource BodyTextBlockStyle}" MaxHeight="60" />
+                </StackPanel>
+            </Grid>
+        </DataTemplate>
+        <common:BooleanToVisibilityConverter x:Key="BoolToVis" />
+    </Page.Resources>
+
+    <!--
+    Dieser Raster fungiert als Stammbereich für die Seite.
+  -->
+    <!--<Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">-->
+    <Grid Background="White">
+        <Grid.ChildrenTransitions>
+            <TransitionCollection>
+                <EntranceThemeTransition/>
+            </TransitionCollection>
+        </Grid.ChildrenTransitions>
+        <Hub SectionHeaderClick="Hub_SectionHeaderClick">
+            <Hub.Header>
+                <!-- Schaltfläche "Zurück" und Seitentitel -->
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="80"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button  x:Name="backButton" Style="{StaticResource NavigationBackButtonNormalStyle}"
+                        Margin="-1,-1,39,0" 
+                        VerticalAlignment="Top"
+                        Command="{Binding NavigationHelper.GoBackCommand, ElementName=pageRoot}"
+                        AutomationProperties.Name="Back"
+                        AutomationProperties.AutomationId="BackButton"
+                        AutomationProperties.ItemType="Navigation Button"/>
+                    <TextBlock x:Name="pageTitle" Text="{StaticResource AppName}" Style="{StaticResource HeaderTextBlockStyle}" Grid.Column="1" 
+                        VerticalAlignment="Top" IsHitTestVisible="false" TextWrapping="NoWrap" />
+                </Grid>
+            </Hub.Header>
+            <HubSection Width="780" Margin="0,0,80,0" Background="#00549f">
+                <!--<HubSection.Background>
+                    <ImageBrush ImageSource="Assets/MediumGray.png" Stretch="UniformToFill" />
+                </HubSection.Background> -->
+            </HubSection>
+            <HubSection Width="500" DataContext="{Binding Section1Items}" Background="White" Foreground="#00549f" Visibility="{Binding Section1Enabled, Converter={StaticResource BoolToVis}}">
+                <HubSection.Header>
+                    <TextBlock TextLineBounds="TrimToBaseline" OpticalMarginAlignment="TrimSideBearings" FontSize="28" FontWeight="Bold" Text="Section 1" Foreground="#00549f"/>
+                </HubSection.Header>
+                <DataTemplate>
+                    <ListView x:Name="listView1" ItemsSource="{Binding}">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                            <StackPanel Orientation="Vertical">
+                                    <TextBlock Text="{Binding Name}" TextWrapping="WrapWholeWords" FontSize="22" Foreground="#00549f" />
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="{Binding Kind}" Foreground="Black" />
+                                        <TextBlock Text=" " Foreground="White" Width="15" />
+                                        <TextBlock Text="{Binding Price}" Foreground="Silver" FontStyle="Italic" />
+                                    </StackPanel>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </DataTemplate>
+                <!--<DataTemplate>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <Image Source="Assets/MediumGray.png" Stretch="Fill" Width="420" Height="280"/>
+                        <TextBlock Style="{StaticResource SubheaderTextBlockStyle}" Grid.Row="1" Margin="0,10,0,0" TextWrapping="Wrap"  
+                                   x:Uid="Section1Subtitle" Text="Lorem ipsum dolor sit nonumy sed consectetuer ising elit, sed diam"/>
+                        <TextBlock Style="{StaticResource TitleTextBlockStyle}" Grid.Row="2" Margin="0,10,0,0" 
+                                   x:Uid="DescriptionHeader" Text="Description text:"/>
+                        <TextBlock Style="{StaticResource BodyTextBlockStyle}" Grid.Row="3"
+                                   x:Uid="Section1DescriptionText" Text="Lorem ipsum dolor sit amet, consectetuer ising elit, sed diam nonummy nibh uismod tincidunt ut laoreet suscipit lobortis ni ut wisi quipexerci quis consequat minim veniam, quis nostrud exerci tation ullam corper. Lorem ipsum dolor sit amet, consectetuer ising elit, sed diam nonummy nibh uismod tincidunt ut laoreet suscipit lobortis ni ut wisi quipexerci quis consequat minim veniam, quis nostrud exerci tation ullam corper. "/>
+                    </Grid>
+                </DataTemplate>-->
+            </HubSection>
+        </Hub>
+    </Grid>
+</Page>
