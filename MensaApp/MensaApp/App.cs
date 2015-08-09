@@ -9,7 +9,7 @@ namespace MensaApp
 {
 	public class App : Application
 	{
-        public readonly static string Version = "1.0.0";
+        public readonly static string Version = "1.0.1";
         
         public App ()
 		{

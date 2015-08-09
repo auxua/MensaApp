@@ -12,7 +12,9 @@
     <!--<ToolbarItem Name="Previous Day" Order="Primary" Priority="0" />
     <ToolbarItem Name="Today" Order="Primary" Priority="1" Activated="ToolBarTodayClicked" />
     <ToolbarItem Name="Next Day" Order="Primary" Priority="2" />-->
-    <!---<ToolbarItem Name="Config" Order="Primary" Priority="0" Activated="ConfigClicked" Icon="settingsPadded.png" />-->
+
+    <!--- Xamarin Bug! Use the version without Icon for compilation on OS X, the other one for VS Compilations -->
+    <!--<ToolbarItem Name="Config" Order="Primary" Priority="0" Activated="ConfigClicked" Icon="settingsPadded.png" />-->
     <ToolbarItem Name="Filter" Order="Primary" Priority="0" Activated="ConfigClicked" />
   </ContentPage.ToolbarItems>
       <StackLayout Orientation="Vertical" VerticalOptions="Fill" Spacing="5" HorizontalOptions="Fill">

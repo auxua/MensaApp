@@ -15,11 +15,12 @@ namespace MensaConsole
     {
         static void Main(string[] args)
         {
-            Uri uri = new Uri("http://www.studentenwerk-aachen.de/speiseplaene/academica-w.html");
+            //Uri uri = new Uri("http://www.studentenwerk-aachen.de/speiseplaene/academica-w.html");
+            /*Uri uri = new Uri("http://www.studentenwerk-aachen.de/de/Gastronomie/cafeteria-forum-cafete-wochenplan.html");
 
             HttpClient http = new HttpClient();
             var response = http.GetByteArrayAsync(uri).Result;
-            String source = Encoding.UTF8.GetString(response);
+            String source = Encoding.UTF8.GetString(response);*/
             //String source = Encoding.GetEncoding("utf-8").GetString(response, 0, response.Length - 1);
 
             //Mensa.MenuDB.Instance.ImportFromSource(source, "Mensa Academica");
@@ -60,10 +61,23 @@ namespace MensaConsole
             Console.ReadLine();
         }
 
-        static Dictionary<string, Uri> Mensen = new Dictionary<string, Uri>()
+        /*static Dictionary<string, Uri> Mensen = new Dictionary<string, Uri>()
+        {
+            //{ "Academica", new Uri("http://www.studentenwerk-aachen.de/speiseplaene/academica-w.html")},
+            //{ "Ahornstrasse", new Uri("http://www.studentenwerk-aachen.de/speiseplaene/ahornstrasse-w.html")},  
+            { "Forum Cafete", new Uri("http://www.studentenwerk-aachen.de/de/Gastronomie/cafeteria-forum-cafete-wochenplan.html")},  
+        };*/
+
+        public static Dictionary<string, Uri> Mensen = new Dictionary<string, Uri>()
         {
             { "Academica", new Uri("http://www.studentenwerk-aachen.de/speiseplaene/academica-w.html")},
             { "Ahornstrasse", new Uri("http://www.studentenwerk-aachen.de/speiseplaene/ahornstrasse-w.html")},  
+            { "Bistro", new Uri("http://www.studentenwerk-aachen.de/speiseplaene/templergraben-w.html")}, 
+            { "Bayernallee", new Uri("http://www.studentenwerk-aachen.de/speiseplaene/bayernallee-w.html")},
+            { "Eupener Straße", new Uri("http://www.studentenwerk-aachen.de/speiseplaene/eupenerstrasse-w.html")},
+            { "Gastro Goethe", new Uri("http://www.studentenwerk-aachen.de/speiseplaene/goethestrasse-w.html")},
+            { "Mensa Vita", new Uri("http://www.studentenwerk-aachen.de/speiseplaene/vita-w.html")},
+            { "Forum Cafete", new Uri("http://www.studentenwerk-aachen.de/speiseplaene/forum-w.html")},
         };
 
         public async static Task<Dictionary<string,string>> getSourcesAsync(Dictionary<string,Uri> urls)

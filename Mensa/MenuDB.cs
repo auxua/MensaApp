@@ -135,6 +135,13 @@ namespace Mensa
         {
             try
             {
+                // Quick Fix: If there are 10 "Mensa geschlossen", there is no data
+                string haystack = source;
+                string needle = "Mensa geschlossen";
+                int needleCount = (haystack.Length - source.Replace(needle, "").Length) / needle.Length;
+                if (needleCount > 9)
+                    return true;
+                
                 // Remove newlines
                 source = source.Replace("\n", " ");
                 
@@ -250,6 +257,17 @@ namespace Mensa
         }
 
         #endregion
+
+        public void Reset(StoreLoader sl)
+        {
+            this.Dishes.Clear();
+            this.StoreDB(sl);
+        }
+        
+        public void Reset()
+        {
+            this.Dishes.Clear();
+        }
 
         public DateTime getNextAvailableDay(DateTime dt)
         {

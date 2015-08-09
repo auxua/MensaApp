@@ -13,8 +13,12 @@ namespace MensaApp
         
         public async static Task<bool> CatchMensaDataAsync()
         {
-            // First, Load the Data from persistent storage
             AppLoadStoreMenuDB sl = new AppLoadStoreMenuDB();
+#if DEBUG
+            // Debugging? Reset the internal storage
+            //Mensa.MenuDB.Instance.Reset(sl);
+#endif
+            // First, Load the Data from persistent storage
             Mensa.MenuDB.Instance.LoadDB(sl);
 
             // Check the latest Day of the data
@@ -24,6 +28,9 @@ namespace MensaApp
             // The data is Outdated! Try getting the new data
             try
             {
+                // Reset the whole Database to prevent too much Data on the Device
+                Mensa.MenuDB.Instance.Reset(sl);
+
                 Dictionary<string, string> dict = await getSourcesAsync(Mensen);
                 var res =  Mensa.MenuDB.Instance.ImportFromSources(dict);
                 Mensa.MenuDB.Instance.StoreDB(sl);

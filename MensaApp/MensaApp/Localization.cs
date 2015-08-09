@@ -28,11 +28,35 @@ namespace MensaApp
 #endif
             var netLanguage = Locale();
 
+            ResourceManager temp;
+
+			/*
+			 * Workaround!
+			 * 
+			 * On Visual Studio Build, use the upper line,
+			 * using Xamarin on iOS user the second line (with ResourceFiles.)
+			 * 
+			 * This is a Bug in Xamarin and will be fixed later... hopefully
+			 */ 
+
+            //temp = new ResourceManager("MensaApp." + ProjectInfix() + ".MensaAppResources", typeof(Localization).GetTypeInfo().Assembly);
+
+			temp = new ResourceManager("MensaApp." + ProjectInfix() + ".ResourceFiles.MensaAppResources", typeof(Localization).GetTypeInfo().Assembly);
+
             //ResourceManager temp = new ResourceManager("MensaApp.MensaAppResources", typeof(Localization).GetTypeInfo().Assembly);
-            ResourceManager temp = new ResourceManager("MensaApp."+ProjectInfix()+".ResourceFiles.MensaAppResources", typeof(Localization).GetTypeInfo().Assembly);
+            /*if (Device.OS != TargetPlatform.iOS)
+            {
+                temp = new ResourceManager("MensaApp." + ProjectInfix() + ".MensaAppResources", typeof(Localization).GetTypeInfo().Assembly);
+            } 
+            else
+            {
+                temp = new ResourceManager("MensaApp." + ProjectInfix() + ".ResourceFiles.MensaAppResources", typeof(Localization).GetTypeInfo().Assembly);
+            }*/
 			//ResourceManager temp = new ResourceManager("MensaApp."+ProjectInfix()+".MensaAppResources", typeof(Localization).GetTypeInfo().Assembly);
 
-            string result = temp.GetString(key, new CultureInfo(netLanguage));
+            var cult = new CultureInfo(netLanguage);
+
+            string result = temp.GetString(key, cult);
 
             return result;
         }
