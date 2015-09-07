@@ -14,7 +14,7 @@
     <ToolbarItem Name="Next Day" Order="Primary" Priority="2" />-->
 
     <!--- Xamarin Bug! Use the version without Icon for compilation on OS X, the other one for VS Compilations -->
-    <!--<ToolbarItem Name="Config" Order="Primary" Priority="0" Activated="ConfigClicked" Icon="settingsPadded.png" />-->
+    <!---<ToolbarItem Name="Config" Order="Primary" Priority="0" Activated="ConfigClicked" Icon="settingsPadded.png" />-->
     <ToolbarItem Name="Filter" Order="Primary" Priority="0" Activated="ConfigClicked" />
   </ContentPage.ToolbarItems>
       <StackLayout Orientation="Vertical" VerticalOptions="Fill" Spacing="5" HorizontalOptions="Fill">

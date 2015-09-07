@@ -135,11 +135,17 @@
   <data name="FurtherInfoTitle" xml:space="preserve">
     <value>Weitere Infos</value>
   </data>
+  <data name="GetData" xml:space="preserve">
+    <value>Lade Daten</value>
+  </data>
   <data name="InfoCellDetail" xml:space="preserve">
     <value>Antippen für mehr Infos</value>
   </data>
   <data name="InfoCellText" xml:space="preserve">
     <value>Über die App</value>
+  </data>
+  <data name="LoadFail" xml:space="preserve">
+    <value>Konnte Daten nicht laden</value>
   </data>
   <data name="MainDishesOnly" xml:space="preserve">
     <value>Nur Hauptgerichte</value>
@@ -147,10 +153,25 @@
   <data name="MensenTitle" xml:space="preserve">
     <value>Mensen (de)aktivieren</value>
   </data>
+  <data name="No" xml:space="preserve">
+    <value>Nein</value>
+  </data>
+  <data name="Refresh" xml:space="preserve">
+    <value>Daten neu Laden</value>
+  </data>
+  <data name="RefreshAlert" xml:space="preserve">
+    <value>Wirklich Daten löschen und neu laden?</value>
+  </data>
+  <data name="RefreshDetail" xml:space="preserve">
+    <value>Kann etwas dauern</value>
+  </data>
   <data name="TestText" xml:space="preserve">
     <value>Dies ist ein einfacher Test</value>
   </data>
   <data name="VegieOnly" xml:space="preserve">
     <value>Nur vegetarische Gerichte</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>Ja</value>
   </data>
 </root>

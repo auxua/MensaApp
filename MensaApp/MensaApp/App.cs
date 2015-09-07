@@ -9,8 +9,9 @@ namespace MensaApp
 {
 	public class App : Application
 	{
-        public readonly static string Version = "1.0.1";
+        public readonly static string Version = "1.0.2";
         
+
         public App ()
 		{
 			// The root page of your application

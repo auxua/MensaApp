@@ -445,7 +445,7 @@ namespace MensaApp.ViewModels
         {
             this.MensaName = MensaName;
             this.Date = dt.Date;
-            this.Status = "Creating Page";
+            this.Status = "Starting...";
             this.getLocalizedStrings();
             this.items = new ObservableCollection<Mensa.DataTypes.Dish>();
             this.IsBusy = false;
@@ -454,7 +454,7 @@ namespace MensaApp.ViewModels
             this.loadAllDataCommand = new Command(async () => 
                 {
                     IsBusy = true;
-                    this.Status = "Get Data";
+                    this.Status = Localization.Localize("GetData");
                     bool done = true;
                     if (Mensa.MenuDB.Instance.isOutdated())
                     {
@@ -462,7 +462,7 @@ namespace MensaApp.ViewModels
                     }
                     if (!done)
                     {
-                        this.ErrorMessage = "Could not Load Mensa Data";
+                        this.ErrorMessage = Localization.Localize("LoadFail");
                     }
                     else
                     {

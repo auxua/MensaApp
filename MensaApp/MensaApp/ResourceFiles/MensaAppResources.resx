@@ -135,11 +135,17 @@
   <data name="FurtherInfoTitle" xml:space="preserve">
     <value>Further Info</value>
   </data>
+  <data name="GetData" xml:space="preserve">
+    <value>Getting Data</value>
+  </data>
   <data name="InfoCellDetail" xml:space="preserve">
     <value>Tap for more Information</value>
   </data>
   <data name="InfoCellText" xml:space="preserve">
     <value>About the App</value>
+  </data>
+  <data name="LoadFail" xml:space="preserve">
+    <value>Could not load Data</value>
   </data>
   <data name="MainDishesOnly" xml:space="preserve">
     <value>Only Main Dishes</value>
@@ -147,10 +153,25 @@
   <data name="MensenTitle" xml:space="preserve">
     <value>(De)Activate Canteens</value>
   </data>
+  <data name="No" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="Refresh" xml:space="preserve">
+    <value>Refresh Data</value>
+  </data>
+  <data name="RefreshAlert" xml:space="preserve">
+    <value>Delete Data and Refresh?</value>
+  </data>
+  <data name="RefreshDetail" xml:space="preserve">
+    <value>May take a bit</value>
+  </data>
   <data name="TestText" xml:space="preserve">
     <value>This is a simple Test</value>
   </data>
   <data name="VegieOnly" xml:space="preserve">
     <value>Only Vegetarian Dishes</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>Yes</value>
   </data>
 </root>

@@ -100,7 +100,25 @@ namespace MensaApp.pages
                 Text = "Version",
                 Detail = App.Version
             };
+            TextCell refreshCell = new TextCell
+            {
+                Text = Localization.Localize("Refresh"),
+                Detail = Localization.Localize("RefreshDetail")
+            };
+            refreshCell.Tapped += (s, e) =>
+            {
+                Device.BeginInvokeOnMainThread(async () =>
+                {
+                    // Ask user to confirm
+                    var success = await DisplayAlert(Localization.Localize("Refresh"), Localization.Localize("RefreshAlert"), Localization.Localize("Yes"), Localization.Localize("No"));
+                    if (!success) return;
+                    // Reset MensaDB and re-create Mensapage - this will trigger data refresh automatically
+                    Mensa.MenuDB.Instance.Reset(new AppLoadStoreMenuDB());
+                    App.Current.MainPage = new NavigationPage(new pages.MensaPage());
+                });
+            };
 
+            sectionInfo.Add(refreshCell);
             sectionInfo.Add(InfoCell);
             sectionInfo.Add(versionCell);
 
