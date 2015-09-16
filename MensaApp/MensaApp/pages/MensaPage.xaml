@@ -14,14 +14,14 @@
     <ToolbarItem Name="Next Day" Order="Primary" Priority="2" />-->
 
     <!--- Xamarin Bug! Use the version without Icon for compilation on OS X, the other one for VS Compilations -->
-    <!---<ToolbarItem Name="Config" Order="Primary" Priority="0" Activated="ConfigClicked" Icon="settingsPadded.png" />-->
-    <ToolbarItem Name="Filter" Order="Primary" Priority="0" Activated="ConfigClicked" />
+    <ToolbarItem Name="Config" Order="Primary" Priority="0" Activated="ConfigClicked" Icon="settingsPadded.png" />
+    <!--<ToolbarItem Name="Config" Order="Primary" Priority="0" Activated="ConfigClicked" />-->
   </ContentPage.ToolbarItems>
       <StackLayout Orientation="Vertical" VerticalOptions="Fill" Spacing="5" HorizontalOptions="Fill">
         <StackLayout Orientation="Horizontal" Spacing="15" HorizontalOptions="CenterAndExpand">
-          <Button FontAttributes="Bold" FontSize="Large" VerticalOptions="CenterAndExpand" Text="{Binding PreviousMensaString}" HorizontalOptions="Center" TextColor="#00549f" x:Name="PrevMensaButton" BackgroundColor="#FFFFFF" IsEnabled="{Binding HasData}" />
+            <Button FontAttributes="Bold" FontSize="Large" VerticalOptions="CenterAndExpand" Text="{Binding PreviousMensaString}" HorizontalOptions="Center" TextColor="#00549f" x:Name="PrevMensaButton" BackgroundColor="#FFFFFF" IsEnabled="{Binding HasData}" BorderWidth="0" BorderColor="#FFFFFF" />
           <Label FontAttributes="Bold" FontSize="Large" VerticalOptions="CenterAndExpand" Text="{Binding MensaName}" HorizontalOptions="Center" TextColor="#00549f" />
-          <Button FontAttributes="Bold" FontSize="Large" VerticalOptions="CenterAndExpand" Text="{Binding NextMensaString}" HorizontalOptions="Center" TextColor="#00549f" x:Name="NextMensaButton" BackgroundColor="#FFFFFF" IsEnabled="{Binding HasData}" />
+            <Button FontAttributes="Bold" FontSize="Large" VerticalOptions="CenterAndExpand" Text="{Binding NextMensaString}" HorizontalOptions="Center" TextColor="#00549f" x:Name="NextMensaButton" BackgroundColor="#FFFFFF" IsEnabled="{Binding HasData}" BorderWidth="0"  BorderColor="#FFFFFF" />
         </StackLayout>
         <StackLayout Orientation="Vertical" Padding="2, 2, 1, 5" HorizontalOptions="CenterAndExpand" IsVisible="{Binding IsBusy}">
           <Label Text="{Binding Status}" TextColor="Black" />
@@ -60,9 +60,9 @@
             </ListView.ItemTemplate>
           </ListView>
           <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand" Spacing="30">
-            <Button HorizontalOptions="Start" VerticalOptions="Center" Text="{Binding PreviousDayString}" TextColor="Black" FontSize="Large" BackgroundColor="#FFFFFF" x:Name="PrevDayButton" />
+                <Button HorizontalOptions="Start" VerticalOptions="Center" Text="{Binding PreviousDayString}" TextColor="Black" FontSize="Large" BackgroundColor="#FFFFFF" x:Name="PrevDayButton" BorderWidth="0"  BorderColor="#FFFFFF" />
             <Label HorizontalOptions="Center" VerticalOptions="Center" Text="{Binding DateAsString}" TextColor="Black" />
-            <Button HorizontalOptions="End" VerticalOptions="Center" Text="{Binding NextDayString}" TextColor="Black" FontSize="Large" BackgroundColor="#FFFFFF" x:Name="NextDayButton" />
+                <Button HorizontalOptions="End" VerticalOptions="Center" Text="{Binding NextDayString}" TextColor="Black" FontSize="Large" BackgroundColor="#FFFFFF" x:Name="NextDayButton" BorderWidth="0"  BorderColor="#FFFFFF" />
           </StackLayout>
           
         </StackLayout>
