@@ -18,9 +18,9 @@
     <!--<ToolbarItem Name="Config" Order="Primary" Priority="0" Activated="ConfigClicked" />-->
   </ContentPage.ToolbarItems>
       <StackLayout Orientation="Vertical" VerticalOptions="Fill" Spacing="5" HorizontalOptions="Fill">
-        <StackLayout Orientation="Horizontal" Spacing="15" HorizontalOptions="CenterAndExpand">
+        <StackLayout Orientation="Horizontal" Spacing="8" HorizontalOptions="CenterAndExpand">
             <Button FontAttributes="Bold" FontSize="Large" VerticalOptions="CenterAndExpand" Text="{Binding PreviousMensaString}" HorizontalOptions="Center" TextColor="#00549f" x:Name="PrevMensaButton" BackgroundColor="#FFFFFF" IsEnabled="{Binding HasData}" BorderWidth="0" BorderColor="#FFFFFF" />
-          <Label FontAttributes="Bold" FontSize="Large" VerticalOptions="CenterAndExpand" Text="{Binding MensaName}" HorizontalOptions="Center" TextColor="#00549f" />
+          <Label FontAttributes="Bold" FontSize="Large" VerticalOptions="CenterAndExpand" Text="{Binding MensaName}" HorizontalOptions="CenterAndExpand" TextColor="#00549f" />
             <Button FontAttributes="Bold" FontSize="Large" VerticalOptions="CenterAndExpand" Text="{Binding NextMensaString}" HorizontalOptions="Center" TextColor="#00549f" x:Name="NextMensaButton" BackgroundColor="#FFFFFF" IsEnabled="{Binding HasData}" BorderWidth="0"  BorderColor="#FFFFFF" />
         </StackLayout>
         <StackLayout Orientation="Vertical" Padding="2, 2, 1, 5" HorizontalOptions="CenterAndExpand" IsVisible="{Binding IsBusy}">

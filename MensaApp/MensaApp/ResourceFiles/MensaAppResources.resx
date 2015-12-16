@@ -123,11 +123,20 @@
 
  This software uses the json.NET library which is licensed under the MIT license. (Find it here: https://raw.githubusercontent.com/JamesNK/Newtonsoft.Json/master/LICENSE.md)</value>
   </data>
+  <data name="Closed" xml:space="preserve">
+    <value>Closed/No Data</value>
+  </data>
+  <data name="ClosedSubtext" xml:space="preserve">
+    <value>You may force a reload in the options</value>
+  </data>
   <data name="ConfigString" xml:space="preserve">
     <value>Configuration</value>
   </data>
   <data name="DishesString" xml:space="preserve">
     <value>Dishes</value>
+  </data>
+  <data name="DownloadFail" xml:space="preserve">
+    <value>At least one canteen failed to download. (No Internet Connection?)</value>
   </data>
   <data name="FilterTitle" xml:space="preserve">
     <value>Apply Filters</value>

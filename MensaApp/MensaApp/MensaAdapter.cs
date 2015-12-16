@@ -16,7 +16,7 @@ namespace MensaApp
             AppLoadStoreMenuDB sl = new AppLoadStoreMenuDB();
 #if DEBUG
             // Debugging? Reset the internal storage
-            //Mensa.MenuDB.Instance.Reset(sl);
+            Mensa.MenuDB.Instance.Reset(sl);
 #endif
             // First, Load the Data from persistent storage
             Mensa.MenuDB.Instance.LoadDB(sl);
@@ -129,6 +129,8 @@ namespace MensaApp
             return newMensa;
         }
 
+        public static bool DownloadError = false;
+
         /// <summary>
         /// creates a dictionary of the web source text and the MensaName
         /// </summary>
@@ -136,7 +138,8 @@ namespace MensaApp
         {
             // Policy (input): urls.keys == MensaName, urls.Value == Uri of the plan
             // Policy (output): key==source, Value == MensaName
-
+            DownloadError = false;
+            int downloads = 0;
             Dictionary<string, string> dict = new Dictionary<string, string>();
 
             Mutex mutex = new Mutex();
@@ -150,25 +153,54 @@ namespace MensaApp
                     {
                         try 
                         {
-                            string result = e.Result;
-                            mutex.WaitOne();
-                            dict.Add(result, tuple.Key);
-                            mutex.ReleaseMutex();
+                            // Error occured?
+                            if (e.Error != null)
+                            {
+                                DownloadError = true;
+                            }
+                            else
+                            {
+                                // No error -> Add to dict.
+                                string result = e.Result;
+                                mutex.WaitOne();
+                                dict.Add(result, tuple.Key);
+                                mutex.ReleaseMutex();
+                            }
+                            
                         }
                         catch (Exception)
                         {
-                            dict.Add("","");
+                            // Error while getting data. Set flag!
+                            DownloadError = true;
+                        }
+                        finally
+                        {
+                            // In every case, count this for a finished task
+                            mutex.WaitOne();
+                            downloads++;
+                            mutex.ReleaseMutex();
                         }
                     });
                 client.DownloadStringAsync(tuple.Value);
             }
 
             // Wait for the actions to complete
-			while (dict.Count != urls.Count)
+			while (downloads != urls.Count)
 			{
 				await Task.Delay (200);
 				//Thread.Sleep(200);
 			}
+
+            string message = Localization.Localize("DownloadFail");
+
+            if (DownloadError)
+            {
+                // Check for errors, inform user!
+                Xamarin.Forms.Device.BeginInvokeOnMainThread(() =>
+                {
+                    App.Current.MainPage.DisplayAlert("Error", message, "OK");
+                });
+            }
 
             return dict;
 

@@ -123,11 +123,20 @@
 
  Diese Software nutzt die json.NET library, die under MIT-Lizenz steht. (Lizenz: https://raw.githubusercontent.com/JamesNK/Newtonsoft.Json/master/LICENSE.md)</value>
   </data>
+  <data name="Closed" xml:space="preserve">
+    <value>Geschlossen/Keine Daten</value>
+  </data>
+  <data name="ClosedSubtext" xml:space="preserve">
+    <value>Evtl. über die Optionen manuell neu laden</value>
+  </data>
   <data name="ConfigString" xml:space="preserve">
     <value>Einstellungen</value>
   </data>
   <data name="DishesString" xml:space="preserve">
     <value>Gerichte</value>
+  </data>
+  <data name="DownloadFail" xml:space="preserve">
+    <value>Daten mindestens einer Mensa konnten nicht abgeholt werden (keine Internetverbindung?)</value>
   </data>
   <data name="FilterTitle" xml:space="preserve">
     <value>Filter anwenden</value>

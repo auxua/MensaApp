@@ -135,13 +135,34 @@ namespace Mensa
         {
             try
             {
+                /*
+                *   Remark: Complete Regex matches computation takes a bit time,
+                *   if there are no matches, it takes much time. 
+                *   => Quick Fixes have better performance (for now)
+                */
+
+                // Quick Fix: If there are 10 "geschlossen", there is no data
+                string haystack = source;
+                string needle = "geschlossen";
+                int needleCount = (haystack.Length - source.Replace(needle, "").Length) / needle.Length;
+                if (needleCount > 9)
+                    return true;
+
+                /*
                 // Quick Fix: If there are 10 "Mensa geschlossen", there is no data
                 string haystack = source;
                 string needle = "Mensa geschlossen";
                 int needleCount = (haystack.Length - source.Replace(needle, "").Length) / needle.Length;
                 if (needleCount > 9)
                     return true;
-                
+
+                // Quick Fix 2: If there are 10 "Geschlossen wegen Umbauarbeiten", there is no data
+                haystack = source;
+                needle = "Geschlossen";
+                needleCount = (haystack.Length - source.Replace(needle, "").Length) / needle.Length;
+                if (needleCount > 9)
+                    return true;*/
+
                 // Remove newlines
                 source = source.Replace("\n", " ");
                 
@@ -271,6 +292,8 @@ namespace Mensa
 
         public DateTime getNextAvailableDay(DateTime dt)
         {
+            // In case of empty set (e.g. holidays), return old value;
+            if (this.Dishes.Count == 0) return dt;
             DateTime now = dt.AddMonths(1);
             
             List<DataTypes.Dish> list = MenuDB.Instance.Dishes.FindAll((x) =>
@@ -298,6 +321,7 @@ namespace Mensa
         public DateTime getPreviousAvailableDay(DateTime dt)
         {
             //DateTime dt_back = dt;
+            if (this.Dishes.Count == 0) return dt;
             dt = dt.Date;
             DateTime now = dt.Date.AddMonths(-2);
             //now = now.AddDays(-1);

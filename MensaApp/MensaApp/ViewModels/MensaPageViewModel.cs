@@ -60,6 +60,7 @@ namespace MensaApp.ViewModels
             }
             set
             {
+                IsBusy = true;
                 this.needsUpdate = value;
                 RaisePropertyChanged("NeedsUpdate");
                 if (value)
@@ -67,6 +68,7 @@ namespace MensaApp.ViewModels
                     this.LoadAllDataCommand.Execute(null);
                 }
                 this.needsUpdate = false;
+                IsBusy = false;
             }
         }
 
@@ -441,6 +443,8 @@ namespace MensaApp.ViewModels
 
         #endregion
 
+        internal Mensa.DataTypes.Dish Closed = new Mensa.DataTypes.Dish(Localization.Localize("Closed"), Localization.Localize("ClosedSubtext"),DateTime.Now, "");
+
         public MensaPageViewModel(string MensaName, DateTime dt)
         {
             this.MensaName = MensaName;
@@ -456,7 +460,8 @@ namespace MensaApp.ViewModels
                     IsBusy = true;
                     this.Status = Localization.Localize("GetData");
                     bool done = true;
-                    if (Mensa.MenuDB.Instance.isOutdated())
+                    // Outdated without error? -> Refresh!
+                    if (Mensa.MenuDB.Instance.isOutdated() && !MensaAdapter.DownloadError)
                     {
                         done = await MensaAdapter.CatchMensaDataAsync();
                     }
@@ -492,6 +497,11 @@ namespace MensaApp.ViewModels
                 {
                     this.Items.Add(dish);
                 }
+                // No data? Show default Closed info
+                if (this.Items.Count == 0)
+                {
+                    this.Items.Add(this.Closed);
+                }
                 this.HasData = true;
                 IsBusy = false;
             });
@@ -500,6 +510,12 @@ namespace MensaApp.ViewModels
             {
                 IsBusy = true;
                 DateTime next = Mensa.MenuDB.Instance.getNextAvailableDay(this.Date);
+                // Optimization: No better day available? prevent reloading data and re-download in some cases
+                if (next == this.Date)
+                {
+                    IsBusy = false;
+                    return;
+                }
                 this.Date = next;
                 this.NeedsUpdate = true;
                 IsBusy = false;
@@ -509,6 +525,12 @@ namespace MensaApp.ViewModels
             {
                 IsBusy = true;
                 DateTime next = Mensa.MenuDB.Instance.getPreviousAvailableDay(this.Date);
+                // Optimization: No better day available? prevent reloading data and re-download in some cases
+                if (next == this.Date)
+                {
+                    IsBusy = false;
+                    return;
+                }
                 this.Date = next;
                 this.NeedsUpdate = true;
                 IsBusy = false;

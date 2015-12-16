@@ -113,6 +113,7 @@ namespace MensaApp.pages
                     var success = await DisplayAlert(Localization.Localize("Refresh"), Localization.Localize("RefreshAlert"), Localization.Localize("Yes"), Localization.Localize("No"));
                     if (!success) return;
                     // Reset MensaDB and re-create Mensapage - this will trigger data refresh automatically
+                    MensaAdapter.DownloadError = false;
                     Mensa.MenuDB.Instance.Reset(new AppLoadStoreMenuDB());
                     App.Current.MainPage = new NavigationPage(new pages.MensaPage());
                 });

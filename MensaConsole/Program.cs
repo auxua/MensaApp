@@ -70,12 +70,12 @@ namespace MensaConsole
 
         public static Dictionary<string, Uri> Mensen = new Dictionary<string, Uri>()
         {
-            { "Academica", new Uri("http://www.studentenwerk-aachen.de/speiseplaene/academica-w.html")},
+            /*{ "Academica", new Uri("http://www.studentenwerk-aachen.de/speiseplaene/academica-w.html")},
             { "Ahornstrasse", new Uri("http://www.studentenwerk-aachen.de/speiseplaene/ahornstrasse-w.html")},  
             { "Bistro", new Uri("http://www.studentenwerk-aachen.de/speiseplaene/templergraben-w.html")}, 
             { "Bayernallee", new Uri("http://www.studentenwerk-aachen.de/speiseplaene/bayernallee-w.html")},
             { "Eupener Straße", new Uri("http://www.studentenwerk-aachen.de/speiseplaene/eupenerstrasse-w.html")},
-            { "Gastro Goethe", new Uri("http://www.studentenwerk-aachen.de/speiseplaene/goethestrasse-w.html")},
+            { "Gastro Goethe", new Uri("http://www.studentenwerk-aachen.de/speiseplaene/goethestrasse-w.html")},*/
             { "Mensa Vita", new Uri("http://www.studentenwerk-aachen.de/speiseplaene/vita-w.html")},
             { "Forum Cafete", new Uri("http://www.studentenwerk-aachen.de/speiseplaene/forum-w.html")},
         };

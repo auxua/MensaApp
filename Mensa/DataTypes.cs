@@ -16,7 +16,7 @@ namespace Mensa
             public string Kind { get; set; }
             public DateTime Date { get; set; }
             public string Mensa { get; set; }
-
+            
             public Dish(string name, string kind, DateTime date, string mensa)
             {
                 Name = RemoveTags(name);
