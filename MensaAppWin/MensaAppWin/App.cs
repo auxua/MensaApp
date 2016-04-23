@@ -5,7 +5,7 @@ using System.Text;
 
 using Xamarin.Forms;
 
-namespace MensaApp
+namespace MensaAppWin
 {
 	public class App : Application
 	{
@@ -15,7 +15,7 @@ namespace MensaApp
         public App ()
 		{
 			// The root page of your application
-            MainPage = new NavigationPage(new pages.MensaPage());
+            MainPage = new NavigationPage(new MensaPage());
             //MainPage = new pages.APage();
 		}
 

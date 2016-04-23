@@ -1,0 +1,3 @@
+MainPackage=T:\drop\Dropbox\Visual Studio 2012\Projects\MensaApp\MensaAppWin\MensaAppWin.UWP\bin\ARM\Release\MensaAppWin.UWP_1.2.0.0_ARM.appx
+SymbolPackage=T:\drop\Dropbox\Visual Studio 2012\Projects\MensaApp\MensaAppWin\MensaAppWin.UWP\AppPackages\MensaAppWin.UWP_1.2.0.0_Test\MensaAppWin.UWP_1.2.0.0_ARM.appxsym
+ResourcePack=T:\drop\Dropbox\Visual Studio 2012\Projects\MensaApp\MensaAppWin\MensaAppWin.UWP\bin\ARM\Release\MensaAppWin.UWP_1.2.0.0_language-de.appx

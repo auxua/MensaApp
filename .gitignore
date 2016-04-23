@@ -199,3 +199,6 @@ FakesAssemblies/
 *.apk
 
 # Exclude Settings of concrete implementation for security reasons but provide Sample
+
+AppPackages/
+*.pfx

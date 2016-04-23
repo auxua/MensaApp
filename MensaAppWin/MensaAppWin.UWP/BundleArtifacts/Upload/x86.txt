@@ -1,0 +1,1 @@
+MainPackage=T:\drop\Dropbox\Visual Studio 2012\Projects\MensaApp\MensaAppWin\MensaAppWin.UWP\bin\x86\Release\Upload\MensaAppWin.UWP_1.2.0.0_x86.appx

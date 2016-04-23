@@ -5,8 +5,9 @@ using System.Threading.Tasks;
 using System.Net;
 using Mensa;
 using System.Threading;
+using System.Net.Http;
 
-namespace MensaApp
+namespace MensaAppWin
 {
     class MensaAdapter
     {
@@ -146,22 +147,28 @@ namespace MensaApp
 
             foreach (KeyValuePair<string, Uri> tuple in urls)
             {
-                WebClient client = new WebClient();
+                HttpClient client = new HttpClient();
+                var answer = await client.GetAsync(tuple.Value);
+                
+                
+
+
+                /*WebClient client = new WebClient();
 				client.Encoding = Encoding.UTF8;
                 //client.DownloadStringCompleted += client_DownloadStringCompleted;
                 client.DownloadStringCompleted += ((object sender, DownloadStringCompletedEventArgs e) =>
-                    {
+                    {*/
                         try 
                         {
                             // Error occured?
-                            if (e.Error != null)
+                            if (!answer.IsSuccessStatusCode)
                             {
                                 DownloadError = true;
                             }
                             else
                             {
-                                // No error -> Add to dict.
-                                string result = e.Result;
+                        // No error -> Add to dict.
+                                string result = await answer.Content.ReadAsStringAsync();
                                 mutex.WaitOne();
                                 dict.Add(result, tuple.Key);
                                 mutex.ReleaseMutex();
@@ -180,8 +187,8 @@ namespace MensaApp
                             downloads++;
                             mutex.ReleaseMutex();
                         }
-                    });
-                client.DownloadStringAsync(tuple.Value);
+                    /*});
+                client.DownloadStringAsync(tuple.Value);*/
             }
 
             // Wait for the actions to complete
