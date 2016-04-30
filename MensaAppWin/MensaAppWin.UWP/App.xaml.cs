@@ -57,8 +57,9 @@ namespace MensaAppWin.UWP
                 rootFrame = new Frame();
 
                 rootFrame.NavigationFailed += OnNavigationFailed;
-
+                
                 Xamarin.Forms.Forms.Init(e);
+                Xamarin.Forms.DependencyService.Register< MensaAppWin.UWP.Locale_UWP> (); // add this
 
                 if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
                 {

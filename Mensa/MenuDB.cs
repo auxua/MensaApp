@@ -142,11 +142,13 @@ namespace Mensa
                 */
 
                 // Quick Fix: If there are 10 "geschlossen", there is no data
-                string haystack = source;
+                /*string haystack = source;
                 string needle = "geschlossen";
                 int needleCount = (haystack.Length - source.Replace(needle, "").Length) / needle.Length;
                 if (needleCount > 9)
-                    return true;
+                    return true;*/
+
+                // End of April 2016: STW changed Syntax, now every dish is listed with "geschlossen" - optimization invalid
 
                 /*
                 // Quick Fix: If there are 10 "Mensa geschlossen", there is no data
@@ -209,7 +211,15 @@ namespace Mensa
              *  2: Name of Dish
              * 
              * */
-            string regex = "<tr.*?>.*?<td.*?>(.*?)<\\/td>.*?<td.*?>(.*?)<\\/td>.*?<td><\\/td>.*?<\\/tr>";
+            
+            // Regex for SPAN-based dishes with "oder"
+            //string regex = "<tr.*?>.*?<td.*?>.*?<span.*?>(.*?)<\\/span>.*?<span.*?>(.*?)<\\/span>.*?<\\/td>.*?<\\/tr>";
+
+            // Regex for SPAN-based dishes without "oder"
+            string regex = "<tr.*?>.*?<td.*?>.*?<span.*?>(.*?)<\\/span>.*?<span.*?>(.*?<span class=\"or\">oder<\\/span>.*?)<\\/span>.*?<\\/td>.*?<\\/tr>";
+            
+            
+            //string regex = "<tr.*?>.*?<td.*?>(.*?)<\\/td>.*?<td.*?>(.*?)<\\/td>.*?<td><\\/td>.*?<\\/tr>";
             MatchCollection matches = Regex.Matches(p, regex);
 
             foreach (Match m in matches)
@@ -240,7 +250,9 @@ namespace Mensa
              *  3: Price
              * 
              * */
-            string regex = "<tr.*?>.*?<td.*?>(.*?)<\\/td>.*?<td.*?>(.*?)<\\/td>.*?<td.*?>(.*?)<\\/td>.*?<\\/tr>";
+            //string regex = "<tr.*?>.*?<td.*?>(.*?)<\\/td>.*?<td.*?>(.*?)<\\/td>.*?<td.*?>(.*?)<\\/td>.*?<\\/tr>";
+            //string regex = "<tr.*?>.*?<td.*?>.?*<span.*?>(.*?)<\\span>.*?<span.*?>(.*?)<\\/span>.*?<span.*?>(.*?)<\\/span>.*?<\\/td>.*?<\\/tr>";
+            string regex = "<tr.*?>.*?<td.*?>.*?<span.*?>(.*?)<\\/span>.*?<span.*?>(.*?)<\\/span>.*?<span.*?>(.*?)<\\/span>.*?<\\/td>.*?<\\/tr>";
             MatchCollection matches = Regex.Matches(p, regex);
             foreach (Match m in matches)
             {
