@@ -16,18 +16,18 @@ namespace MensaAppWin.ViewModels
 
         //private INavigation navigation;
 
-        private bool isBusy;
+        private bool busy;
 
-        public bool IsBusy
+        public bool Busy
         {
             get
             {
-                return this.isBusy;
+                return this.busy;
             }
             set
             {
-                this.isBusy = value;
-                RaisePropertyChanged("IsBusy");
+                this.busy = value;
+                RaisePropertyChanged("Busy");
             }
         }
 
@@ -60,7 +60,7 @@ namespace MensaAppWin.ViewModels
             }
             set
             {
-                IsBusy = true;
+                Busy = true;
                 this.needsUpdate = value;
                 RaisePropertyChanged("NeedsUpdate");
                 if (value)
@@ -68,7 +68,7 @@ namespace MensaAppWin.ViewModels
                     this.LoadAllDataCommand.Execute(null);
                 }
                 this.needsUpdate = false;
-                IsBusy = false;
+                //Busy = false;
             }
         }
 
@@ -166,8 +166,7 @@ namespace MensaAppWin.ViewModels
                 RaisePropertyChanged("Date");
                 var culture = new CultureInfo(Localization.Locale());
                 var day = culture.DateTimeFormat.GetDayName(value.Date.DayOfWeek);
-                //this.DateAsString = day + "\n" + value.Date.ToShortDateString();
-                this.DateAsString = day + "\n" + value.Date.Day+"."+value.Date.Month+"."+value.Date.Year;
+                this.DateAsString = day + "\n" + value.Date.Day + "." + value.Date.Month + "." + value.Date.Year;
             }
         }
 
@@ -444,7 +443,7 @@ namespace MensaAppWin.ViewModels
 
         #endregion
 
-        internal Mensa.DataTypes.Dish Closed = new Mensa.DataTypes.Dish(Localization.Localize("Closed"), Localization.Localize("ClosedSubtext"),DateTime.Now, "");
+        internal Mensa.DataTypes.Dish Closed = new Mensa.DataTypes.Dish(Localization.Localize("Closed"), Localization.Localize("ClosedSubtext"), DateTime.Now, "");
 
         public MensaPageViewModel(string MensaName, DateTime dt)
         {
@@ -453,34 +452,34 @@ namespace MensaAppWin.ViewModels
             this.Status = "Starting...";
             this.getLocalizedStrings();
             this.items = new ObservableCollection<Mensa.DataTypes.Dish>();
-            this.IsBusy = false;
+            this.Busy = true;
 
             // Trigger the MensaDB to get the Mensa Data
-            this.loadAllDataCommand = new Command(async () => 
+            this.loadAllDataCommand = new Command(async () =>
+            {
+                Busy = true;
+                this.Status = Localization.Localize("GetData");
+                bool done = true;
+                // Outdated without error? -> Refresh!
+                if (Mensa.MenuDB.Instance.isOutdated() && !MensaAdapter.DownloadError)
                 {
-                    IsBusy = true;
-                    this.Status = Localization.Localize("GetData");
-                    bool done = true;
-                    // Outdated without error? -> Refresh!
-                    if (Mensa.MenuDB.Instance.isOutdated() && !MensaAdapter.DownloadError)
-                    {
-                        done = await MensaAdapter.CatchMensaDataAsync();
-                    }
-                    if (!done)
-                    {
-                        this.ErrorMessage = Localization.Localize("LoadFail");
-                    }
-                    else
-                    {
-                        this.DataAvailable = true;
-                    }
-                    IsBusy = false;
-                });
+                    done = await MensaAdapter.CatchMensaDataAsync();
+                }
+                if (!done)
+                {
+                    this.ErrorMessage = Localization.Localize("LoadFail");
+                }
+                else
+                {
+                    this.DataAvailable = true;
+                }
+                //IsBusy = false;
+            });
 
             // query the Mensa Data from the MensaDB
             this.getAllDataCommand = new Command(async () =>
             {
-                IsBusy = true;
+                Busy = true;
                 Status = "Populating Data";
 
                 var query = new Mensa.MenuDB.QueryBuilder().ByDate(this.Date).ByMensa(this.MensaName);
@@ -492,7 +491,7 @@ namespace MensaAppWin.ViewModels
                     query = query.NoSideDishes();
 
                 var queryData = query.ExecuteQuery();
-                
+
                 this.Items.Clear();
                 foreach (var dish in queryData)
                 {
@@ -504,55 +503,55 @@ namespace MensaAppWin.ViewModels
                     this.Items.Add(this.Closed);
                 }
                 this.HasData = true;
-                IsBusy = false;
+                Busy = false;
             });
 
             this.getNextDayCommand = new Command(async () =>
             {
-                IsBusy = true;
+                Busy = true;
                 DateTime next = Mensa.MenuDB.Instance.getNextAvailableDay(this.Date);
                 // Optimization: No better day available? prevent reloading data and re-download in some cases
                 if (next == this.Date)
                 {
-                    IsBusy = false;
+                    Busy = false;
                     return;
                 }
                 this.Date = next;
                 this.NeedsUpdate = true;
-                IsBusy = false;
+                Busy = false;
             });
 
             this.getPrevDayCommand = new Command(async () =>
             {
-                IsBusy = true;
+                Busy = true;
                 DateTime next = Mensa.MenuDB.Instance.getPreviousAvailableDay(this.Date);
                 // Optimization: No better day available? prevent reloading data and re-download in some cases
                 if (next == this.Date)
                 {
-                    IsBusy = false;
+                    Busy = false;
                     return;
                 }
                 this.Date = next;
                 this.NeedsUpdate = true;
-                IsBusy = false;
+                Busy = false;
             });
 
             this.getNextMensaCommand = new Command(async () =>
             {
-                IsBusy = true;
+                Busy = true;
                 string next = MensaAdapter.getNextMensaName(this.MensaName);
                 this.MensaName = next;
                 this.NeedsUpdate = true;
-                IsBusy = false;
+                Busy = false;
             });
 
             this.getPrevMensaCommand = new Command(async () =>
             {
-                IsBusy = true;
+                Busy = true;
                 string next = MensaAdapter.getPreviousMensaName(this.MensaName);
                 this.MensaName = next;
                 this.NeedsUpdate = true;
-                IsBusy = false;
+                Busy = false;
             });
 
             this.IsCreated = true;

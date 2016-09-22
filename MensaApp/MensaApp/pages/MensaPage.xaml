@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MensaApp.pages.MensaPage"
              Title="{Binding MensaName}"
-             IsBusy="{Binding IsBusy}"
+             IsBusy="{Binding Busy}"
              BackgroundColor="#FFFFFF">
   <ContentPage.Padding>
     30, 20, 20, 0
@@ -23,9 +23,9 @@
           <Label FontAttributes="Bold" FontSize="Large" VerticalOptions="CenterAndExpand" Text="{Binding MensaName}" HorizontalOptions="CenterAndExpand" TextColor="#00549f" />
             <Button FontAttributes="Bold" FontSize="Large" VerticalOptions="CenterAndExpand" Text="{Binding NextMensaString}" HorizontalOptions="Center" TextColor="#00549f" x:Name="NextMensaButton" BackgroundColor="#FFFFFF" IsEnabled="{Binding HasData}" BorderWidth="0"  BorderColor="#FFFFFF" />
         </StackLayout>
-        <StackLayout Orientation="Vertical" Padding="2, 2, 1, 5" HorizontalOptions="CenterAndExpand" IsVisible="{Binding IsBusy}">
+        <StackLayout Orientation="Vertical" Padding="2, 2, 1, 5" HorizontalOptions="CenterAndExpand" IsVisible="{Binding Busy}">
           <Label Text="{Binding Status}" TextColor="Black" />
-          <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" />
+          <ActivityIndicator IsRunning="{Binding Busy}" IsVisible="{Binding Busy}" />
         </StackLayout>
         <Label TextColor="Red" Text="{Binding ErrorMessage}" IsVisible="{Binding HasErrorMessage}" />
         <StackLayout VerticalOptions="StartAndExpand" HorizontalOptions="CenterAndExpand" Orientation="Vertical" IsVisible="{Binding HasData}">

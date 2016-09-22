@@ -13,6 +13,7 @@ namespace MensaApp
         
         public async static Task<bool> CatchMensaDataAsync()
         {
+
             AppLoadStoreMenuDB sl = new AppLoadStoreMenuDB();
 #if DEBUG
             // Debugging? Reset the internal storage
