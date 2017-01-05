@@ -1,5 +1,5 @@
 # Mensa Aachen App
-A simple App for Canteens in Aachen. (WinPhone, iOS, Android)
+A simple App for Canteens in Aachen. (WinPhone, iOS, Android, UWP)
 
 ## License
 This Software uses the Newtonsoft json library, which is licensed under MIT-License (https://raw.githubusercontent.com/JamesNK/Newtonsoft.Json/master/LICENSE.md)
@@ -15,4 +15,6 @@ The solution has multiple projects:
 * Mensa - Basic Regex and Data-Management
 * MensaApp - Shared Project for UI, MVVM, Adapters and Localization Content
 * MensaApp.WinPhone/Droid/iOS - The actual projects for the target mobile platforms, containing platform-specific code, Manifests, images
+* MensaAppWin - A new shared project which is almost identical to MensaApp but also targets a UWP project
+* MensaAppWin.UWP - The actual UWP project which targets Windows 10 devices (PC, Mobile, XBOX)
 * MensaConsole - Simple Testing Console Application for the Importer
