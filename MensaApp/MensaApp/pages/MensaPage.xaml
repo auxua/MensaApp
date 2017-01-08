@@ -18,9 +18,9 @@
     <!--<ToolbarItem Name="Config" Order="Primary" Priority="0" Activated="ConfigClicked" />-->
   </ContentPage.ToolbarItems>
       <StackLayout Orientation="Vertical" VerticalOptions="Fill" Spacing="5" HorizontalOptions="Fill">
-        <StackLayout Orientation="Horizontal" Spacing="8" HorizontalOptions="CenterAndExpand">
+        <StackLayout Orientation="Horizontal" Spacing="8" HorizontalOptions="CenterAndExpand" x:Name="MensaStack">
             <Button FontAttributes="Bold" FontSize="Large" VerticalOptions="CenterAndExpand" Text="{Binding PreviousMensaString}" HorizontalOptions="Center" TextColor="#00549f" x:Name="PrevMensaButton" BackgroundColor="#FFFFFF" IsEnabled="{Binding HasData}" BorderWidth="0" BorderColor="#FFFFFF" />
-          <Label FontAttributes="Bold" FontSize="Large" VerticalOptions="CenterAndExpand" Text="{Binding MensaName}" HorizontalOptions="CenterAndExpand" TextColor="#00549f" />
+          <Label x:Name="MensaLabel" FontAttributes="Bold" FontSize="Large" VerticalOptions="CenterAndExpand" Text="{Binding MensaName}" HorizontalOptions="CenterAndExpand" TextColor="#00549f" />
             <Button FontAttributes="Bold" FontSize="Large" VerticalOptions="CenterAndExpand" Text="{Binding NextMensaString}" HorizontalOptions="Center" TextColor="#00549f" x:Name="NextMensaButton" BackgroundColor="#FFFFFF" IsEnabled="{Binding HasData}" BorderWidth="0"  BorderColor="#FFFFFF" />
         </StackLayout>
         <StackLayout Orientation="Vertical" Padding="2, 2, 1, 5" HorizontalOptions="CenterAndExpand" IsVisible="{Binding Busy}">
@@ -43,12 +43,14 @@
                       </StackLayout>
                       <Label FontAttributes="Italic" FontSize="Small" VerticalOptions="Center" HorizontalOptions="EndAndExpand" Text="{Binding Price}" />
                     </StackLayout>-->
+                    
                     <StackLayout Orientation="Vertical" HorizontalOptions="StartAndExpand">
+                        <Label FontSize="Micro" Text="{Binding Special}" TextColor="#f0509a" />
                         <!--<Label FontSize="Small" Text="{Binding Special}" TextColor="#f0509a" />-->
                         <Label FontAttributes="Bold" Text="{Binding Name}" TextColor="#00549f" />
                         <StackLayout Orientation="Horizontal">
                           <Label FontSize="Small" Text="{Binding Kind}" TextColor="Black" />
-                          <Label FontSize="Small" Text="{Binding Special}" TextColor="#f0509a" />
+                          <!--<Label FontSize="Small" Text="{Binding Special}" TextColor="#f0509a" />-->
                           <Label FontSize="Small" FontAttributes="Italic" Text="{Binding Price}" TextColor="Gray" />
                         </StackLayout>
                       <Label FontSize="Small" Text=" " />

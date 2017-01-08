@@ -28,9 +28,9 @@
 	<key>CFBundleIdentifier</key>
 	<string>com.auxua.mensaapp</string>
 	<key>CFBundleVersion</key>
-	<string>1.8</string>
+	<string>1.9</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.5.0</string>
+	<string>1.5.2</string>
 	<key>UIMainStoryboardFile~ipad</key>
 	<string>LaunchScreen</string>
 	<key>CFBundleName</key>

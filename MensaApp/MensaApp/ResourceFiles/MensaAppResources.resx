@@ -162,6 +162,12 @@
   <data name="MensenTitle" xml:space="preserve">
     <value>(De)Activate Canteens</value>
   </data>
+  <data name="NextDayAuto" xml:space="preserve">
+    <value>Auto-Select Day</value>
+  </data>
+  <data name="NextDayAutoDescription" xml:space="preserve">
+    <value>When activated, automatically selects the next day with dishes for this canteen when the app is started.</value>
+  </data>
   <data name="No" xml:space="preserve">
     <value>No</value>
   </data>
@@ -173,6 +179,9 @@
   </data>
   <data name="RefreshDetail" xml:space="preserve">
     <value>May take a bit</value>
+  </data>
+  <data name="TapHere" xml:space="preserve">
+    <value>Tap here for details</value>
   </data>
   <data name="TestText" xml:space="preserve">
     <value>This is a simple Test</value>

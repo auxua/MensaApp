@@ -67,6 +67,15 @@ namespace MensaApp.ViewModels
                 {
                     this.LoadAllDataCommand.Execute(null);
                 }
+                else
+                {
+                    var query = new Mensa.MenuDB.QueryBuilder().ByDate(this.Date).ByMensa(this.MensaName);
+                    var dishes = query.ExecuteQuery();
+                    if (dishes.Count < 1)
+                    {
+                        this.GetNextDayCommand.Execute(null);
+                    }
+                }
                 this.needsUpdate = false;
                 //Busy = false;
             }
@@ -477,20 +486,60 @@ namespace MensaApp.ViewModels
                 });
 
             // query the Mensa Data from the MensaDB
-            this.getAllDataCommand = new Command(async () =>
+            this.getAllDataCommand = new Command(() =>
             {
+                //Debugging only!
+                //this.Date = Date.AddDays(-2);
+
                 Busy = true;
                 Status = "Populating Data";
 
-                var query = new Mensa.MenuDB.QueryBuilder().ByDate(this.Date).ByMensa(this.MensaName);
+                IList<Mensa.DataTypes.Dish> queryData = new List<Mensa.DataTypes.Dish>();
+                bool searchNextDay = App.getConfig("searchNextDay");
 
-                if (App.getConfig("VegieOnly"))
-                    query = query.ByKind("Vegetarisch");
+                if (searchNextDay)
+                {
+                    // This whole looping is just for selecting a day for this canteen with dishes available. It automatically stops after 5 subsequent days without dishes
+                    bool found = false;
+                    int counter = 5;
+                    while (!found && counter > 0)
+                    {
+                        var query = new Mensa.MenuDB.QueryBuilder().ByDate(this.Date).ByMensa(this.MensaName);
 
-                if (App.getConfig("MainDishesOnly"))
-                    query = query.NoSideDishes();
+                        if (App.getConfig("VegieOnly"))
+                            query = query.ByKind("Vegetarisch");
 
-                var queryData = query.ExecuteQuery();
+                        if (App.getConfig("MainDishesOnly"))
+                            query = query.NoSideDishes();
+
+                        queryData = query.ExecuteQuery();
+
+                        if (queryData.Count > 0)
+                            found = true;
+                        else
+                            this.Date = Date.AddDays(1);
+                        counter--;
+                    }
+                    if (counter == 0 && !found)
+                    {
+                        // did not find any dishes! Reset Date
+                        this.Date = Date.AddDays(-5);
+                    }
+                }
+                else
+                {
+                    // old behavior: just use current day - independently from any dishes existing
+                    var query = new Mensa.MenuDB.QueryBuilder().ByDate(this.Date).ByMensa(this.MensaName);
+
+                    if (App.getConfig("VegieOnly"))
+                        query = query.ByKind("Vegetarisch");
+
+                    if (App.getConfig("MainDishesOnly"))
+                        query = query.NoSideDishes();
+
+                    queryData = query.ExecuteQuery();
+                }
+                
                 
                 this.Items.Clear();
                 foreach (var dish in queryData)
@@ -506,7 +555,7 @@ namespace MensaApp.ViewModels
                 Busy = false;
             });
 
-            this.getNextDayCommand = new Command(async () =>
+            this.getNextDayCommand = new Command(() =>
             {
                 Busy = true;
                 DateTime next = Mensa.MenuDB.Instance.getNextAvailableDay(this.Date);
@@ -521,7 +570,7 @@ namespace MensaApp.ViewModels
                 Busy = false;
             });
 
-            this.getPrevDayCommand = new Command(async () =>
+            this.getPrevDayCommand = new Command(() =>
             {
                 Busy = true;
                 DateTime next = Mensa.MenuDB.Instance.getPreviousAvailableDay(this.Date);
@@ -536,7 +585,7 @@ namespace MensaApp.ViewModels
                 Busy = false;
             });
 
-            this.getNextMensaCommand = new Command(async () =>
+            this.getNextMensaCommand = new Command(() =>
             {
                 Busy = true;
                 string next = MensaAdapter.getNextMensaName(this.MensaName);
@@ -545,7 +594,7 @@ namespace MensaApp.ViewModels
                 Busy = false;
             });
 
-            this.getPrevMensaCommand = new Command(async () =>
+            this.getPrevMensaCommand = new Command(() =>
             {
                 Busy = true;
                 string next = MensaAdapter.getPreviousMensaName(this.MensaName);

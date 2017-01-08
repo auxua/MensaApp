@@ -162,6 +162,12 @@
   <data name="MensenTitle" xml:space="preserve">
     <value>Mensen (de)aktivieren</value>
   </data>
+  <data name="NextDayAuto" xml:space="preserve">
+    <value>Auto-Select Tag</value>
+  </data>
+  <data name="NextDayAutoDescription" xml:space="preserve">
+    <value>Wenn eingeschaltet, wir beim Start der App für die aktuelle Mensa automatisch der nächste Tag mit Gerichten ausgewählt.</value>
+  </data>
   <data name="No" xml:space="preserve">
     <value>Nein</value>
   </data>
@@ -173,6 +179,9 @@
   </data>
   <data name="RefreshDetail" xml:space="preserve">
     <value>Kann etwas dauern</value>
+  </data>
+  <data name="TapHere" xml:space="preserve">
+    <value>Hier drücken für Details</value>
   </data>
   <data name="TestText" xml:space="preserve">
     <value>Dies ist ein einfacher Test</value>

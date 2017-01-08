@@ -8,17 +8,17 @@ using Xamarin.Forms;
 
 namespace MensaAppWin
 {
-	public partial class ConfigPage : ContentPage
-	{
-		public ConfigPage (object vmo = null)
-		{
+    public partial class ConfigPage : ContentPage
+    {
+        public ConfigPage(object vmo = null)
+        {
             ViewModels.MensaPageViewModel vm = null;
             if (vmo.GetType() == typeof(ViewModels.MensaPageViewModel))
             {
                 vm = vmo as ViewModels.MensaPageViewModel;
             }
-            
-            InitializeComponent ();
+
+            InitializeComponent();
 
             // get LocalizedStrings
             string MensenTitle = Localization.Localize("MensenTitle");
@@ -55,12 +55,13 @@ namespace MensaAppWin
             }
 
             TableSection sectionFilters = new TableSection(FilterTitle);
-            SwitchCell VegieSwitch = new SwitchCell {
+            SwitchCell VegieSwitch = new SwitchCell
+            {
                 Text = VegieOnly,
                 On = App.getConfig("VegieOnly")
             };
-            VegieSwitch.OnChanged += (s, e) => 
-            { 
+            VegieSwitch.OnChanged += (s, e) =>
+            {
                 App.setConfig("VegieOnly", VegieSwitch.On);
                 if (vm != null)
                     vm.NeedsUpdate = true;
@@ -84,16 +85,16 @@ namespace MensaAppWin
 
             TableSection sectionInfo = new TableSection(FurtherInfoTitle);
 
-            
+
             TextCell InfoCell = new TextCell
             {
                 Text = Localization.Localize("InfoCellText"),
                 Detail = Localization.Localize("InfoCellDetail"),
             };
             InfoCell.Tapped += async (s, e) =>
-                {
-                    await DisplayAlert("Info", Localization.Localize("AboutText"), "OK");
-                };
+            {
+                await DisplayAlert("Info", Localization.Localize("AboutText"), "OK");
+            };
 
             TextCell versionCell = new TextCell
             {
@@ -115,7 +116,7 @@ namespace MensaAppWin
                     // Reset MensaDB and re-create Mensapage - this will trigger data refresh automatically
                     MensaAdapter.DownloadError = false;
                     Mensa.MenuDB.Instance.Reset(new AppLoadStoreMenuDB());
-                    App.Current.MainPage = new NavigationPage(new MensaPage()); 
+                    App.Current.MainPage = new NavigationPage(new MensaPage());
                 });
             };
 
@@ -123,11 +124,39 @@ namespace MensaAppWin
             sectionInfo.Add(InfoCell);
             sectionInfo.Add(versionCell);
 
+            // Misc. Config
+            TableSection sectionMisc = new TableSection("Misc.");
+
+            SwitchCell autoDayCell = new SwitchCell();
+            autoDayCell.Text = Localization.Localize("NextDayAuto");
+            autoDayCell.On = App.getConfig("searchNextDay");
+
+            autoDayCell.OnChanged += (s, e) =>
+            {
+                App.setConfig("searchNextDay", autoDayCell.On);
+            };
+
+            TextCell tc = new TextCell();
+            tc.Text = "";
+            tc.Detail = Localization.Localize("TapHere");
+
+            tc.Tapped += (s, e) =>
+            {
+                Device.BeginInvokeOnMainThread(() =>
+                {
+                    DisplayAlert("Info", Localization.Localize("NextDayAutoDescription"), "OK");
+                });
+            };
+
+            sectionMisc.Add(autoDayCell);
+            sectionMisc.Add(tc);
+
             root.Add(sectionFilters);
             root.Add(sectionMensen);
+            root.Add(sectionMisc);
             root.Add(sectionInfo);
 
-            
+
 
             /*StackLayout stack = new StackLayout
             {
@@ -140,6 +169,7 @@ namespace MensaAppWin
             {
                 Root = root
             };
-		}
-	}
+        }
+
+    }
 }

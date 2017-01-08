@@ -123,8 +123,36 @@ namespace MensaApp.pages
             sectionInfo.Add(InfoCell);
             sectionInfo.Add(versionCell);
 
+            // Misc. Config
+            TableSection sectionMisc = new TableSection("Misc.");
+
+            SwitchCell autoDayCell = new SwitchCell();
+            autoDayCell.Text = Localization.Localize("NextDayAuto");
+            autoDayCell.On = App.getConfig("searchNextDay");
+
+            autoDayCell.OnChanged += (s, e) =>
+            {
+                App.setConfig("searchNextDay", autoDayCell.On);
+            };
+
+            TextCell tc = new TextCell();
+            tc.Text = "";
+            tc.Detail = Localization.Localize("TapHere");
+
+            tc.Tapped += (s, e) =>
+            {
+                Device.BeginInvokeOnMainThread(() =>
+                {
+                    DisplayAlert("Info", Localization.Localize("NextDayAutoDescription"), "OK");
+                });
+            };
+
+            sectionMisc.Add(autoDayCell);
+            sectionMisc.Add(tc);
+
             root.Add(sectionFilters);
             root.Add(sectionMensen);
+            root.Add(sectionMisc);
             root.Add(sectionInfo);
 
             
@@ -141,5 +169,6 @@ namespace MensaApp.pages
                 Root = root
             };
 		}
-	}
+        
+    }
 }

@@ -17,8 +17,24 @@ namespace MensaApp.Droid
 			base.OnCreate (bundle);
 
 			global::Xamarin.Forms.Forms.Init (this, bundle);
-			LoadApplication (new MensaApp.App ());
+
+            // Init screen values
+            var metrics = Resources.DisplayMetrics;
+            DisplayWidth = ConvertPixelsToDp(metrics.WidthPixels);
+            DisplayHeight = ConvertPixelsToDp(metrics.HeightPixels);
+
+            LoadApplication (new MensaApp.App ());
 		}
-	}
+
+        public static int DisplayHeight { get; set; }
+        public static int DisplayWidth { get; set; }
+        
+        private int ConvertPixelsToDp(float pixelValue)
+        {
+            var dp = (int)((pixelValue) / Resources.DisplayMetrics.Density);
+            return dp;
+        }
+
+    }
 }
 
