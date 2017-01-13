@@ -66,6 +66,10 @@ namespace Mensa
                     int end = input.IndexOf("</sup>");
                     input = input.Remove(start, (end - start)+6);
                 }
+                /*if (input.Contains("feine Erbsen "))
+                {
+                    int i = 5;
+                }*/
                 input = input.Replace("<span class=\"or\">", "");
                 input = input.Replace("</span>", "");
                 input = input.Replace("  ", " ");

@@ -216,9 +216,10 @@ namespace Mensa
             //string regex = "<tr.*?>.*?<td.*?>.*?<span.*?>(.*?)<\\/span>.*?<span.*?>(.*?)<\\/span>.*?<\\/td>.*?<\\/tr>";
 
             // Regex for SPAN-based dishes without "oder"
-            string regex = "<tr.*?>.*?<td.*?>.*?<span.*?>(.*?)<\\/span>.*?<span.*?>(.*?<span class=\"or\">oder<\\/span>.*?)<\\/span>.*?<\\/td>.*?<\\/tr>";
-            
-            
+            //string regex = "<tr.*?>.*?<td.*?>.*?<span.*?>(.*?)<\\/span>.*?<span.*?>(.*?<span class=\"or\">oder<\\/span>.*?)<\\/span>.*?<\\/td>.*?<\\/tr>";
+            string regex = "<tr.*?>.*?<td.*?>.*?<span.*?>(.*?)<\\/span>.*?<span.*?>(.*?<span class=\"or\">oder<\\/span>.*?)<\\/span>\\s*<\\/td>.*?<\\/tr>";
+
+
             //string regex = "<tr.*?>.*?<td.*?>(.*?)<\\/td>.*?<td.*?>(.*?)<\\/td>.*?<td><\\/td>.*?<\\/tr>";
             MatchCollection matches = Regex.Matches(p, regex);
 

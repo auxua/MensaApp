@@ -27,10 +27,8 @@
 	<string>Mensa Aachen</string>
 	<key>CFBundleIdentifier</key>
 	<string>com.auxua.mensaapp</string>
-	<key>CFBundleVersion</key>
-	<string>1.9</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.5.2</string>
+	<string>1.5.3</string>
 	<key>UIMainStoryboardFile~ipad</key>
 	<string>LaunchScreen</string>
 	<key>CFBundleName</key>
@@ -43,5 +41,7 @@
 	<string>LaunchScreen</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
+	<key>CFBundleVersion</key>
+	<string>1.10</string>
 </dict>
 </plist>
