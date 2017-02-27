@@ -6,7 +6,7 @@
     <Language code="en-US" />
     <Language code="en" />
   </Languages>
-  <App xmlns="" ProductID="{4f1fbe7c-9c1e-4e10-a1a0-8e0c15730e33}" Title="Mensa Aachen" RuntimeType="Silverlight" Version="1.5.3.0" Genre="apps.normal" Author="Arno Schmetz" Description="Simple App for Canteens in Aachen" Publisher="Arno Schmetz" PublisherID="{addc82a7-e223-41a6-9de5-5ffaff395052}">
+  <App xmlns="" ProductID="{4f1fbe7c-9c1e-4e10-a1a0-8e0c15730e33}" Title="Mensa Aachen" RuntimeType="Silverlight" Version="1.6.0.0" Genre="apps.normal" Author="Arno Schmetz" Description="Simple App for Canteens in Aachen" Publisher="Arno Schmetz" PublisherID="{addc82a7-e223-41a6-9de5-5ffaff395052}">
     <IconPath IsRelative="true" IsResource="false">AppIcon-512@2x.png</IconPath>
     <Capabilities>
       <Capability Name="ID_CAP_NETWORKING" />

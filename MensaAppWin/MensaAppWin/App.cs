@@ -5,13 +5,44 @@ using System.Text;
 
 using Xamarin.Forms;
 
+#if WINDOWS_UWP
+
+using Windows.Gaming.Input;
+using Windows.System;
+
+#endif
+
 namespace MensaAppWin
 {
-	public class App : Application
-	{
-        public readonly static string Version = "1.5.3";
-        
+    public interface IGamePadSupport
+    {
+        void ButtonTrigger(VirtualKey button);
+    }
 
+    public class App : Application
+	{
+        public readonly static string Version = "1.6.2";
+
+        public static bool isXbox = false;
+
+        //public static void GamepadButton(string button)
+        public static void GamepadButton(VirtualKey button)
+        {
+            if (App.Current.MainPage is NavigationPage)
+            {
+
+                var innerPage = ((NavigationPage)App.Current.MainPage).CurrentPage;
+                if (innerPage is IGamePadSupport)
+                {
+                    ((IGamePadSupport)innerPage).ButtonTrigger(button);
+                }
+
+                /*if (innerPage is MensaPage)
+                    ((MensaPage)innerPage).ButtonTrigger(button);
+                else if (innerPage is ConfigPage)
+                    ((ConfigPage)innerPage).ButtonTrigger(button);*/
+            }
+        }
         public App ()
 		{
 			// The root page of your application

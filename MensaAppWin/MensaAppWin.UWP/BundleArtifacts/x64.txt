@@ -1,3 +1,1 @@
-MainPackage=T:\drop\Dropbox\Visual Studio 2012\Projects\MensaApp\MensaAppWin\MensaAppWin.UWP\bin\x64\Release\MensaAppWin.UWP_1.5.0.0_x64.appx
-ResourcePack=T:\drop\Dropbox\Visual Studio 2012\Projects\MensaApp\MensaAppWin\MensaAppWin.UWP\bin\x64\Release\MensaAppWin.UWP_1.5.0.0_language-de.appx
-ResourcePack=T:\drop\Dropbox\Visual Studio 2012\Projects\MensaApp\MensaAppWin\MensaAppWin.UWP\bin\x64\Release\MensaAppWin.UWP_1.5.0.0_scale-400.appx
+MainPackage=T:\drop\Dropbox\Visual Studio 2012\Projects\MensaApp\MensaAppWin\MensaAppWin.UWP\bin\x64\Release\MensaAppWin.UWP_1.6.2.0_x64.appx

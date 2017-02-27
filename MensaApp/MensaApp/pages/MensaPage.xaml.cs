@@ -15,13 +15,15 @@ namespace MensaApp.pages
         public MensaPage ()
 		{
 			InitializeComponent ();
+            StackLayout mStack = this.FindByName<StackLayout>("MensaStack");
+            
 #if __ANDROID__
             // This is a special Workaround for CM devices
             // CM brings different fonts and sizes. This workaround prevents the mensa names from breaking
             // It is not a good fix, but its working for now.
 
             Label mlabel = this.FindByName<Label>("MensaLabel");
-            StackLayout mStack = this.FindByName<StackLayout>("MensaStack");
+            
             //mlabel.FontSize = 20;
 
             var height = MensaApp.Droid.MainActivity.DisplayHeight;
@@ -42,6 +44,18 @@ namespace MensaApp.pages
             string mensa = MensaAdapter.getNextMensaName("Forum Cafete");
             vm = new ViewModels.MensaPageViewModel(mensa, DateTime.Now.Date);
             this.BindingContext = vm;
+
+            /*if (Device.Idiom != TargetIdiom.Phone)
+            {
+                // This is a quick workaround for buttons being very near to the edge
+                // The "correct" version would be to pack the buttons into another view that supports padding
+                Button nmlabel = this.FindByName<Button>("NextMensaButton");
+                Button pmlabel = this.FindByName<Button>("PrevMensaButton");
+
+                nmlabel.Text = "      " + nmlabel.Text + "      ";
+                pmlabel.Text = "      " + pmlabel.Text + "      ";
+
+            }*/
 
             //vm.GetNextDayCommand.Execute(null);
             /*

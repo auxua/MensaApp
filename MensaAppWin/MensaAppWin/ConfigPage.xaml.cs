@@ -6,10 +6,28 @@ using System.Threading.Tasks;
 
 using Xamarin.Forms;
 
+#if WINDOWS_UWP
+
+using Windows.Gaming.Input;
+using Windows.System;
+
+#endif
+
 namespace MensaAppWin
 {
-    public partial class ConfigPage : ContentPage
+    public partial class ConfigPage : ContentPage, IGamePadSupport
     {
+        private Cell focusCell = null;
+        private enum TextCellSelect
+        {
+            APPINFO,
+            REFRESH,
+            NEXTDAY,
+            NONE
+        }
+
+        private TextCellSelect textCellSelect = TextCellSelect.NONE;
+
         public ConfigPage(object vmo = null)
         {
             ViewModels.MensaPageViewModel vm = null;
@@ -39,6 +57,12 @@ namespace MensaAppWin
                     Text = mens.Key,
                     On = App.MensaActive(mens.Key)
                 };
+                // Also allow tapped-event in here
+                cell.Tapped += (s, e) => 
+                {
+                    this.focusCell = cell;
+                    if (s == null) cell.On = !cell.On;
+                };
                 cell.OnChanged += (s, e) =>
                 {
                     if (cell.On)
@@ -60,6 +84,11 @@ namespace MensaAppWin
                 Text = VegieOnly,
                 On = App.getConfig("VegieOnly")
             };
+            VegieSwitch.Tapped += (s, e) => 
+            {
+                this.focusCell = VegieSwitch;
+                if (s == null) VegieSwitch.On = !VegieSwitch.On;
+            };
             VegieSwitch.OnChanged += (s, e) =>
             {
                 App.setConfig("VegieOnly", VegieSwitch.On);
@@ -71,6 +100,11 @@ namespace MensaAppWin
             {
                 Text = MainDishesOnly,
                 On = App.getConfig("MainDishesOnly")
+            };
+            DishesSwitch.Tapped += (s, e) => 
+            {
+                this.focusCell = DishesSwitch;
+                if (s == null) DishesSwitch.On = !DishesSwitch.On;
             };
             DishesSwitch.OnChanged += (s, e) =>
             {
@@ -91,11 +125,9 @@ namespace MensaAppWin
                 Text = Localization.Localize("InfoCellText"),
                 Detail = Localization.Localize("InfoCellDetail"),
             };
-            InfoCell.Tapped += async (s, e) =>
-            {
-                await DisplayAlert("Info", Localization.Localize("AboutText"), "OK");
-            };
 
+            InfoCell.Tapped += InfoCell_Tapped;
+            
             TextCell versionCell = new TextCell
             {
                 Text = "Version",
@@ -106,19 +138,9 @@ namespace MensaAppWin
                 Text = Localization.Localize("Refresh"),
                 Detail = Localization.Localize("RefreshDetail")
             };
-            refreshCell.Tapped += (s, e) =>
-            {
-                Device.BeginInvokeOnMainThread(async () =>
-                {
-                    // Ask user to confirm
-                    var success = await DisplayAlert(Localization.Localize("Refresh"), Localization.Localize("RefreshAlert"), Localization.Localize("Yes"), Localization.Localize("No"));
-                    if (!success) return;
-                    // Reset MensaDB and re-create Mensapage - this will trigger data refresh automatically
-                    MensaAdapter.DownloadError = false;
-                    Mensa.MenuDB.Instance.Reset(new AppLoadStoreMenuDB());
-                    App.Current.MainPage = new NavigationPage(new MensaPage());
-                });
-            };
+
+            refreshCell.Tapped += RefreshCell_Tapped;
+            
 
             sectionInfo.Add(refreshCell);
             sectionInfo.Add(InfoCell);
@@ -130,7 +152,11 @@ namespace MensaAppWin
             SwitchCell autoDayCell = new SwitchCell();
             autoDayCell.Text = Localization.Localize("NextDayAuto");
             autoDayCell.On = App.getConfig("searchNextDay");
-
+            autoDayCell.Tapped += (s, e) => 
+            {
+                this.focusCell = autoDayCell;
+                if (s == null) autoDayCell.On = !autoDayCell.On;
+            };
             autoDayCell.OnChanged += (s, e) =>
             {
                 App.setConfig("searchNextDay", autoDayCell.On);
@@ -140,13 +166,11 @@ namespace MensaAppWin
             tc.Text = "";
             tc.Detail = Localization.Localize("TapHere");
 
-            tc.Tapped += (s, e) =>
-            {
-                Device.BeginInvokeOnMainThread(() =>
-                {
-                    DisplayAlert("Info", Localization.Localize("NextDayAutoDescription"), "OK");
-                });
-            };
+            tc.Tapped += Tc_Tapped;
+
+            // sections itelf should not have tapped events
+            versionCell.Tapped += Misc_Tapped;
+
 
             sectionMisc.Add(autoDayCell);
             sectionMisc.Add(tc);
@@ -156,19 +180,121 @@ namespace MensaAppWin
             root.Add(sectionMisc);
             root.Add(sectionInfo);
 
+            Label tmplabel = new Label();
 
-
-            /*StackLayout stack = new StackLayout
+            StackLayout stack = new StackLayout
             {
                 Orientation = StackOrientation.Vertical,
-                Children = { new TableView(root), }
-            };*/
+                Children = { new TableView(root), },
+                Padding = new Thickness(10,0),
+            };
+
+            
 
 
-            Content = new TableView
+            /*Content = new TableView
             {
                 Root = root
-            };
+            };*/
+
+            Content = stack;
+
+            //Content.Focus();
+            tmplabel.Focus();
+        }
+
+        private void Tc_Tapped(object sender, EventArgs e)
+        {
+            if ((!App.isXbox) || (sender == null))
+            {
+                Device.BeginInvokeOnMainThread(() =>
+                {
+                    DisplayAlert("Info", Localization.Localize("NextDayAutoDescription"), "OK");
+                });
+            }
+            else
+            {
+                this.focusCell = sender as TextCell;
+                this.textCellSelect = TextCellSelect.NEXTDAY;
+            }
+        }
+
+        private void RefreshCell_Tapped(object sender, EventArgs e)
+        {
+            if ((!App.isXbox) || (sender == null))
+            {
+                Device.BeginInvokeOnMainThread(async () =>
+                {
+                    // Ask user to confirm
+                    var success = await DisplayAlert(Localization.Localize("Refresh"), Localization.Localize("RefreshAlert"), Localization.Localize("Yes"), Localization.Localize("No"));
+                    if (!success) return;
+                    // Reset MensaDB and re-create Mensapage - this will trigger data refresh automatically
+                    MensaAdapter.DownloadError = false;
+                    Mensa.MenuDB.Instance.Reset(new AppLoadStoreMenuDB());
+                    App.Current.MainPage = new NavigationPage(new MensaPage());
+                });
+            }
+            else
+            {
+                this.focusCell = sender as TextCell;
+                this.textCellSelect = TextCellSelect.REFRESH;
+            }
+        }
+
+        private void InfoCell_Tapped(object sender, EventArgs e)
+        {
+            if ((!App.isXbox) || (sender == null))
+                Device.BeginInvokeOnMainThread(async () => await DisplayAlert("Info", Localization.Localize("AboutText"), "OK") );
+            else
+            {
+                this.focusCell = sender as TextCell;
+                this.textCellSelect = TextCellSelect.APPINFO;
+            }
+        }
+
+        /// <summary>
+        /// This method should be called to reset the internal focus structures to prevent events for objects that are not having own tapped events
+        /// </summary>
+        private void Misc_Tapped(object sender, EventArgs e)
+        {
+            this.focusCell = null;
+            this.textCellSelect = TextCellSelect.NONE;
+        }
+
+        public void ButtonTrigger(VirtualKey button)
+        {
+            // Back via B or menu buttons
+            if ((button == VirtualKey.GamepadB) || (button == VirtualKey.GamepadMenu))
+                this.OnBackButtonPressed();
+
+            if (button == VirtualKey.GamepadA)
+            {
+                if (focusCell is SwitchCell)
+                {
+                    ((SwitchCell)focusCell).On = !((SwitchCell)focusCell).On;
+                }
+                else if (focusCell is TextCell)
+                {
+                    // TextCells - for now, we need to do the event manually
+                    switch (this.textCellSelect)
+                    {
+                        case TextCellSelect.APPINFO:
+                            InfoCell_Tapped(null, null);
+                            break;
+
+                        case TextCellSelect.NEXTDAY:
+                            Tc_Tapped(null, null);
+                            break;
+
+                        case TextCellSelect.REFRESH:
+                            RefreshCell_Tapped(null, null);
+                            break;
+
+                        case TextCellSelect.NONE:
+                            break;
+                    }
+                }
+            }
         }
 
     }

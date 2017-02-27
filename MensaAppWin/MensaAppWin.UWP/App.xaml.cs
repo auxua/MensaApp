@@ -7,6 +7,7 @@ using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -14,6 +15,8 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using MensaAppWin;
+using Windows.UI.Xaml.Media.Imaging;
 
 namespace MensaAppWin.UWP
 {
@@ -28,6 +31,7 @@ namespace MensaAppWin.UWP
         /// </summary>
         public App()
         {
+            this.RequiresPointerMode = ApplicationRequiresPointerMode.WhenRequested;
             this.InitializeComponent();
             this.Suspending += OnSuspending;
         }
@@ -79,6 +83,44 @@ namespace MensaAppWin.UWP
             }
             // Ensure the current window is active
             Window.Current.Activate();
+
+            // Gamepad
+            var str = Windows.System.Profile.AnalyticsInfo.VersionInfo.DeviceFamily;
+            //MensaAppWin.App.isXbox = true;
+            if (str.ToLower().Contains("xbox"))
+            {
+                MensaAppWin.App.isXbox = true;
+                // Only activte Gamepad for XBOX
+                Window.Current.CoreWindow.KeyDown += CoreWindow_KeyDown;
+            }
+
+            // Only for Debugging!
+            //MensaAppWin.App.isXbox = true;
+            //Window.Current.CoreWindow.KeyDown += CoreWindow_KeyDown;
+
+
+        }
+
+        private void CoreWindow_KeyDown(Windows.UI.Core.CoreWindow sender, Windows.UI.Core.KeyEventArgs args)
+        //private async void CoreWindow_KeyDown(Windows.UI.Core.CoreWindow sender, Windows.UI.Core.KeyEventArgs args)
+        {
+            //if (args.Handled) return;
+
+            MensaAppWin.App.GamepadButton(args.VirtualKey);
+
+            //if (args.VirtualKey == Windows.System.VirtualKey.GamepadLeftTrigger)
+            /*{
+                var dlg = new MessageDialog("Button: "+args.VirtualKey.ToString());
+                dlg.Commands.Add(new UICommand("Yes", null, "YES"));
+                dlg.Commands.Add(new UICommand("No", null, "NO"));
+                
+
+                var op = await dlg.ShowAsync();
+                if ((string)op.Id == "YES")
+                {
+                    //Do something
+                }
+            }*/   
         }
 
         /// <summary>
@@ -104,5 +146,12 @@ namespace MensaAppWin.UWP
             //TODO: Save application state and stop any background activity
             deferral.Complete();
         }
+
+        /*private async void SaveImageSource_Click(object sender, RoutedEventArgs e)
+        {                        
+            RenderTargetBitmap renderTargetBitmap = new RenderTargetBitmap();
+            await renderTargetBitmap.RenderAsync(RenderedGrid, width, height);
+            RenderedImage.Source = renderTargetBitmap;
+        }*/
     }
 }
