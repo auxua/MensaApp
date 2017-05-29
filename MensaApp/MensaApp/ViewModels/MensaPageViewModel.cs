@@ -69,7 +69,7 @@ namespace MensaApp.ViewModels
                 }
                 else
                 {
-                    var query = new Mensa.MenuDB.QueryBuilder().ByDate(this.Date).ByMensa(this.MensaName);
+                    var query = new MensaPortable.MenuDB.QueryBuilder().ByDate(this.Date).ByMensa(this.MensaName);
                     var dishes = query.ExecuteQuery();
                     if (dishes.Count < 1)
                     {
@@ -145,9 +145,9 @@ namespace MensaApp.ViewModels
             }
         }
 
-        private ObservableCollection<Mensa.DataTypes.Dish> items;
+        private ObservableCollection<MensaPortable.DataTypes.Dish> items;
 
-        public ObservableCollection<Mensa.DataTypes.Dish> Items
+        public ObservableCollection<MensaPortable.DataTypes.Dish> Items
         {
             get
             {
@@ -173,8 +173,16 @@ namespace MensaApp.ViewModels
             {
                 this.date = value;
                 RaisePropertyChanged("Date");
-                var culture = new CultureInfo(Localization.Locale());
-                var day = culture.DateTimeFormat.GetDayName(value.Date.DayOfWeek);
+                CultureInfo cult;
+                try
+                {
+                    cult = new CultureInfo(Localization.Locale());
+				}
+                catch
+                {
+                    cult = new CultureInfo("en-US");
+                }
+                var day = cult.DateTimeFormat.GetDayName(value.Date.DayOfWeek);
                 this.DateAsString = day + "\n" + value.Date.ToShortDateString();
             }
         }
@@ -452,7 +460,7 @@ namespace MensaApp.ViewModels
 
         #endregion
 
-        internal Mensa.DataTypes.Dish Closed = new Mensa.DataTypes.Dish(Localization.Localize("Closed"), Localization.Localize("ClosedSubtext"),DateTime.Now, "");
+        internal MensaPortable.DataTypes.Dish Closed = new MensaPortable.DataTypes.Dish(Localization.Localize("Closed"), Localization.Localize("ClosedSubtext"),DateTime.Now, "");
 
         public MensaPageViewModel(string MensaName, DateTime dt)
         {
@@ -460,7 +468,7 @@ namespace MensaApp.ViewModels
             this.Date = dt.Date;
             this.Status = "Starting...";
             this.getLocalizedStrings();
-            this.items = new ObservableCollection<Mensa.DataTypes.Dish>();
+            this.items = new ObservableCollection<MensaPortable.DataTypes.Dish>();
             this.Busy = true;
 
             // Trigger the MensaDB to get the Mensa Data
@@ -470,7 +478,7 @@ namespace MensaApp.ViewModels
                     this.Status = Localization.Localize("GetData");
                     bool done = true;
                     // Outdated without error? -> Refresh!
-                    if (Mensa.MenuDB.Instance.isOutdated() && !MensaAdapter.DownloadError)
+                    if (MensaPortable.MenuDB.Instance.isOutdated() && !MensaAdapter.DownloadError)
                     {
                         done = await MensaAdapter.CatchMensaDataAsync();
                     }
@@ -494,7 +502,7 @@ namespace MensaApp.ViewModels
                 Busy = true;
                 Status = "Populating Data";
 
-                IList<Mensa.DataTypes.Dish> queryData = new List<Mensa.DataTypes.Dish>();
+                IList<MensaPortable.DataTypes.Dish> queryData = new List<MensaPortable.DataTypes.Dish>();
                 bool searchNextDay = App.getConfig("searchNextDay");
 
                 if (searchNextDay)
@@ -504,7 +512,7 @@ namespace MensaApp.ViewModels
                     int counter = 5;
                     while (!found && counter > 0)
                     {
-                        var query = new Mensa.MenuDB.QueryBuilder().ByDate(this.Date).ByMensa(this.MensaName);
+                        var query = new MensaPortable.MenuDB.QueryBuilder().ByDate(this.Date).ByMensa(this.MensaName);
 
                         if (App.getConfig("VegieOnly"))
                             query = query.ByKind("Vegetarisch");
@@ -529,7 +537,7 @@ namespace MensaApp.ViewModels
                 else
                 {
                     // old behavior: just use current day - independently from any dishes existing
-                    var query = new Mensa.MenuDB.QueryBuilder().ByDate(this.Date).ByMensa(this.MensaName);
+                    var query = new MensaPortable.MenuDB.QueryBuilder().ByDate(this.Date).ByMensa(this.MensaName);
 
                     if (App.getConfig("VegieOnly"))
                         query = query.ByKind("Vegetarisch");
@@ -558,7 +566,7 @@ namespace MensaApp.ViewModels
             this.getNextDayCommand = new Command(() =>
             {
                 Busy = true;
-                DateTime next = Mensa.MenuDB.Instance.getNextAvailableDay(this.Date);
+                DateTime next = MensaPortable.MenuDB.Instance.getNextAvailableDay(this.Date);
                 // Optimization: No better day available? prevent reloading data and re-download in some cases
                 if (next == this.Date)
                 {
@@ -573,7 +581,7 @@ namespace MensaApp.ViewModels
             this.getPrevDayCommand = new Command(() =>
             {
                 Busy = true;
-                DateTime next = Mensa.MenuDB.Instance.getPreviousAvailableDay(this.Date);
+                DateTime next = MensaPortable.MenuDB.Instance.getPreviousAvailableDay(this.Date);
                 // Optimization: No better day available? prevent reloading data and re-download in some cases
                 if (next == this.Date)
                 {

@@ -114,7 +114,7 @@ namespace MensaApp.pages
                     if (!success) return;
                     // Reset MensaDB and re-create Mensapage - this will trigger data refresh automatically
                     MensaAdapter.DownloadError = false;
-                    Mensa.MenuDB.Instance.Reset(new AppLoadStoreMenuDB());
+                    MensaPortable.MenuDB.Instance.Reset(new AppLoadStoreMenuDB());
                     App.Current.MainPage = new NavigationPage(new pages.MensaPage());
                 });
             };

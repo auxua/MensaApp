@@ -65,9 +65,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Mensa\Mensa.csproj">
-      <Project>{F3378818-6341-4367-AAFA-D7862AC96F9C}</Project>
-      <Name>Mensa</Name>
+    <ProjectReference Include="..\MensaPortable\MensaPortable.csproj">
+      <Project>{D03C8A4C-FC47-4302-919F-92E2352EEEEE}</Project>
+      <Name>MensaPortable</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

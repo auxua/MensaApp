@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using System.Net;
-using Mensa;
+//using Mensa;
+using MensaPortable;
 using System.Threading;
 
 namespace MensaApp
@@ -17,24 +18,24 @@ namespace MensaApp
             AppLoadStoreMenuDB sl = new AppLoadStoreMenuDB();
 #if DEBUG
             // Debugging? Reset the internal storage
-            Mensa.MenuDB.Instance.Reset(sl);
+            MensaPortable.MenuDB.Instance.Reset(sl);
 #endif
             // First, Load the Data from persistent storage
-            Mensa.MenuDB.Instance.LoadDB(sl);
+            MensaPortable.MenuDB.Instance.LoadDB(sl);
 
             // Check the latest Day of the data
-            if (!Mensa.MenuDB.Instance.isOutdated())
+            if (!MensaPortable.MenuDB.Instance.isOutdated())
                 return true;
 
             // The data is Outdated! Try getting the new data
             try
             {
                 // Reset the whole Database to prevent too much Data on the Device
-                Mensa.MenuDB.Instance.Reset(sl);
+                MensaPortable.MenuDB.Instance.Reset(sl);
 
                 Dictionary<string, string> dict = await getSourcesAsync(Mensen);
-                var res =  Mensa.MenuDB.Instance.ImportFromSources(dict);
-                Mensa.MenuDB.Instance.StoreDB(sl);
+                var res =  MensaPortable.MenuDB.Instance.ImportFromSources(dict);
+                MensaPortable.MenuDB.Instance.StoreDB(sl);
                 return res;
             }
             catch (Exception ex)
@@ -55,7 +56,7 @@ namespace MensaApp
 			{ "Eupener Straße", new Uri("http://www.studierendenwerk-aachen.de/speiseplaene/eupenerstrasse-w.html")},
 			{ "Gastro Goethe", new Uri("http://www.studierendenwerk-aachen.de/speiseplaene/goethestrasse-w.html")},
 			{ "Mensa Vita", new Uri("http://www.studierendenwerk-aachen.de/speiseplaene/vita-w.html")},
-			{ "Forum Cafete", new Uri("http://www.studierendenwerk-aachen.de/speiseplaene/forum-w.html")},
+			/*{ "Forum Cafete", new Uri("http://www.studierendenwerk-aachen.de/speiseplaene/forum-w.html")},*/
         };
 
         /// <summary>

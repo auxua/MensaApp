@@ -52,9 +52,21 @@ namespace MensaApp
             {
                 temp = new ResourceManager("MensaApp." + ProjectInfix() + ".ResourceFiles.MensaAppResources", typeof(Localization).GetTypeInfo().Assembly);
             }*/
-			//ResourceManager temp = new ResourceManager("MensaApp."+ProjectInfix()+".MensaAppResources", typeof(Localization).GetTypeInfo().Assembly);
+            //ResourceManager temp = new ResourceManager("MensaApp."+ProjectInfix()+".MensaAppResources", typeof(Localization).GetTypeInfo().Assembly);
 
-            var cult = new CultureInfo(netLanguage);
+            CultureInfo cult;
+
+            try
+            {
+				cult = new CultureInfo(netLanguage);
+			}
+            catch
+            {
+                // Fallback!
+                // VS Mac compiles different leading to problems in some cases, so use explicit fallback
+                cult = new CultureInfo("en-US");
+            }
+
 
             string result = temp.GetString(key, cult);
 

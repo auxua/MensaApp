@@ -7,7 +7,7 @@ using System.Net.Http;
 using System.Xml;
 using System.IO;
 using System.Text.RegularExpressions;
-using Mensa;
+using MensaPortable;
 
 namespace MensaConsole
 {
@@ -25,7 +25,7 @@ namespace MensaConsole
 
             //Mensa.MenuDB.Instance.ImportFromSource(source, "Mensa Academica");
 
-            Mensa.MenuDB.Instance.ImportFromSources(getSourcesAsync(Mensen).Result);
+            MensaPortable.MenuDB.Instance.ImportFromSources(getSourcesAsync(Mensen).Result);
 
             //source = source.Replace("\n", " ");
 
@@ -33,7 +33,7 @@ namespace MensaConsole
             ////string days = "<h3.*?>\\s*?<a.*?>\\s*?(.*?\\n.*?)\\s*?<\\/a>";
             //string days = "<h3.*?>\\s*?<a.*?>\\s*?(.*?)\\s*?<\\/a>\\s*?<\\/h3>";
             ////string regex = "<div.*?>\\s*?(<table.*?>.*?<\\/table>).*?(<table.*?>.*?<\\/table>).*?<\\/div>";
-            
+
             ///*
             // * 
             // * Groups:
@@ -56,7 +56,10 @@ namespace MensaConsole
             //    //Console.WriteLine(m.Groups[1].Value + "||" + m.Groups[2].Value + "||" + m.Groups[3].Value);
             //}
 
+            var query = new MensaPortable.MenuDB.QueryBuilder();
+            var list = query.ExecuteQuery();
 
+            Console.WriteLine("Entries: "+list.Count());
 
             Console.ReadLine();
         }
@@ -71,13 +74,13 @@ namespace MensaConsole
         public static Dictionary<string, Uri> Mensen = new Dictionary<string, Uri>()
         {
             { "Academica", new Uri("http://www.studierendenwerk-aachen.de/speiseplaene/academica-w.html")},
-            /*{ "Ahornstrasse", new Uri("http://www.studierendenwerk-aachen.de/speiseplaene/ahornstrasse-w.html")},  
+            { "Ahornstrasse", new Uri("http://www.studierendenwerk-aachen.de/speiseplaene/ahornstrasse-w.html")},  
             { "Bistro", new Uri("http://www.studierendenwerk-aachen.de/speiseplaene/templergraben-w.html")}, 
             { "Bayernallee", new Uri("http://www.studierendenwerk-aachen.de/speiseplaene/bayernallee-w.html")},
             { "Eupener Straße", new Uri("http://www.studierendenwerk-aachen.de/speiseplaene/eupenerstrasse-w.html")},
             { "Gastro Goethe", new Uri("http://www.studierendenwerk-aachen.de/speiseplaene/goethestrasse-w.html")},
             { "Mensa Vita", new Uri("http://www.studierendenwerk-aachen.de/speiseplaene/vita-w.html")},
-            { "Forum Cafete", new Uri("http://www.studierendenwerk-aachen.de/speiseplaene/forum-w.html")},*/
+            /*{ "Forum Cafete", new Uri("http://www.studierendenwerk-aachen.de/speiseplaene/forum-w.html")},*/
         };
 
         public async static Task<Dictionary<string,string>> getSourcesAsync(Dictionary<string,Uri> urls)
