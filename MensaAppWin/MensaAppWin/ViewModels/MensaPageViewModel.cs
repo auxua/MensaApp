@@ -8,6 +8,8 @@ using System.Threading;
 using Xamarin.Forms;
 using System.Globalization;
 
+using MensaPortable;
+
 namespace MensaAppWin.ViewModels
 {
     class MensaPageViewModel : INotifyPropertyChanged
@@ -69,7 +71,7 @@ namespace MensaAppWin.ViewModels
                 }
                 else
                 {
-                    var query = new Mensa.MenuDB.QueryBuilder().ByDate(this.Date).ByMensa(this.MensaName);
+                    var query = new MenuDB.QueryBuilder().ByDate(this.Date).ByMensa(this.MensaName);
                     var dishes = query.ExecuteQuery();
                     if (dishes.Count < 1)
                     {
@@ -145,9 +147,9 @@ namespace MensaAppWin.ViewModels
             }
         }
 
-        private ObservableCollection<Mensa.DataTypes.Dish> items;
+        private ObservableCollection<DataTypes.Dish> items;
 
-        public ObservableCollection<Mensa.DataTypes.Dish> Items
+        public ObservableCollection<DataTypes.Dish> Items
         {
             get
             {
@@ -452,7 +454,7 @@ namespace MensaAppWin.ViewModels
 
         #endregion
 
-        internal Mensa.DataTypes.Dish Closed = new Mensa.DataTypes.Dish(Localization.Localize("Closed"), Localization.Localize("ClosedSubtext"), DateTime.Now, "");
+        internal DataTypes.Dish Closed = new DataTypes.Dish(Localization.Localize("Closed"), Localization.Localize("ClosedSubtext"), DateTime.Now, "");
 
         public MensaPageViewModel(string MensaName, DateTime dt)
         {
@@ -460,7 +462,7 @@ namespace MensaAppWin.ViewModels
             this.Date = dt.Date;
             this.Status = "Starting...";
             this.getLocalizedStrings();
-            this.items = new ObservableCollection<Mensa.DataTypes.Dish>();
+            this.items = new ObservableCollection<DataTypes.Dish>();
             this.Busy = true;
 
             // Trigger the MensaDB to get the Mensa Data
@@ -470,7 +472,7 @@ namespace MensaAppWin.ViewModels
                 this.Status = Localization.Localize("GetData");
                 bool done = true;
                 // Outdated without error? -> Refresh!
-                if (Mensa.MenuDB.Instance.isOutdated() && !MensaAdapter.DownloadError)
+                if (MenuDB.Instance.isOutdated() && !MensaAdapter.DownloadError)
                 {
                     done = await MensaAdapter.CatchMensaDataAsync();
                 }
@@ -494,7 +496,7 @@ namespace MensaAppWin.ViewModels
                 Busy = true;
                 Status = "Populating Data";
 
-                IList<Mensa.DataTypes.Dish> queryData = new List<Mensa.DataTypes.Dish>();
+                IList<DataTypes.Dish> queryData = new List<DataTypes.Dish>();
                 bool searchNextDay = App.getConfig("searchNextDay");
 
                 if (searchNextDay)
@@ -504,7 +506,7 @@ namespace MensaAppWin.ViewModels
                     int counter = 5;
                     while (!found && counter > 0)
                     {
-                        var query = new Mensa.MenuDB.QueryBuilder().ByDate(this.Date).ByMensa(this.MensaName);
+                        var query = new MenuDB.QueryBuilder().ByDate(this.Date).ByMensa(this.MensaName);
 
                         if (App.getConfig("VegieOnly"))
                             query = query.ByKind("Vegetarisch");
@@ -529,7 +531,7 @@ namespace MensaAppWin.ViewModels
                 else
                 {
                     // old behavior: just use current day - independently from any dishes existing
-                    var query = new Mensa.MenuDB.QueryBuilder().ByDate(this.Date).ByMensa(this.MensaName);
+                    var query = new MenuDB.QueryBuilder().ByDate(this.Date).ByMensa(this.MensaName);
 
                     if (App.getConfig("VegieOnly"))
                         query = query.ByKind("Vegetarisch");
@@ -558,7 +560,7 @@ namespace MensaAppWin.ViewModels
             this.getNextDayCommand = new Command(() =>
             {
                 Busy = true;
-                DateTime next = Mensa.MenuDB.Instance.getNextAvailableDay(this.Date);
+                DateTime next = MenuDB.Instance.getNextAvailableDay(this.Date);
                 // Optimization: No better day available? prevent reloading data and re-download in some cases
                 if (next == this.Date)
                 {
@@ -573,7 +575,7 @@ namespace MensaAppWin.ViewModels
             this.getPrevDayCommand = new Command(() =>
             {
                 Busy = true;
-                DateTime next = Mensa.MenuDB.Instance.getPreviousAvailableDay(this.Date);
+                DateTime next = MenuDB.Instance.getPreviousAvailableDay(this.Date);
                 // Optimization: No better day available? prevent reloading data and re-download in some cases
                 if (next == this.Date)
                 {

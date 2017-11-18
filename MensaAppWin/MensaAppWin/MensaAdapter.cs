@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using System.Net;
-using Mensa;
+using MensaPortable;
 using System.Threading;
 using System.Net.Http;
+
+using MensaPortable;
 
 namespace MensaAppWin
 {
@@ -17,24 +19,24 @@ namespace MensaAppWin
             AppLoadStoreMenuDB sl = new AppLoadStoreMenuDB();
 #if DEBUG
             // Debugging? Reset the internal storage
-            Mensa.MenuDB.Instance.Reset(sl);
+            MenuDB.Instance.Reset(sl);
 #endif
             // First, Load the Data from persistent storage
-            Mensa.MenuDB.Instance.LoadDB(sl);
+            MenuDB.Instance.LoadDB(sl);
 
             // Check the latest Day of the data
-            if (!Mensa.MenuDB.Instance.isOutdated())
+            if (!MenuDB.Instance.isOutdated())
                 return true;
 
             // The data is Outdated! Try getting the new data
             try
             {
                 // Reset the whole Database to prevent too much Data on the Device
-                Mensa.MenuDB.Instance.Reset(sl);
+                MenuDB.Instance.Reset(sl);
 
                 Dictionary<string, string> dict = await getSourcesAsync(Mensen);
-                var res =  Mensa.MenuDB.Instance.ImportFromSources(dict);
-                Mensa.MenuDB.Instance.StoreDB(sl);
+                var res =  MenuDB.Instance.ImportFromSources(dict);
+                MenuDB.Instance.StoreDB(sl);
                 return res;
             }
             catch (Exception ex)
@@ -55,7 +57,7 @@ namespace MensaAppWin
 			{ "Eupener Straße", new Uri("http://www.studierendenwerk-aachen.de/speiseplaene/eupenerstrasse-w.html")},
 			{ "Gastro Goethe", new Uri("http://www.studierendenwerk-aachen.de/speiseplaene/goethestrasse-w.html")},
 			{ "Mensa Vita", new Uri("http://www.studierendenwerk-aachen.de/speiseplaene/vita-w.html")},
-			{ "Forum Cafete", new Uri("http://www.studierendenwerk-aachen.de/speiseplaene/forum-w.html")},
+			/*{ "Forum Cafete", new Uri("http://www.studierendenwerk-aachen.de/speiseplaene/forum-w.html")},*/
         };
 
         /// <summary>

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Mensa;
+using MensaPortable;
 using Newtonsoft.Json;
 using Xamarin.Forms;
 

@@ -211,13 +211,15 @@ namespace MensaPortable
              *  2: Name of Dish
              * 
              * */
-            
+
             // Regex for SPAN-based dishes with "oder"
             //string regex = "<tr.*?>.*?<td.*?>.*?<span.*?>(.*?)<\\/span>.*?<span.*?>(.*?)<\\/span>.*?<\\/td>.*?<\\/tr>";
 
             // Regex for SPAN-based dishes without "oder"
             //string regex = "<tr.*?>.*?<td.*?>.*?<span.*?>(.*?)<\\/span>.*?<span.*?>(.*?<span class=\"or\">oder<\\/span>.*?)<\\/span>.*?<\\/td>.*?<\\/tr>";
-            string regex = "<tr.*?>.*?<td.*?>.*?<span.*?>(.*?)<\\/span>.*?<span.*?>(.*?<span class=\"or\">oder<\\/span>.*?)<\\/span>\\s*<\\/td>.*?<\\/tr>";
+            //string regex = "<tr.*?>.*?<td.*?>.*?<span.*?>(.*?)<\\/span>.*?<span.*?>(.*?<span class=\"or\">oder<\\/span>.*?)<\\/span>\\s*<\\/td>.*?<\\/tr>";
+            // New Regex - adapted to new STW page, also Side dishes may not have a kind name
+            string regex = "<tr>.*?<span.*?>(.*?)<\\/span><span.*?>(.*?)<\\/span><\\/td>";
 
 
             //string regex = "<tr.*?>.*?<td.*?>(.*?)<\\/td>.*?<td.*?>(.*?)<\\/td>.*?<td><\\/td>.*?<\\/tr>";
@@ -248,17 +250,29 @@ namespace MensaPortable
              * Groups:
              *  1: Dish kind
              *  2: Name of Dish
-             *  3: Price
+             *  3: Nutrition Information
+             *  4: Price
              * 
              * */
             //string regex = "<tr.*?>.*?<td.*?>(.*?)<\\/td>.*?<td.*?>(.*?)<\\/td>.*?<td.*?>(.*?)<\\/td>.*?<\\/tr>";
             //string regex = "<tr.*?>.*?<td.*?>.?*<span.*?>(.*?)<\\span>.*?<span.*?>(.*?)<\\/span>.*?<span.*?>(.*?)<\\/span>.*?<\\/td>.*?<\\/tr>";
-            string regex = "<tr.*?>.*?<td.*?>.*?<span.*?>(.*?)<\\/span>.*?<span.*?>(.*?)<\\/span>.*?<span.*?>(.*?)<\\/span>.*?<\\/td>.*?<\\/tr>";
+            // Version 1.6.3 regex
+            //string regex = "<tr.*?>.*?<td.*?>.*?<span.*?>(.*?)<\\/span>.*?<span.*?>(.*?)<\\/span>.*?<span.*?>(.*?)<\\/span>.*?<\\/td>.*?<\\/tr>";
+            // New regex (new STW site, including Nutrition info)
+            string regex = "<tr.*?>.*?<td.*?>.*?<span.*?>(.*?)<\\/span>.*?<span.*?><span.*?>.*?<\\/span>(.*?)<\\/span><div.*?><div.*?>(.*?)<\\/div>.*?<span.*?>(.*?)<\\/span>.*?<\\/td>.*?<\\/tr>";
             MatchCollection matches = Regex.Matches(p, regex);
             foreach (Match m in matches)
             {
                 //Console.WriteLine(m.Groups[1].Value.Trim() + ": " + m.Groups[2].Value.Trim() + " for " + m.Groups[3].Value.Trim());
-                DataTypes.Dish dish = new DataTypes.Dish(m.Groups[2].Value.Trim(), m.Groups[1].Value.Trim(), date, MensaName, m.Groups[3].Value.Trim());
+                //DataTypes.Dish dish = new DataTypes.Dish(m.Groups[2].Value.Trim(), m.Groups[1].Value.Trim(), date, MensaName, m.Groups[3].Value.Trim());
+                DataTypes.Dish dish = new DataTypes.Dish(
+                    m.Groups[2].Value.Trim(),
+                    m.Groups[1].Value.Trim(),
+                    date, 
+                    MensaName, 
+                    m.Groups[4].Value.Trim(),
+                    m.Groups[3].Value.Trim()
+                    );
                 list.Add(dish);
             }
             return list;
