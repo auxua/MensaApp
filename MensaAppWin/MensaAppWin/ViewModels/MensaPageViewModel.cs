@@ -7,8 +7,7 @@ using System.Windows.Input;
 using System.Threading;
 using Xamarin.Forms;
 using System.Globalization;
-
-using MensaPortable;
+using static MensaPortable.DataTypes;
 
 namespace MensaAppWin.ViewModels
 {
@@ -71,7 +70,7 @@ namespace MensaAppWin.ViewModels
                 }
                 else
                 {
-                    var query = new MenuDB.QueryBuilder().ByDate(this.Date).ByMensa(this.MensaName);
+                    var query = new MensaPortable.MenuDB.QueryBuilder().ByDate(this.Date).ByMensa(this.MensaName);
                     var dishes = query.ExecuteQuery();
                     if (dishes.Count < 1)
                     {
@@ -147,9 +146,9 @@ namespace MensaAppWin.ViewModels
             }
         }
 
-        private ObservableCollection<DataTypes.Dish> items;
+        private ObservableCollection<MensaPortable.DataTypes.Dish> items;
 
-        public ObservableCollection<DataTypes.Dish> Items
+        public ObservableCollection<MensaPortable.DataTypes.Dish> Items
         {
             get
             {
@@ -175,9 +174,17 @@ namespace MensaAppWin.ViewModels
             {
                 this.date = value;
                 RaisePropertyChanged("Date");
-                var culture = new CultureInfo(Localization.Locale());
-                var day = culture.DateTimeFormat.GetDayName(value.Date.DayOfWeek);
-                this.DateAsString = day + "\n" + value.Date.Day + "." + value.Date.Month + "." + value.Date.Year;
+                CultureInfo cult;
+                try
+                {
+                    cult = new CultureInfo(Localization.Locale());
+                }
+                catch
+                {
+                    cult = new CultureInfo("en-US");
+                }
+                var day = cult.DateTimeFormat.GetDayName(value.Date.DayOfWeek);
+                this.DateAsString = value.Date.ToShortDateFormatString();
             }
         }
 
@@ -454,7 +461,7 @@ namespace MensaAppWin.ViewModels
 
         #endregion
 
-        internal DataTypes.Dish Closed = new DataTypes.Dish(Localization.Localize("Closed"), Localization.Localize("ClosedSubtext"), DateTime.Now, "");
+        internal MensaPortable.DataTypes.Dish Closed = new MensaPortable.DataTypes.Dish(Localization.Localize("Closed"), Localization.Localize("ClosedSubtext"), DateTime.Now, "");
 
         public MensaPageViewModel(string MensaName, DateTime dt)
         {
@@ -462,7 +469,7 @@ namespace MensaAppWin.ViewModels
             this.Date = dt.Date;
             this.Status = "Starting...";
             this.getLocalizedStrings();
-            this.items = new ObservableCollection<DataTypes.Dish>();
+            this.items = new ObservableCollection<MensaPortable.DataTypes.Dish>();
             this.Busy = true;
 
             // Trigger the MensaDB to get the Mensa Data
@@ -472,7 +479,7 @@ namespace MensaAppWin.ViewModels
                 this.Status = Localization.Localize("GetData");
                 bool done = true;
                 // Outdated without error? -> Refresh!
-                if (MenuDB.Instance.isOutdated() && !MensaAdapter.DownloadError)
+                if (MensaPortable.MenuDB.Instance.isOutdated() && !MensaAdapter.DownloadError)
                 {
                     done = await MensaAdapter.CatchMensaDataAsync();
                 }
@@ -496,7 +503,7 @@ namespace MensaAppWin.ViewModels
                 Busy = true;
                 Status = "Populating Data";
 
-                IList<DataTypes.Dish> queryData = new List<DataTypes.Dish>();
+                IList<MensaPortable.DataTypes.Dish> queryData = new List<MensaPortable.DataTypes.Dish>();
                 bool searchNextDay = App.getConfig("searchNextDay");
 
                 if (searchNextDay)
@@ -506,7 +513,7 @@ namespace MensaAppWin.ViewModels
                     int counter = 5;
                     while (!found && counter > 0)
                     {
-                        var query = new MenuDB.QueryBuilder().ByDate(this.Date).ByMensa(this.MensaName);
+                        var query = new MensaPortable.MenuDB.QueryBuilder().ByDate(this.Date).ByMensa(this.MensaName);
 
                         if (App.getConfig("VegieOnly"))
                             query = query.ByKind("Vegetarisch");
@@ -531,7 +538,7 @@ namespace MensaAppWin.ViewModels
                 else
                 {
                     // old behavior: just use current day - independently from any dishes existing
-                    var query = new MenuDB.QueryBuilder().ByDate(this.Date).ByMensa(this.MensaName);
+                    var query = new MensaPortable.MenuDB.QueryBuilder().ByDate(this.Date).ByMensa(this.MensaName);
 
                     if (App.getConfig("VegieOnly"))
                         query = query.ByKind("Vegetarisch");
@@ -560,7 +567,7 @@ namespace MensaAppWin.ViewModels
             this.getNextDayCommand = new Command(() =>
             {
                 Busy = true;
-                DateTime next = MenuDB.Instance.getNextAvailableDay(this.Date);
+                DateTime next = MensaPortable.MenuDB.Instance.getNextAvailableDay(this.Date);
                 // Optimization: No better day available? prevent reloading data and re-download in some cases
                 if (next == this.Date)
                 {
@@ -575,7 +582,7 @@ namespace MensaAppWin.ViewModels
             this.getPrevDayCommand = new Command(() =>
             {
                 Busy = true;
-                DateTime next = MenuDB.Instance.getPreviousAvailableDay(this.Date);
+                DateTime next = MensaPortable.MenuDB.Instance.getPreviousAvailableDay(this.Date);
                 // Optimization: No better day available? prevent reloading data and re-download in some cases
                 if (next == this.Date)
                 {
@@ -609,5 +616,30 @@ namespace MensaAppWin.ViewModels
             this.NeedsUpdate = true;
         }
 
+    }
+
+    public class NutritionToStringConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (App.getConfig("ShowNutrition") == false) return "";
+            if (value == null) return "";
+            if (value is Nutrition)
+            {
+                Nutrition nutrition = (Nutrition)value;
+                string text = "";
+                text += "\t" + Localization.Localize(nameof(Nutrition.Caloric)) + ": " + nutrition.Caloric + Environment.NewLine;
+                text += "\t" + Localization.Localize(nameof(Nutrition.Carbohydrates)) + ": " + nutrition.Carbohydrates + Environment.NewLine;
+                text += "\t" + Localization.Localize(nameof(Nutrition.Fat)) + ": " + nutrition.Fat + Environment.NewLine;
+                text += "\t" + Localization.Localize(nameof(Nutrition.Proteins)) + ": " + nutrition.Proteins;
+                return text;
+            }
+            throw new ArgumentException();
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

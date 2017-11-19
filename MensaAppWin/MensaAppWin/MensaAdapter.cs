@@ -7,8 +7,6 @@ using MensaPortable;
 using System.Threading;
 using System.Net.Http;
 
-using MensaPortable;
-
 namespace MensaAppWin
 {
     class MensaAdapter

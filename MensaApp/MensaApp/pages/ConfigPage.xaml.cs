@@ -27,6 +27,7 @@ namespace MensaApp.pages
             string MainDishesOnly = Localization.Localize("MainDishesOnly");
             string VegieOnly = Localization.Localize("VegieOnly");
             string FurtherInfoTitle = Localization.Localize("FurtherInfoTitle");
+            string ShowNutrition = Localization.Localize("ShowNutrition");
 
             Title = ConfigTitle;
 
@@ -78,8 +79,21 @@ namespace MensaApp.pages
                     vm.NeedsUpdate = true;
             };
 
+            SwitchCell NutritionSwitch = new SwitchCell
+            {
+                Text = ShowNutrition,
+                On = App.getConfig("ShowNutrition")
+            };
+
+            NutritionSwitch.OnChanged += (s, e) =>
+            {
+                App.setConfig("ShowNutrition", NutritionSwitch.On);
+                if (vm != null) vm.NeedsUpdate = true;
+            };
+
             sectionFilters.Add(VegieSwitch);
             sectionFilters.Add(DishesSwitch);
+            sectionFilters.Add(NutritionSwitch);
 
 
             TableSection sectionInfo = new TableSection(FurtherInfoTitle);

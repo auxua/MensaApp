@@ -123,6 +123,12 @@
 
  This software uses the json.NET library which is licensed under the MIT license. (Find it here: https://raw.githubusercontent.com/JamesNK/Newtonsoft.Json/master/LICENSE.md)</value>
   </data>
+  <data name="Caloric" xml:space="preserve">
+    <value>Caloric</value>
+  </data>
+  <data name="Carbohydrates" xml:space="preserve">
+    <value>Carbohydrates</value>
+  </data>
   <data name="Closed" xml:space="preserve">
     <value>Closed/No Data</value>
   </data>
@@ -137,6 +143,9 @@
   </data>
   <data name="DownloadFail" xml:space="preserve">
     <value>At least one canteen failed to download. (No Internet Connection?)</value>
+  </data>
+  <data name="Fat" xml:space="preserve">
+    <value>Fat</value>
   </data>
   <data name="FilterTitle" xml:space="preserve">
     <value>Apply Filters</value>
@@ -171,6 +180,9 @@
   <data name="No" xml:space="preserve">
     <value>No</value>
   </data>
+  <data name="Proteins" xml:space="preserve">
+    <value>Proteins</value>
+  </data>
   <data name="Refresh" xml:space="preserve">
     <value>Refresh Data</value>
   </data>
@@ -179,6 +191,9 @@
   </data>
   <data name="RefreshDetail" xml:space="preserve">
     <value>May take a bit</value>
+  </data>
+  <data name="ShowNutrition" xml:space="preserve">
+    <value>Show Nutrition Information</value>
   </data>
   <data name="TapHere" xml:space="preserve">
     <value>Tap here for details</value>

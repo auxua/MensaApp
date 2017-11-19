@@ -7,6 +7,7 @@ using System.Windows.Input;
 using System.Threading;
 using Xamarin.Forms;
 using System.Globalization;
+using static MensaPortable.DataTypes;
 
 namespace MensaApp.ViewModels
 {
@@ -615,5 +616,30 @@ namespace MensaApp.ViewModels
             this.NeedsUpdate = true;
         }
 
+    }
+
+    public class NutritionToStringConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (App.getConfig("ShowNutrition") == false) return "";
+            if (value == null) return "";
+            if (value is Nutrition)
+            {
+                Nutrition nutrition = (Nutrition)value;
+                string text = "";
+                text += "\t"+Localization.Localize(nameof(Nutrition.Caloric)) + ": "+nutrition.Caloric + Environment.NewLine;
+                text += "\t" + Localization.Localize(nameof(Nutrition.Carbohydrates)) + ": " + nutrition.Carbohydrates + Environment.NewLine;
+                text += "\t" + Localization.Localize(nameof(Nutrition.Fat)) + ": " + nutrition.Fat + Environment.NewLine;
+                text += "\t" + Localization.Localize(nameof(Nutrition.Proteins)) + ": " + nutrition.Proteins;
+                return text;
+            }
+            throw new ArgumentException();
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

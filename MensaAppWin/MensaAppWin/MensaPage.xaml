@@ -1,11 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?> 
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:MensaAppWin.ViewModels"
              x:Class="MensaAppWin.MensaPage"
              Title="{Binding MensaName}"
              IsBusy="{Binding Busy}"
              BackgroundColor="#FFFFFF"
              x:Name="MensaPage">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <local:NutritionToStringConverter x:Key="NutritionConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
   <ContentPage.Padding>
     30, 20, 20, 0
   </ContentPage.Padding>
@@ -58,7 +64,10 @@
                     <Label FontSize="Small" Text="{Binding Kind}" TextColor="Black" />
                     <Label FontSize="Small" FontAttributes="Italic" Text="{Binding Price}" TextColor="Gray" />
                   </StackLayout>
-                  <Label FontSize="Small" Text=" " />
+                    <StackLayout Orientation="Horizontal">
+                        <Label FontSize="Small" Text="{Binding NutritionInfo,Converter={x:StaticResource NutritionConverter}}" />
+                    </StackLayout>
+                    <!--<Label FontSize="Small" Text=" " />-->
                   <!-- Just add for some padding in here -->
 
                 </StackLayout>

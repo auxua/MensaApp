@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 
 using Xamarin.Forms;
+using System.Globalization;
 
 #if WINDOWS_UWP
 
@@ -14,6 +15,17 @@ using Windows.System;
 
 namespace MensaAppWin
 {
+    public static class DateExtensions
+    {
+        public static string ToShortDateFormatString(this DateTime dt)
+        {
+            var culture = new CultureInfo(Localization.Locale());
+            var day = culture.DateTimeFormat.GetDayName(dt.Date.DayOfWeek);
+            var text = day + "\n" + dt.Date.Day + "." + dt.Date.Month + "." + dt.Date.Year;
+            return text;
+        }
+    }
+
     public interface IGamePadSupport
     {
         void ButtonTrigger(VirtualKey button);
@@ -21,7 +33,7 @@ namespace MensaAppWin
 
     public class App : Application
 	{
-        public readonly static string Version = "1.6.3";
+        public readonly static string Version = "1.7.0";
 
         public static bool isXbox = false;
 
