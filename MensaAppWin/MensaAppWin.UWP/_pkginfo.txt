@@ -1,1 +1,1 @@
-C:\Users\arno\ownCloud\Projects\MensaApp\MensaAppWin\MensaAppWin.UWP\bin\ARM\Release\Upload\MensaAppWin.UWP_1.7.0.0\MensaAppWin.UWP_1.7.0.0_x86_x64_arm.appxbundle
+C:\Users\arno\ownCloud\Projects\MensaApp\MensaAppWin\MensaAppWin.UWP\bin\ARM\Release\Upload\MensaAppWin.UWP_1.7.1.0\MensaAppWin.UWP_1.7.1.0_x86_x64_arm.appxbundle

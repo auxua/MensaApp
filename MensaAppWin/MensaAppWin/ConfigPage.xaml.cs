@@ -127,6 +127,11 @@ namespace MensaAppWin
                 App.setConfig("ShowNutrition", NutritionSwitch.On);
                 if (vm != null) vm.NeedsUpdate = true;
             };
+            NutritionSwitch.Tapped += (s, e) =>
+            {
+                this.focusCell = NutritionSwitch;
+                if (s == null) NutritionSwitch.On = !NutritionSwitch.On;
+            };
 
             sectionFilters.Add(VegieSwitch);
             sectionFilters.Add(DishesSwitch);

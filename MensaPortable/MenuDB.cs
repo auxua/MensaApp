@@ -4,9 +4,48 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using static MensaPortable.DataTypes;
 
 namespace MensaPortable
 {
+    public static class DishesExtension
+    {
+        const string prefix = "<span class=\"menue-nutr\">+ ";
+
+        public static void ExtractNutritionInfo(this Dish dish)
+        {
+            // Check for Nutrition info
+            if (!dish.Name.StartsWith(prefix)) return;
+
+            dish.NutritionInfo = new Nutrition();
+            var splits = dish.Name.Split(new string[] { "<br />", "<br/>" , "<div>" }, StringSplitOptions.RemoveEmptyEntries);
+            foreach (var inner in splits)
+            {
+                if (dish.NutritionInfo.Caloric == null && inner.StartsWith("<div class=\"nutr-info\">"))
+                {
+                    dish.NutritionInfo.Caloric = inner.Replace("<div class=\"nutr-info\">", "").Replace("Brennwert = ", "");
+                }
+                else if (dish.NutritionInfo.Caloric == null && inner.StartsWith("Brennwert"))
+                    dish.NutritionInfo.Caloric = inner.Replace("Brennwert = ", "").Replace("</div>","");
+                else if (dish.NutritionInfo.Fat == null && inner.StartsWith("Fett"))
+                    dish.NutritionInfo.Fat = inner.Replace("Fett = ", "").Replace("</div>", "");
+                else if (dish.NutritionInfo.Carbohydrates == null && inner.StartsWith("Kohlenhydrate"))
+                    dish.NutritionInfo.Carbohydrates = inner.Replace("Kohlenhydrate = ", "").Replace("</div>", "");
+                else if (dish.NutritionInfo.Proteins == null && inner.StartsWith("Eiweiß"))
+                    dish.NutritionInfo.Proteins = inner.Replace("Eiweiß = ", "").Replace("</div>", "");
+            }
+            // Cleanup name
+            dish.Name = splits.First().Replace(prefix, "").Replace("<div class=\"nutr-info\">", "");
+
+            // Cleanup different trailing texts
+            if (String.IsNullOrWhiteSpace(dish.NutritionInfo.Proteins)) return;
+            var pos = dish.NutritionInfo.Proteins.IndexOf("g");
+            if (dish.NutritionInfo.Proteins.Length <= pos+1) return;
+            dish.NutritionInfo.Proteins = dish.NutritionInfo.Proteins.Remove(pos+1);
+            
+        }
+    }
+
     public class MenuDB
     {
 
@@ -220,7 +259,7 @@ namespace MensaPortable
             //string regex = "<tr.*?>.*?<td.*?>.*?<span.*?>(.*?)<\\/span>.*?<span.*?>(.*?<span class=\"or\">oder<\\/span>.*?)<\\/span>\\s*<\\/td>.*?<\\/tr>";
             // New Regex - adapted to new STW page, also Side dishes may not have a kind name
             string regex = "<tr>.*?<span.*?>(.*?)<\\/span><span.*?>(.*?)<\\/span><\\/td>";
-
+            
 
             //string regex = "<tr.*?>.*?<td.*?>(.*?)<\\/td>.*?<td.*?>(.*?)<\\/td>.*?<td><\\/td>.*?<\\/tr>";
             MatchCollection matches = Regex.Matches(p, regex);
@@ -229,6 +268,7 @@ namespace MensaPortable
             {
                 //Console.WriteLine(m.Groups[1].Value.Trim() + ": " + m.Groups[2].Value.Trim());
                 DataTypes.Dish dish = new DataTypes.Dish(m.Groups[2].Value.Trim(), m.Groups[1].Value.Trim(), date, MensaName);
+                dish.ExtractNutritionInfo();
                 list.Add(dish);
             }
             return list;
@@ -259,7 +299,7 @@ namespace MensaPortable
             // Version 1.6.3 regex
             //string regex = "<tr.*?>.*?<td.*?>.*?<span.*?>(.*?)<\\/span>.*?<span.*?>(.*?)<\\/span>.*?<span.*?>(.*?)<\\/span>.*?<\\/td>.*?<\\/tr>";
             // New regex (new STW site, including Nutrition info)
-            string regex = "<tr.*?>.*?<td.*?>.*?<span.*?>(.*?)<\\/span>.*?<span.*?><span.*?>.*?<\\/span>(.*?)<\\/span><div.*?><div.*?>(.*?)<\\/div>.*?<span.*?>(.*?)<\\/span>.*?<\\/td>.*?<\\/tr>";
+            string regex = "<tr.*?>.*?<td.*?>.*?<span.*?>(.*?)<\\/span>.*?<span.*?><span.*?>(.*?)<\\/div>.*?<span.*?>(.*?)<\\/span>.*?<\\/td>.*?<\\/tr>";
             MatchCollection matches = Regex.Matches(p, regex);
             foreach (Match m in matches)
             {
@@ -270,9 +310,9 @@ namespace MensaPortable
                     m.Groups[1].Value.Trim(),
                     date, 
                     MensaName, 
-                    m.Groups[4].Value.Trim(),
                     m.Groups[3].Value.Trim()
                     );
+                dish.ExtractNutritionInfo();
                 list.Add(dish);
             }
             return list;

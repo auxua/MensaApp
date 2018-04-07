@@ -14,22 +14,22 @@ namespace MensaPortable
             /// Caloric Value (kcal/kj)
             /// "Brennwert"
             /// </summary>
-            public string Caloric { get; set; }
+            public string Caloric { get; set; } = null;
 
             /// <summary>
             /// "Fette"
             /// </summary>
-            public string Fat { get; set; }
+            public string Fat { get; set; } = null;
 
             /// <summary>
             /// "Kohlenhydrate"
             /// </summary>
-            public string Carbohydrates { get; set; }
+            public string Carbohydrates { get; set; } = null;
 
             /// <summary>
             /// "Eiweiß"
             /// </summary>
-            public string Proteins { get; set; }
+            public string Proteins { get; set; } = null;
         }
 
         public class Dish
@@ -67,21 +67,7 @@ namespace MensaPortable
                     Name = Name.Replace(Name.Substring(0, pos + 2), "");
                 }
                 Price = price;
-                // Check for Nutrition info
-                if (String.IsNullOrWhiteSpace(NutritionString)) return;
-                NutritionInfo = new Nutrition();
-                var splits = NutritionString.Split(new string[] { "<br />", "<br/>" }, StringSplitOptions.RemoveEmptyEntries);
-                foreach (var inner in splits)
-                {
-                    if (inner.StartsWith("Brennwert"))
-                        NutritionInfo.Caloric = inner.Replace("Brennwert = ", "");
-                    else if (inner.StartsWith("Fett"))
-                        NutritionInfo.Fat = inner.Replace("Fett = ", "");
-                    else if (inner.StartsWith("Kohlenhydrate"))
-                        NutritionInfo.Carbohydrates = inner.Replace("Kohlenhydrate = ", "");
-                    else if (inner.StartsWith("Eiweiß"))
-                        NutritionInfo.Proteins = inner.Replace("Eiweiß = ", "");
-                }
+                
             }
 
             /*public Dish(string name, string kind, DateTime date, string mensa, string price) : this(name,kind,date,mensa)
@@ -95,7 +81,7 @@ namespace MensaPortable
             {
                 return (Price == null);
             }
-
+            
 
             /// <summary>
             /// Removes the HTML-Tags inside the text

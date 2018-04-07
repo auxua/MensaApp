@@ -33,7 +33,7 @@ namespace MensaAppWin
 
     public class App : Application
 	{
-        public readonly static string Version = "1.7.0";
+        public readonly static string Version = "1.7.1";
 
         public static bool isXbox = false;
 
