@@ -6,6 +6,10 @@ using System.Threading.Tasks;
 
 using Xamarin.Forms;
 
+#if __IOS__
+using Xamarin.Forms.PlatformConfiguration.iOSSpecific;
+#endif
+
 namespace MensaApp.pages
 {
 	public partial class MensaPage : ContentPage
@@ -16,7 +20,7 @@ namespace MensaApp.pages
 		{
 			InitializeComponent ();
             StackLayout mStack = this.FindByName<StackLayout>("MensaStack");
-            
+
 #if __ANDROID__
             // This is a special Workaround for CM devices
             // CM brings different fonts and sizes. This workaround prevents the mensa names from breaking
@@ -39,6 +43,10 @@ namespace MensaApp.pages
             mStack.Spacing = 4;
             mlabel.FontSize--;
 
+#endif
+
+#if __IOS__
+            On<Xamarin.Forms.PlatformConfiguration.iOS>().SetUseSafeArea(true);
 #endif
 
             string mensa = MensaAdapter.getNextMensaName("Forum Cafete");
