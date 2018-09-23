@@ -75,9 +75,9 @@ namespace MensaApp
 
         public static string ProjectInfix()
         {
-            if (Device.OS == TargetPlatform.Android)
+            if (Device.RuntimePlatform == Device.Android)
                 return "Droid";
-            if (Device.OS == TargetPlatform.iOS)
+            if (Device.RuntimePlatform == Device.iOS)
                 return "iOS";
             return "WinPhone";
         }

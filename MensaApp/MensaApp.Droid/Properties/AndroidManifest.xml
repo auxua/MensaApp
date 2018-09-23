@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:installLocation="auto" android:versionName="1.7.1" package="com.auxua.mensaapp" android:versionCode="171">
-	<uses-sdk android:minSdkVersion="14" android:targetSdkVersion="25" />
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:installLocation="auto" android:versionName="1.7.2" package="com.auxua.mensaapp" android:versionCode="172">
+	<uses-sdk android:targetSdkVersion="27" android:minSdkVersion="19" />
 	<uses-permission android:name="android.permission.INTERNET" />
 	<application android:icon="@drawable/Icon" android:label="Mensa Aachen"></application>
 </manifest>

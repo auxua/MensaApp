@@ -9,7 +9,7 @@ namespace MensaApp
 {
 	public class App : Application
 	{
-        public readonly static string Version = "1.7.1";
+        public readonly static string Version = "1.7.2";
         
 
         public App ()
@@ -85,4 +85,9 @@ namespace MensaApp
 
         #endregion
 	}
+
+    public interface IScreenDetection
+    {
+        string GetDeviceName();
+    }
 }

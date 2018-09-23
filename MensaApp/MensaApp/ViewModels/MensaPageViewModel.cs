@@ -8,12 +8,14 @@ using System.Threading;
 using Xamarin.Forms;
 using System.Globalization;
 using static MensaPortable.DataTypes;
+using System.Runtime.InteropServices;
+
 
 namespace MensaApp.ViewModels
 {
     class MensaPageViewModel : INotifyPropertyChanged
     {
-        #region properties
+#region properties
 
         //private INavigation navigation;
 
@@ -29,6 +31,32 @@ namespace MensaApp.ViewModels
             {
                 this.busy = value;
                 RaisePropertyChanged("Busy");
+            }
+        }
+
+        private bool needLowerMargin = true;
+        public bool UINeedLowerMargin
+        {
+            get
+            {
+                return needLowerMargin;
+            }
+            set
+            {
+                needLowerMargin = value;
+                RaisePropertyChanged(nameof(UINeedLowerMargin));
+            }
+        }
+
+
+        public Thickness LowerMargin
+        {
+            get
+            {
+                if (needLowerMargin)
+                    return new Thickness(0, 0, 0, 50);
+                else
+                    return new Thickness(0);
             }
         }
 
@@ -234,9 +262,9 @@ namespace MensaApp.ViewModels
             }
         }
 
-        #endregion
+#endregion
 
-        #region commands
+#region commands
 
         private ICommand loadAllDataCommand;
 
@@ -308,9 +336,9 @@ namespace MensaApp.ViewModels
             }
         }
 
-        #endregion
+#endregion
 
-        #region Localization Strings
+#region Localization Strings
 
         private string dishesString;
 
@@ -459,7 +487,7 @@ namespace MensaApp.ViewModels
             this.ConfigString = Localization.Localize("ConfigString");
         }
 
-        #endregion
+#endregion
 
         internal MensaPortable.DataTypes.Dish Closed = new MensaPortable.DataTypes.Dish(Localization.Localize("Closed"), Localization.Localize("ClosedSubtext"),DateTime.Now, "");
 
@@ -471,6 +499,8 @@ namespace MensaApp.ViewModels
             this.getLocalizedStrings();
             this.items = new ObservableCollection<MensaPortable.DataTypes.Dish>();
             this.Busy = true;
+
+            DetectLowerMargin();
 
             // Trigger the MensaDB to get the Mensa Data
             this.loadAllDataCommand = new Command(async () => 
@@ -616,6 +646,49 @@ namespace MensaApp.ViewModels
             this.NeedsUpdate = true;
         }
 
+        private void DetectLowerMargin()
+        {
+            // Detect, whether system needs increased lower nargin
+
+            // Only iOS devices with lower margin problem known right now
+            if (Device.RuntimePlatform != Device.iOS)
+                needLowerMargin = false;
+            else
+            {
+                var dep = DependencyService.Get<IScreenDetection>().GetDeviceName();
+
+                /*
+                 * Current Device types (documented)
+                 * 
+                 * iPhone10,1 -> iPhone 8
+                 * iPhone10,2 -> iPhone 8 Plus
+                 * iPhone10,3 -> iPhone X
+                 * iPhone10,4 -> iPhone 8
+                 * iPhone10,5 -> iPhone 8 Plus
+                 * iPhone10,6 -> iPhone X
+                 * 
+                 * Assuming all later names having new display form
+                 * 
+                 * More Details: https://support.hockeyapp.net/kb/client-integration-ios-mac-os-x-tvos/ios-device-types
+                 * 
+                 * */
+
+                List<string> normal = new List<string>();
+                normal.Add("iPhone10,1");
+                normal.Add("iPhone10,2");
+                normal.Add("iPhone10,4");
+                normal.Add("iPhone10,5");
+
+                if (normal.Contains(dep))
+                    needLowerMargin = false;
+                else if (!dep.StartsWith("iPhone1"))
+                    needLowerMargin = false;
+                else
+                    needLowerMargin = true;
+
+            }
+        }
+
     }
 
     public class NutritionToStringConverter : IValueConverter
@@ -642,4 +715,6 @@ namespace MensaApp.ViewModels
             throw new NotImplementedException();
         }
     }
+
+
 }
