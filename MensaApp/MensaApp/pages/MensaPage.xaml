@@ -78,11 +78,14 @@
               </DataTemplate>
             </ListView.ItemTemplate>
           </ListView>
-          <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand" Spacing="30" Margin="{Binding LowerMargin}">
+            
+            <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand" Spacing="30" Margin="{Binding LowerMargin}">
                 <Button HorizontalOptions="Start" VerticalOptions="Center" Text="{Binding PreviousDayString}" TextColor="Black" FontSize="Large" BackgroundColor="#FFFFFF" x:Name="PrevDayButton" BorderWidth="0"  BorderColor="#FFFFFF" />
-            <Label HorizontalOptions="Center" VerticalOptions="Center" Text="{Binding DateAsString}" TextColor="Black" />
+                <Label HorizontalOptions="Center" VerticalOptions="Center" Text="{Binding DateAsString}" TextColor="Black" />
                 <Button HorizontalOptions="End" VerticalOptions="Center" Text="{Binding NextDayString}" TextColor="Black" FontSize="Large" BackgroundColor="#FFFFFF" x:Name="NextDayButton" BorderWidth="0"  BorderColor="#FFFFFF" />
-          </StackLayout>
+            
+            </StackLayout>
+            <Button Text="{Binding OpenWebString}" Command="{Binding OpenWebCommand}" />
           
         </StackLayout>
       </StackLayout>

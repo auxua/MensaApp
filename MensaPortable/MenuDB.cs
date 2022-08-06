@@ -225,13 +225,26 @@ namespace MensaPortable
 
                 MatchCollection matches = Regex.Matches(source, regex);
 
+                string regexPopup = @"<div.id=.teaserpopup.*?<div.class=.container.*?<p>(.*?)</p>";
+                var match = Regex.Match(source, regexPopup);
+                string rawPopup = null;
+                if (match.Success)
+                {
+                    rawPopup = match.Groups[1].Value;
+                }
+
                 foreach (Match m in matches)
                 {
                     DateTime date = getDateFromDayString(m.Groups[1].Value);
+                    if (!String.IsNullOrEmpty(rawPopup))
+                        this.Dishes.Add(new Dish(rawPopup, "NOTE", date, MensaName));
+                    
                     this.Dishes.AddRange(getDishesFromTable(m.Groups[2].Value,MensaName,date));
                     this.Dishes.AddRange(getSideDishesFromTable(m.Groups[3].Value,date,MensaName));
                     //Console.WriteLine(m.Groups[1].Value + "||" + m.Groups[2].Value + "||" + m.Groups[3].Value);
                 }
+
+                
                 return true;
             }
             catch (Exception ex)
@@ -240,7 +253,7 @@ namespace MensaPortable
             }
         }
 
-        private List<DataTypes.Dish> getSideDishesFromTable(string p,DateTime date, string MensaName)
+        private List<DataTypes.Dish> getSideDishesFromTable(string p,DateTime date, string MensaName, string popup=null)
         {
             List<DataTypes.Dish> list = new List<DataTypes.Dish>();
             /*
@@ -268,7 +281,8 @@ namespace MensaPortable
             {
                 //Console.WriteLine(m.Groups[1].Value.Trim() + ": " + m.Groups[2].Value.Trim());
                 DataTypes.Dish dish = new DataTypes.Dish(m.Groups[2].Value.Trim(), m.Groups[1].Value.Trim(), date, MensaName);
-                dish.ExtractNutritionInfo();
+                // Not Continued by STW
+                //dish.ExtractNutritionInfo();
                 list.Add(dish);
             }
             return list;

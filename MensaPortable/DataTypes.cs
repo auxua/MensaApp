@@ -43,6 +43,8 @@ namespace MensaPortable
 
             public string Special { get; set; }
 
+            public string Popup { get; set; }
+
             public Nutrition NutritionInfo { get; set; }
             
             public Dish(string name, string kind, DateTime date, string mensa, string price=null, string NutritionString=null)
@@ -88,6 +90,7 @@ namespace MensaPortable
             /// </summary>
             private string RemoveTags(string input)
             {
+                
                 while (input.Contains("<sup>"))
                 {
                     int start = input.IndexOf("<sup>");
@@ -100,7 +103,19 @@ namespace MensaPortable
                 input = input.Replace("<span class=\"seperator\">", " ");
                 input = input.Replace("</span>", " ");
                 input = input.Replace("  ", " ");
+                input = input.Replace("<em>", "");
+                input = input.Replace("</em>", "");
+                input = input.Replace("<br>", "\n");
+                input = input.Replace("<strong>", "");
+                input = input.Replace("</strong>", "");
+                input = input.Replace("<span class=\"menue-nutr\">", "");
+                input = input.Replace("<br/>", "");
+                input = input.Replace("<br />", "");
+                input = input.Replace("<div class=\"nutr-info\">", "");
+                input = input.Replace("<div>", "");
                 input = input.Trim();
+                if (input.StartsWith("+"))
+                    input = input.Substring(1);
                 return input;
             }
         }        

@@ -27,7 +27,8 @@ namespace MensaApp.pages
             string MainDishesOnly = Localization.Localize("MainDishesOnly");
             string VegieOnly = Localization.Localize("VegieOnly");
             string FurtherInfoTitle = Localization.Localize("FurtherInfoTitle");
-            string ShowNutrition = Localization.Localize("ShowNutrition");
+            // Not continued by STW
+            //string ShowNutrition = Localization.Localize("ShowNutrition");
 
             Title = ConfigTitle;
 
@@ -79,7 +80,8 @@ namespace MensaApp.pages
                     vm.NeedsUpdate = true;
             };
 
-            SwitchCell NutritionSwitch = new SwitchCell
+            // Not Continued by STW
+            /*SwitchCell NutritionSwitch = new SwitchCell
             {
                 Text = ShowNutrition,
                 On = App.getConfig("ShowNutrition")
@@ -89,11 +91,12 @@ namespace MensaApp.pages
             {
                 App.setConfig("ShowNutrition", NutritionSwitch.On);
                 if (vm != null) vm.NeedsUpdate = true;
-            };
+            };*/
 
             sectionFilters.Add(VegieSwitch);
             sectionFilters.Add(DishesSwitch);
-            sectionFilters.Add(NutritionSwitch);
+            // Not continued by STW
+            //sectionFilters.Add(NutritionSwitch);
 
 
             TableSection sectionInfo = new TableSection(FurtherInfoTitle);
@@ -132,10 +135,22 @@ namespace MensaApp.pages
                     App.Current.MainPage = new NavigationPage(new pages.MensaPage());
                 });
             };
+            TextCell privacyCell = new TextCell
+            {
+                Text = Localization.Localize("PrivacyPolicy"),
+                Detail = Localization.Localize("TapWeb")
+            };
+            privacyCell.Tapped += (s, e) =>
+            {
+                Device.OpenUri(new Uri("https://apps.auxua.eu/privacy/PP_MensaAachen.htm"));
+            };
+
 
             sectionInfo.Add(refreshCell);
-            sectionInfo.Add(InfoCell);
+            sectionInfo.Add(privacyCell);
             sectionInfo.Add(versionCell);
+            sectionInfo.Add(InfoCell);
+
 
             // Misc. Config
             TableSection sectionMisc = new TableSection("Misc.");

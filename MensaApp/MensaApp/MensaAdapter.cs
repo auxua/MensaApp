@@ -54,8 +54,10 @@ namespace MensaApp
 			{ "Bistro", new Uri("http://www.studierendenwerk-aachen.de/speiseplaene/templergraben-w.html")}, 
 			{ "Bayernallee", new Uri("http://www.studierendenwerk-aachen.de/speiseplaene/bayernallee-w.html")},
 			{ "Eupener Straße", new Uri("http://www.studierendenwerk-aachen.de/speiseplaene/eupenerstrasse-w.html")},
-			{ "Gastro Goethe", new Uri("http://www.studierendenwerk-aachen.de/speiseplaene/goethestrasse-w.html")},
-			{ "Mensa Vita", new Uri("http://www.studierendenwerk-aachen.de/speiseplaene/vita-w.html")},
+            { "Mensa Vita", new Uri("http://www.studierendenwerk-aachen.de/speiseplaene/vita-w.html")},
+            { "Mensa Jülich", new Uri("https://www.studierendenwerk-aachen.de/de/Gastronomie/mensa-juelich-wochenplan.html")},
+            
+            //{ "Gastro Goethe", new Uri("http://www.studierendenwerk-aachen.de/speiseplaene/goethestrasse-w.html")},	
 			/*{ "Forum Cafete", new Uri("http://www.studierendenwerk-aachen.de/speiseplaene/forum-w.html")},*/
         };
 

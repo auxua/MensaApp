@@ -180,6 +180,12 @@
   <data name="No" xml:space="preserve">
     <value>No</value>
   </data>
+  <data name="OpenWeb" xml:space="preserve">
+    <value>Open in Browser 📲</value>
+  </data>
+  <data name="PrivacyPolicy" xml:space="preserve">
+    <value>Privacy Policy</value>
+  </data>
   <data name="Proteins" xml:space="preserve">
     <value>Proteins</value>
   </data>
@@ -197,6 +203,9 @@
   </data>
   <data name="TapHere" xml:space="preserve">
     <value>Tap here for details</value>
+  </data>
+  <data name="TapWeb" xml:space="preserve">
+    <value>Tap for Full Policy Online</value>
   </data>
   <data name="TestText" xml:space="preserve">
     <value>This is a simple Test</value>

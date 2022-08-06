@@ -180,6 +180,12 @@
   <data name="No" xml:space="preserve">
     <value>Nein</value>
   </data>
+  <data name="OpenWeb" xml:space="preserve">
+    <value>Im Browser öffnen 📲</value>
+  </data>
+  <data name="PrivacyPolicy" xml:space="preserve">
+    <value>Datenschutz</value>
+  </data>
   <data name="Proteins" xml:space="preserve">
     <value>Eiweiß</value>
   </data>
@@ -197,6 +203,9 @@
   </data>
   <data name="TapHere" xml:space="preserve">
     <value>Hier drücken für Details</value>
+  </data>
+  <data name="TapWeb" xml:space="preserve">
+    <value>Tippen für Details (online)</value>
   </data>
   <data name="TestText" xml:space="preserve">
     <value>Dies ist ein einfacher Test</value>

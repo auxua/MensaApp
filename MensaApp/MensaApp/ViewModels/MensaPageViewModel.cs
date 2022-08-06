@@ -326,6 +326,15 @@ namespace MensaApp.ViewModels
             }
         }
 
+        private ICommand openWebCommand;
+        public ICommand OpenWebCommand
+        {
+            get
+            {
+                return this.openWebCommand;
+            }
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         public void RaisePropertyChanged(string propName)
@@ -381,6 +390,28 @@ namespace MensaApp.ViewModels
                     this.nextDayString = value;
                 }
                 RaisePropertyChanged("NextDayString");
+            }
+        }
+
+        private string openWebString;
+
+        public string OpenWebString
+        {
+            get
+            {
+                return this.openWebString;
+            }
+            set
+            {
+                if (string.IsNullOrEmpty(value))
+                {
+                    this.openWebString = ">";
+                }
+                else
+                {
+                    this.openWebString = value;
+                }
+                RaisePropertyChanged("openWebString");
             }
         }
 
@@ -476,6 +507,7 @@ namespace MensaApp.ViewModels
         {
             //this.DishesString = "DishTest";
             this.DishesString = Localization.Localize("DishesString");
+            this.OpenWebString = Localization.Localize("OpenWeb");
             //this.PreviousDayString = Localization.Localize("PreviousDayString");
             //this.NextDayString = Localization.Localize("NextDayString");
 
@@ -501,6 +533,15 @@ namespace MensaApp.ViewModels
             this.Busy = true;
 
             DetectLowerMargin();
+
+            this.openWebCommand = new Command( () =>
+            {
+                try
+                {
+                    var url = MensaAdapter.Mensen[MensaName];
+                    Device.OpenUri(url);
+                } catch { }
+            });
 
             // Trigger the MensaDB to get the Mensa Data
             this.loadAllDataCommand = new Command(async () => 
