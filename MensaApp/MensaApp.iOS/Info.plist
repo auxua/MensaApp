@@ -40,8 +40,8 @@
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.7.1</string>
+	<string>1.8.0</string>
 	<key>CFBundleVersion</key>
-	<string>171.1</string>
+	<string>180.0</string>
 </dict>
 </plist>
