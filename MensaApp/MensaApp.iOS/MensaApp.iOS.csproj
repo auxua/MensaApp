@@ -12,6 +12,7 @@
     <AssemblyName>MensaAppiOS</AssemblyName>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <ProvisioningType>manual</ProvisioningType>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhoneSimulator' ">
     <DebugSymbols>true</DebugSymbols>
@@ -29,6 +30,8 @@
     <MtouchOptimizePNGs>True</MtouchOptimizePNGs>
     <CodesignProvision>Mensa PP 22</CodesignProvision>
     <MtouchLink>SdkOnly</MtouchLink>
+    <MtouchSdkVersion>
+    </MtouchSdkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhoneSimulator' ">
     <DebugType>none</DebugType>
@@ -106,6 +109,9 @@
     <MtouchI18n>
     </MtouchI18n>
     <MtouchLink>SdkOnly</MtouchLink>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(RunConfiguration)' == 'Default' ">
+    <AppExtensionDebugBundleId />
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Locale_iOS.cs" />
