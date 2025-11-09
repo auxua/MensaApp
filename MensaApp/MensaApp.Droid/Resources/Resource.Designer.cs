@@ -2987,7 +2987,7 @@ namespace MensaApp.Droid
 			public const int settings = 2131165492;
 			
 			// aapt resource value: 0x7F070135
-			public const int settingsPadded = 2131165493;
+			public const int settingspadded = 2131165493;
 			
 			// aapt resource value: 0x7F070136
 			public const int tooltip_frame_dark = 2131165494;

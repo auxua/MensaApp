@@ -1,0 +1,93 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MensaApp2.Pages.MensaPage"
+             xmlns:local="clr-namespace:MensaApp2.Pages.Converter"
+             BackgroundColor="#FFFFFF"
+             IsBusy="{Binding Busy}"
+             Title="{Binding MensaName}">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <local:NutritionToStringConverter x:Key="NutritionConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.Padding>
+        30, 20, 20, 0
+    </ContentPage.Padding>
+    <ContentPage.ToolbarItems BackgroundColor="#00549f">
+        <!--<ToolbarItem Name="Previous Day" Order="Primary" Priority="0" />
+    <ToolbarItem Name="Today" Order="Primary" Priority="1" Activated="ToolBarTodayClicked" />
+    <ToolbarItem Name="Next Day" Order="Primary" Priority="2" />-->
+
+        <!--- Xamarin Bug! Use the version without Icon for compilation on OS X, the other one for VS Compilations -->
+        <ToolbarItem Text="Config" Order="Primary" Priority="0" Clicked="ToolbarItem_Clicked" IconImageSource="settingspadded.png" />
+        <!--<ToolbarItem Name="Config" Order="Primary" Priority="0" Activated="ConfigClicked" />-->
+    </ContentPage.ToolbarItems>
+    <StackLayout Orientation="Vertical" VerticalOptions="Fill" Spacing="3" HorizontalOptions="Fill">
+        <!--<StackLayout Orientation="Horizontal" Spacing="8" HorizontalOptions="CenterAndExpand" x:Name="MensaStack">
+            <Button FontAttributes="Bold" FontSize="Large" VerticalOptions="CenterAndExpand" Text="{Binding PreviousMensaString}" HorizontalOptions="Center" TextColor="#00549f" x:Name="PrevMensaButton" BackgroundColor="#FFFFFF" IsEnabled="{Binding HasData}" BorderWidth="0" BorderColor="#FFFFFF" />
+          <Label x:Name="MensaLabel" FontAttributes="Bold" FontSize="Large" VerticalOptions="CenterAndExpand" Text="{Binding MensaName}" HorizontalOptions="CenterAndExpand" TextColor="#00549f" />
+            <Button FontAttributes="Bold" FontSize="Large" VerticalOptions="CenterAndExpand" Text="{Binding NextMensaString}" HorizontalOptions="Center" TextColor="#00549f" x:Name="NextMensaButton" BackgroundColor="#FFFFFF" IsEnabled="{Binding HasData}" BorderWidth="0"  BorderColor="#FFFFFF" />
+        </StackLayout>-->
+        <StackLayout Orientation="Horizontal" Spacing="8" HorizontalOptions="FillAndExpand" x:Name="MensaStack">
+            <Button FontAttributes="Bold" FontSize="Large" VerticalOptions="CenterAndExpand" Text="{Binding PreviousMensaString}" HorizontalOptions="StartAndExpand" TextColor="#00549f" x:Name="PrevMensaButton" BackgroundColor="#FFFFFF" IsEnabled="{Binding HasData}" BorderWidth="0" BorderColor="#FFFFFF" />
+            <Label x:Name="MensaLabel" FontAttributes="Bold" FontSize="Large" VerticalOptions="CenterAndExpand" Text="{Binding MensaName}" HorizontalOptions="CenterAndExpand" TextColor="#00549f" />
+            <Button FontAttributes="Bold" FontSize="Large" VerticalOptions="CenterAndExpand" Text="{Binding NextMensaString}" HorizontalOptions="EndAndExpand" TextColor="#00549f" x:Name="NextMensaButton" BackgroundColor="#FFFFFF" IsEnabled="{Binding HasData}" BorderWidth="0"  BorderColor="#FFFFFF" />
+        </StackLayout>
+        <StackLayout Orientation="Vertical" Padding="2, 2, 1, 5" HorizontalOptions="CenterAndExpand" IsVisible="{Binding Busy}">
+            <Label Text="{Binding Status}" TextColor="Black" />
+            <ActivityIndicator IsRunning="{Binding Busy}" IsVisible="{Binding Busy}" />
+        </StackLayout>
+        <Label TextColor="Red" Text="{Binding ErrorMessage}" IsVisible="{Binding HasErrorMessage}" />
+        <StackLayout VerticalOptions="StartAndExpand" HorizontalOptions="CenterAndExpand" Orientation="Vertical" IsVisible="{Binding HasData}">
+            <Label FontSize="Large" Text="{Binding DishesString}" HorizontalOptions="Center" TextColor="#00549f" />
+            <ListView VerticalOptions="Start" ItemsSource="{Binding Items}" HasUnevenRows="True">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <!--<TextCell Text="{Binding Name}" Detail="{Binding Kind}" />-->
+                        <ViewCell>
+                            <ViewCell.View>
+                                <!--<StackLayout Orientation="Horizontal" VerticalOptions="Fill" HorizontalOptions="Fill">
+                      <StackLayout Orientation="Vertical" HorizontalOptions="StartAndExpand">
+                        <Label FontAttributes="Bold" Text="{Binding Name}" />
+                        <Label FontSize="Small" Text="{Binding Kind}" />
+                      </StackLayout>
+                      <Label FontAttributes="Italic" FontSize="Small" VerticalOptions="Center" HorizontalOptions="EndAndExpand" Text="{Binding Price}" />
+                    </StackLayout>-->
+
+                                <StackLayout Orientation="Vertical" HorizontalOptions="StartAndExpand">
+                                    <Label FontSize="Micro" Text="{Binding Special}" TextColor="#f0509a" />
+                                    <!--<Label FontSize="Small" Text="{Binding Special}" TextColor="#f0509a" />-->
+                                    <Label FontAttributes="Bold" Text="{Binding Name}" TextColor="#00549f" />
+                                    <StackLayout Orientation="Horizontal">
+                                        <Label FontSize="Small" Text="{Binding Kind}" TextColor="Black" />
+                                        <!--<Label FontSize="Small" Text="{Binding Special}" TextColor="#f0509a" />-->
+                                        <Label FontSize="Small" FontAttributes="Italic" Text="{Binding Price}" TextColor="Gray" />
+                                    </StackLayout>
+                                    <StackLayout Orientation="Horizontal">
+                                        <Label FontSize="Small"
+                                   TextColor="Black"
+                                   Text="{Binding NutritionInfo,Converter={x:StaticResource NutritionConverter}}" />
+                                    </StackLayout>
+                                    <!--<Label FontSize="Small" Text=" " />-->
+                                    <!-- Just add for some padding in here -->
+
+                                </StackLayout>
+                            </ViewCell.View>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+            <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand" Spacing="30" Margin="{Binding LowerMargin}">
+                <Button HorizontalOptions="Start" VerticalOptions="Center" Text="{Binding PreviousDayString}" TextColor="Black" FontSize="Large" BackgroundColor="#FFFFFF" x:Name="PrevDayButton" BorderWidth="0"  BorderColor="#FFFFFF" />
+                <Label HorizontalOptions="Center" VerticalOptions="Center" Text="{Binding DateAsString}" TextColor="Black" />
+                <Button HorizontalOptions="End" VerticalOptions="Center" Text="{Binding NextDayString}" TextColor="Black" FontSize="Large" BackgroundColor="#FFFFFF" x:Name="NextDayButton" BorderWidth="0"  BorderColor="#FFFFFF" />
+
+            </StackLayout>
+            <Button Text="{Binding OpenWebString}" Command="{Binding OpenWebCommand}" />
+
+        </StackLayout>
+    </StackLayout>
+</ContentPage>
