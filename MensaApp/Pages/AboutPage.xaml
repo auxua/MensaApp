@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:pageModels="clr-namespace:MensaApp.PageModels"
+             xmlns:models="clr-namespace:MensaApp.Models"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:res="clr-namespace:MensaApp.Resources.Strings"
+             x:DataType="pageModels:AboutPageModel"
+             x:Class="MensaApp.Pages.AboutPage"
+             x:Name="AboutPg"
+             Title="{x:Static res:AppRessources.About}">
+
+    <!--<ContentPage.Behaviors>
+        <toolkit:EventToCommandBehavior
+                BindingContext="{Binding Path=BindingContext, Source={x:Reference MetaPage}, x:DataType=ContentPage}"
+                EventName="Appearing"                
+                Command="{Binding AppearingCommand}" />
+    </ContentPage.Behaviors>-->
+
+    <!--<ContentPage.ToolbarItems>
+        <ToolbarItem Text="Feedback" Command="{Binding FeedbackCommand}" />
+    </ContentPage.ToolbarItems>-->
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+
+            <Color x:Key="SettingsBgLight">#F6F6F6</Color>
+            <Color x:Key="SettingsBgDark">#121212</Color>
+
+            <Color x:Key="CardBgLight">#FFFFFF</Color>
+            <Color x:Key="CardBgDark">#1E1E1E</Color>
+
+            <Color x:Key="PrimaryTextLight">#111111</Color>
+            <Color x:Key="PrimaryTextDark">#FFFFFF</Color>
+
+            <Color x:Key="SecondaryTextLight">#666666</Color>
+            <Color x:Key="SecondaryTextDark">#BBBBBB</Color>
+
+            <Color x:Key="SeparatorLight">#E5E5E5</Color>
+            <Color x:Key="SeparatorDark">#2A2A2A</Color>
+
+            <!-- Styles -->
+            <Style x:Key="SectionTitleStyle" TargetType="Label">
+                <Setter Property="FontSize" Value="14"/>
+                <Setter Property="FontAttributes" Value="Bold"/>
+                <Setter Property="TextColor"
+                Value="{AppThemeBinding Light={StaticResource SecondaryTextLight},
+                                        Dark={StaticResource SecondaryTextDark}}" />
+                <Setter Property="Margin" Value="4,16,4,8"/>
+            </Style>
+
+            <Style x:Key="CardStyle" TargetType="Border">
+                <Setter Property="StrokeThickness" Value="0"/>
+                <Setter Property="StrokeShape" Value="RoundRectangle 16"/>
+                <Setter Property="Background"
+                Value="{AppThemeBinding Light={StaticResource CardBgLight},
+                                     Dark={StaticResource CardBgDark}}" />
+                <Setter Property="Padding" Value="12"/>
+            </Style>
+
+            <Style x:Key="RowTitleStyle" TargetType="Label">
+                <Setter Property="FontSize" Value="16"/>
+                <Setter Property="TextColor"
+                Value="{AppThemeBinding Light={StaticResource PrimaryTextLight},
+                                     Dark={StaticResource PrimaryTextDark}}" />
+            </Style>
+
+            <Style x:Key="RowDetailStyle" TargetType="Label">
+                <Setter Property="FontSize" Value="12"/>
+                <Setter Property="TextColor"
+                Value="{AppThemeBinding Light={StaticResource SecondaryTextLight},
+                                        Dark={StaticResource SecondaryTextDark}}" />
+                <Setter Property="Margin" Value="0,2,0,0"/>
+            </Style>
+
+            <Style x:Key="SeparatorStyle" TargetType="BoxView">
+                <Setter Property="HeightRequest" Value="1"/>
+                <Setter Property="HorizontalOptions" Value="Fill"/>
+                <Setter Property="Background"
+                Value="{AppThemeBinding Light={StaticResource CardBgLight},
+                                     Dark={StaticResource CardBgDark}}" />
+            </Style>
+
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.BackgroundColor>
+        {AppThemeBinding Light={StaticResource SettingsBgLight},
+                Dark={StaticResource SettingsBgDark}}
+    </ContentPage.BackgroundColor>
+
+    <ScrollView>
+        <VerticalStackLayout Padding="16" Spacing="12">
+
+            <!-- Section 1: Logo+Name -->
+            <Image Source="mensarounded.png"
+                   Aspect="AspectFit"
+                   HeightRequest="150"
+                   WidthRequest="150"
+                   HorizontalOptions="Center" />
+            <Label Text="Mensa Aachen App" HorizontalTextAlignment="Center" Style="{StaticResource RowTitleStyle}" />
+
+            <!-- Section 2: Info -->
+            <Label Text="Info" Style="{StaticResource SectionTitleStyle}" />
+
+            <Border Style="{StaticResource CardStyle}">
+                <VerticalStackLayout Spacing="0">
+                    <Grid Padding="0,10" ColumnDefinitions="*,Auto">
+                        <VerticalStackLayout Spacing="0">
+                            <Label Text="Version" Style="{StaticResource RowTitleStyle}" />
+                            <Label Text="{Binding Version}"
+                                   Style="{StaticResource RowDetailStyle}" />
+                        </VerticalStackLayout>
+
+                        <!--<Label Grid.Column="1"
+                               Text="›"
+                               FontSize="22"
+                               VerticalOptions="Center"
+                               TextColor="{AppThemeBinding Light={StaticResource SecondaryTextLight},
+                                                       Dark={StaticResource SecondaryTextDark}}" />-->
+                    </Grid>
+                    <BoxView Style="{StaticResource SeparatorStyle}" />
+                    <Grid Padding="0,10" ColumnDefinitions="*,Auto" >
+                        <VerticalStackLayout Spacing="0">
+                            <Label Text="Source Code (GitHub)" Style="{StaticResource RowTitleStyle}" />
+                            <Label Text="https://github.com/auxua/MensaApp"
+                                    Style="{StaticResource RowDetailStyle}" />
+                        </VerticalStackLayout>
+
+                        <Label Grid.Column="1"
+                               Text="›"
+                               FontSize="22"
+                               VerticalOptions="Center"
+                               TextColor="{AppThemeBinding Light={StaticResource SecondaryTextLight},
+                                   Dark={StaticResource SecondaryTextDark}}" />
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding OpenCodeCommand}" />
+                        </Grid.GestureRecognizers>
+                    </Grid>
+
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Section 3 -->
+            <Label Text="{x:Static res:AppRessources.Note}" Style="{StaticResource SectionTitleStyle}" />
+
+            <Border Style="{StaticResource CardStyle}">
+                <VerticalStackLayout Spacing="0">
+
+                    <!-- Reload -->
+                    <Grid Padding="0,10" ColumnDefinitions="*,Auto">
+                        <VerticalStackLayout Spacing="0">
+                            <Label Text="{x:Static res:AppRessources.NotSTW}" Style="{StaticResource RowTitleStyle}" />
+                            <Label Text=" "
+                               Style="{StaticResource RowDetailStyle}" />
+                        </VerticalStackLayout>
+                    </Grid>
+
+                </VerticalStackLayout>
+            </Border>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

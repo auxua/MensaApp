@@ -1,10 +1,7 @@
-﻿﻿using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using static MensaPortable.DataTypes;
 
 namespace MensaPortable
 {
@@ -18,7 +15,7 @@ namespace MensaPortable
             if (!dish.Name.StartsWith(prefix)) return;
 
             dish.NutritionInfo = new Nutrition();
-            var splits = dish.Name.Split(new string[] { "<br />", "<br/>" , "<div>" }, StringSplitOptions.RemoveEmptyEntries);
+            var splits = dish.Name.Split(new string[] { "<br />", "<br/>", "<div>" }, StringSplitOptions.RemoveEmptyEntries);
             foreach (var inner in splits)
             {
                 if (dish.NutritionInfo.Caloric == null && inner.StartsWith("<div class=\"nutr-info\">"))
@@ -26,7 +23,7 @@ namespace MensaPortable
                     dish.NutritionInfo.Caloric = inner.Replace("<div class=\"nutr-info\">", "").Replace("Brennwert = ", "");
                 }
                 else if (dish.NutritionInfo.Caloric == null && inner.StartsWith("Brennwert"))
-                    dish.NutritionInfo.Caloric = inner.Replace("Brennwert = ", "").Replace("</div>","");
+                    dish.NutritionInfo.Caloric = inner.Replace("Brennwert = ", "").Replace("</div>", "");
                 else if (dish.NutritionInfo.Fat == null && inner.StartsWith("Fett"))
                     dish.NutritionInfo.Fat = inner.Replace("Fett = ", "").Replace("</div>", "");
                 else if (dish.NutritionInfo.Carbohydrates == null && inner.StartsWith("Kohlenhydrate"))
@@ -40,9 +37,9 @@ namespace MensaPortable
             // Cleanup different trailing texts
             if (String.IsNullOrWhiteSpace(dish.NutritionInfo.Proteins)) return;
             var pos = dish.NutritionInfo.Proteins.IndexOf("g");
-            if (dish.NutritionInfo.Proteins.Length <= pos+1) return;
-            dish.NutritionInfo.Proteins = dish.NutritionInfo.Proteins.Remove(pos+1);
-            
+            if (dish.NutritionInfo.Proteins.Length <= pos + 1) return;
+            dish.NutritionInfo.Proteins = dish.NutritionInfo.Proteins.Remove(pos + 1);
+
         }
     }
 
@@ -50,12 +47,12 @@ namespace MensaPortable
     {
 
         #region Singleton implementation
-        
+
         private static MenuDB instance;
 
         private MenuDB()
         {
-            this.Dishes = new List<DataTypes.Dish>();
+            this.Dishes = new List<Dish>();
         }
 
         public static MenuDB Instance
@@ -74,7 +71,7 @@ namespace MensaPortable
 
         #region Data Fields
 
-        internal List<DataTypes.Dish> Dishes;
+        internal List<Dish> Dishes;
 
         #endregion
 
@@ -129,29 +126,29 @@ namespace MensaPortable
             }*/
 
 
-            public IList<DataTypes.Dish> ExecuteQuery()
+            public IList<Dish> ExecuteQuery()
             {
                 // Get all items matching the Query
-                List<DataTypes.Dish> list = MenuDB.Instance.Dishes.FindAll((x) =>
-                    {
-                        // If Query-Date is set and the item is not matching
-                        if ((this.date != default(DateTime)) && (!this.date.Equals(x.Date)))
-                            return false;
+                List<Dish> list = MenuDB.Instance.Dishes.FindAll((x) =>
+                {
+                    // If Query-Date is set and the item is not matching
+                    if ((this.date != default(DateTime)) && (!this.date.Equals(x.Date)))
+                        return false;
 
-                        if ((this.Kind != null) && (!(this.Kind == x.Kind)) && (!(x.isSideDish())))
-                            return false;
+                    if ((this.Kind != null) && (!(this.Kind == x.Kind)) && (!(x.IsSideDish)))
+                        return false;
 
-                        if ((!this.MainDishes) && (!x.isSideDish()))
-                            return false;
+                    if ((!this.MainDishes) && (!x.IsSideDish))
+                        return false;
 
-                        if ((!this.SideDishes) && (x.isSideDish()))
-                            return false;
+                    if ((!this.SideDishes) && (x.IsSideDish))
+                        return false;
 
-                        if ((this.Mensa != null) && (x.Mensa != this.Mensa))
-                            return false;
+                    if ((this.Mensa != null) && (x.Mensa != this.Mensa))
+                        return false;
 
-                        return true;
-                    });
+                    return true;
+                });
                 return list;
             }
         }
@@ -160,9 +157,9 @@ namespace MensaPortable
 
         #region Importer
 
-        public bool ImportFromSources(Dictionary<string,string> sourcesFromMensa)
+        public bool ImportFromSources(Dictionary<string, string> sourcesFromMensa)
         {
-            foreach(KeyValuePair<string,string> s in sourcesFromMensa)
+            foreach (KeyValuePair<string, string> s in sourcesFromMensa)
             {
                 if (!ImportFromSource(s.Key, s.Value))
                     return false;
@@ -206,12 +203,12 @@ namespace MensaPortable
 
                 // Remove newlines
                 source = source.Replace("\n", " ");
-                
+
                 //string regex = "<h3 class=\"default-headline\">\\s*<a.*?>(.*?)<\\/a>";
                 //string days = "<h3.*?>\\s*?<a.*?>\\s*?(.*?\\n.*?)\\s*?<\\/a>";
                 string days = "<h3.*?>\\s*?<a.*?>\\s*?(.*?)\\s*?<\\/a>\\s*?<\\/h3>";
                 //string regex = "<div.*?>\\s*?(<table.*?>.*?<\\/table>).*?(<table.*?>.*?<\\/table>).*?<\\/div>";
-            
+
                 /*
                  * 
                  * Groups:
@@ -220,7 +217,7 @@ namespace MensaPortable
                  *  3: table of side dishes
                  * 
                  * */
-                string regex = days+"\\s*?<div.*?>\\s*?(<table.*?>.*?<\\/table>).*?(<table.*?>.*?<\\/table>).*?<\\/div>";
+                string regex = days + "\\s*?<div.*?>\\s*?(<table.*?>.*?<\\/table>).*?(<table.*?>.*?<\\/table>).*?<\\/div>";
                 //Match match = Regex.Match(source, regex);
 
                 MatchCollection matches = Regex.Matches(source, regex);
@@ -238,13 +235,13 @@ namespace MensaPortable
                     DateTime date = getDateFromDayString(m.Groups[1].Value);
                     if (!String.IsNullOrEmpty(rawPopup))
                         this.Dishes.Add(new Dish(rawPopup, "NOTE", date, MensaName));
-                    
-                    this.Dishes.AddRange(getDishesFromTable(m.Groups[2].Value,MensaName,date));
-                    this.Dishes.AddRange(getSideDishesFromTable(m.Groups[3].Value,date,MensaName));
+
+                    this.Dishes.AddRange(getDishesFromTable(m.Groups[2].Value, MensaName, date));
+                    this.Dishes.AddRange(getSideDishesFromTable(m.Groups[3].Value, date, MensaName));
                     //Console.WriteLine(m.Groups[1].Value + "||" + m.Groups[2].Value + "||" + m.Groups[3].Value);
                 }
 
-                
+
                 return true;
             }
             catch (Exception ex)
@@ -253,9 +250,9 @@ namespace MensaPortable
             }
         }
 
-        private List<DataTypes.Dish> getSideDishesFromTable(string p,DateTime date, string MensaName, string popup=null)
+        private List<Dish> getSideDishesFromTable(string p, DateTime date, string MensaName, string popup = null)
         {
-            List<DataTypes.Dish> list = new List<DataTypes.Dish>();
+            List<Dish> list = new List<Dish>();
             /*
              * 
              * Groups:
@@ -272,7 +269,7 @@ namespace MensaPortable
             //string regex = "<tr.*?>.*?<td.*?>.*?<span.*?>(.*?)<\\/span>.*?<span.*?>(.*?<span class=\"or\">oder<\\/span>.*?)<\\/span>\\s*<\\/td>.*?<\\/tr>";
             // New Regex - adapted to new STW page, also Side dishes may not have a kind name
             string regex = "<tr>.*?<span.*?>(.*?)<\\/span><span.*?>(.*?)<\\/span><\\/td>";
-            
+
 
             //string regex = "<tr.*?>.*?<td.*?>(.*?)<\\/td>.*?<td.*?>(.*?)<\\/td>.*?<td><\\/td>.*?<\\/tr>";
             MatchCollection matches = Regex.Matches(p, regex);
@@ -280,7 +277,7 @@ namespace MensaPortable
             foreach (Match m in matches)
             {
                 //Console.WriteLine(m.Groups[1].Value.Trim() + ": " + m.Groups[2].Value.Trim());
-                DataTypes.Dish dish = new DataTypes.Dish(m.Groups[2].Value.Trim(), m.Groups[1].Value.Trim(), date, MensaName);
+                Dish dish = new Dish(m.Groups[2].Value.Trim(), m.Groups[1].Value.Trim(), date, MensaName);
                 // Not Continued by STW
                 //dish.ExtractNutritionInfo();
                 list.Add(dish);
@@ -296,9 +293,9 @@ namespace MensaPortable
             return date;
         }
 
-        private List<DataTypes.Dish> getDishesFromTable(string p, string MensaName, DateTime date)
+        private List<Dish> getDishesFromTable(string p, string MensaName, DateTime date)
         {
-            List<DataTypes.Dish> list = new List<DataTypes.Dish>();
+            List<Dish> list = new List<Dish>();
             /*
              * 
              * Groups:
@@ -319,13 +316,14 @@ namespace MensaPortable
             {
                 //Console.WriteLine(m.Groups[1].Value.Trim() + ": " + m.Groups[2].Value.Trim() + " for " + m.Groups[3].Value.Trim());
                 //DataTypes.Dish dish = new DataTypes.Dish(m.Groups[2].Value.Trim(), m.Groups[1].Value.Trim(), date, MensaName, m.Groups[3].Value.Trim());
-                DataTypes.Dish dish = new DataTypes.Dish(
+                Dish dish = new Dish(
                     m.Groups[2].Value.Trim(),
                     m.Groups[1].Value.Trim(),
-                    date, 
-                    MensaName, 
+                    date,
+                    MensaName,
                     m.Groups[3].Value.Trim()
                     );
+                dish.ExtractTags(m.Groups[0].Value);
                 dish.ExtractNutritionInfo();
                 list.Add(dish);
             }
@@ -336,21 +334,21 @@ namespace MensaPortable
 
         #region Store/Load interface
 
-        public interface StoreLoader
+        public interface IStoreLoader
         {
-            List<DataTypes.Dish> LoadDishes();
+            List<Dish> LoadDishes();
 
-            bool StoreDishes(List<DataTypes.Dish> dishes);
+            bool StoreDishes(List<Dish> dishes);
         }
 
-        public bool StoreDB(StoreLoader sl)
+        public bool StoreDB(IStoreLoader sl)
         {
             return sl.StoreDishes(this.Dishes);
         }
 
-        public bool LoadDB(StoreLoader sl)
+        public bool LoadDB(IStoreLoader sl)
         {
-            List<DataTypes.Dish> dishes = sl.LoadDishes();
+            List<Dish> dishes = sl.LoadDishes();
             if (dishes == null)
                 return false;
 
@@ -360,12 +358,12 @@ namespace MensaPortable
 
         #endregion
 
-        public void Reset(StoreLoader sl)
+        public void Reset(IStoreLoader sl)
         {
             this.Dishes.Clear();
             this.StoreDB(sl);
         }
-        
+
         public void Reset()
         {
             this.Dishes.Clear();
@@ -376,14 +374,14 @@ namespace MensaPortable
             // In case of empty set (e.g. holidays), return old value;
             if (this.Dishes.Count == 0) return dt;
             DateTime now = dt.AddMonths(1);
-            
-            List<DataTypes.Dish> list = MenuDB.Instance.Dishes.FindAll((x) =>
+
+            List<Dish> list = MenuDB.Instance.Dishes.FindAll((x) =>
             {
-                
+
                 // If Query-Date is set and the item is not matching
-                if (DateTime.Compare(dt,x.Date) <0)
+                if (DateTime.Compare(dt, x.Date) < 0)
                 {
-                    if (DateTime.Compare(now,x.Date) > 0)
+                    if (DateTime.Compare(now, x.Date) > 0)
                     {
                         now = x.Date;
                     }
@@ -407,7 +405,7 @@ namespace MensaPortable
             DateTime now = dt.Date.AddMonths(-2);
             //now = now.AddDays(-1);
 
-            List<DataTypes.Dish> list = MenuDB.Instance.Dishes.FindAll((x) =>
+            List<Dish> list = MenuDB.Instance.Dishes.FindAll((x) =>
             {
 
                 // If Query-Date is set and the item is not matching
@@ -425,21 +423,21 @@ namespace MensaPortable
             /*if (DateTime.Compare(now, dt) == 0)
                 return dt_back;*/
 
-            if (DateTime.Compare(now, dt.Date.AddMonths(-1))<0)
+            if (DateTime.Compare(now, dt.Date.AddMonths(-1)) < 0)
                 return dt;
 
             return now;
         }
-        
-        public bool isOutdated()
+
+        public bool IsOutdated()
         {
             if (MenuDB.Instance.Dishes.Count == 0)
                 return true;
             return !MenuDB.Instance.Dishes.Any((x) =>
-                {
-                    return (DateTime.Compare(x.Date, DateTime.Now.Date) >= 0);
-                });
-            
+            {
+                return (DateTime.Compare(x.Date, DateTime.Now.Date) >= 0);
+            });
+
         }
     }
 }

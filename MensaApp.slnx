@@ -1,0 +1,7 @@
+<Solution>
+  <Project Path="MensaApp/MensaApp.csproj">
+    <Deploy Solution="Debug|*" />
+  </Project>
+  <Project Path="MensaConsole/MensaConsole.csproj" Id="f11adfd2-0890-4804-85a6-9e146b423cb1" />
+  <Project Path="MensaPortable/MensaPortable.csproj" />
+</Solution>

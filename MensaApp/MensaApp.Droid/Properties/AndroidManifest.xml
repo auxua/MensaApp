@@ -1,6 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:installLocation="auto" android:versionName="1.8.0" package="com.auxua.mensaapp" android:versionCode="180">
-	<uses-sdk android:targetSdkVersion="30" android:minSdkVersion="19" />
-	<uses-permission android:name="android.permission.INTERNET" />
-	<application android:icon="@drawable/Icon" android:label="Mensa Aachen"></application>
-</manifest>
