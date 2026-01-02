@@ -29,7 +29,7 @@
         </Image>
         <Label Text="{Binding Kind}" TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray400}}" FontSize="14" TextTransform="Uppercase"/>
         <Label Text="{Binding Name}" LineBreakMode="WordWrap"/>
-        <Label Text="{Binding Price}" Margin="20 0 0 0" TextColor="Grey" FontAttributes="Italic" FontSize="Small" HorizontalOptions="End" />
+        <Label Text="{Binding Price}" Margin="20,0,0,0" TextColor="Grey" FontAttributes="Italic" FontSize="Small" HorizontalOptions="End" />
         <HorizontalStackLayout Spacing="6"
                        BindableLayout.ItemsSource="{Binding Tags}">
             <BindableLayout.ItemTemplate>

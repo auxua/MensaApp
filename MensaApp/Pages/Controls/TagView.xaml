@@ -10,7 +10,7 @@
         StrokeThickness="0" 
         Background="{Binding Name, Converter={StaticResource DishTagColorConverter}}"
         Padding="{OnPlatform '12,0,12,8',Android='12,0,12,0'}"
-        Margin="2 2 2 2"
+        Margin="2,2,2,2"
         x:DataType="mensa:DishTag">
         
         <Label Text="{Binding Name}" x:Name="TitleLabel"
