@@ -8,7 +8,7 @@
   xmlns:desktop="http://schemas.microsoft.com/appx/manifest/desktop/windows10"
   IgnorableNamespaces="uap rescap com desktop">
 
-  <Identity Name="1349ArnoSchmetz.MensaAachen" Publisher="CN=User Name" Version="2.0.0.0" />
+  <Identity Name="1349ArnoSchmetz.MensaAachenforWindows" Publisher="CN=User Name" Version="2.0.0.0" />
 
   <mp:PhoneIdentity PhoneProductId="FD188C02-4C48-4E2D-8373-1668231AD5E7" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 

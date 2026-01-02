@@ -147,16 +147,26 @@
             <Border Style="{StaticResource CardStyle}">
                 <VerticalStackLayout Spacing="0">
 
-                    <!-- Reload -->
                     <Grid Padding="0,10" ColumnDefinitions="*,Auto">
                         <VerticalStackLayout Spacing="0">
-                            <Label Text="{x:Static res:AppRessources.NotSTW}" Style="{StaticResource RowTitleStyle}" />
-                            <Label Text=" "
+                            <Label Text="Open Source Development" Style="{StaticResource RowTitleStyle}" />
+                            <Label Text="By Arno Schmetz | auxua "
                                Style="{StaticResource RowDetailStyle}" />
                         </VerticalStackLayout>
                     </Grid>
 
+                <BoxView Style="{StaticResource SeparatorStyle}" />
+
+                    <Grid Padding="0,10" ColumnDefinitions="*,Auto">
+                        <VerticalStackLayout Spacing="0">
+                            <Label Text="{x:Static res:AppRessources.NotSTW}" Style="{StaticResource RowTitleStyle}" />
+                            <Label Text=" "
+                                     Style="{StaticResource RowDetailStyle}" />
+                        </VerticalStackLayout>
+                    </Grid>
+
                 </VerticalStackLayout>
+
             </Border>
 
         </VerticalStackLayout>
