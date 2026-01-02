@@ -83,10 +83,10 @@
         </ResourceDictionary>
     </ContentPage.Resources>
 
-    <ContentPage.BackgroundColor>
-        {AppThemeBinding Light={StaticResource SettingsBgLight},
-                Dark={StaticResource SettingsBgDark}}
-    </ContentPage.BackgroundColor>
+    <!-- <ContentPage.BackgroundColor> -->
+    <!--     {AppThemeBinding Light={StaticResource SettingsBgLight}, -->
+    <!--             Dark={StaticResource SettingsBgDark}} -->
+    <!-- </ContentPage.BackgroundColor> -->
 
     <ScrollView>
         <VerticalStackLayout Padding="16" Spacing="12">
