@@ -1,7 +1,6 @@
 using CommunityToolkit.Maui.PlatformConfiguration.AndroidSpecific;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using MensaApp.Models;
 using MensaApp.Resources.Strings;
 using MensaPortable;
 using System.Collections.ObjectModel;

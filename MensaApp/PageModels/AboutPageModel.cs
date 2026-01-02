@@ -1,7 +1,6 @@
 using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using MensaApp.Models;
 using MensaApp.Services;
 
 namespace MensaApp.PageModels
