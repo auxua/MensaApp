@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Border xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+        xmlns:controls="clr-namespace:MensaApp.Pages.Controls"
+        xmlns:models="clr-namespace:MensaApp.Models"
+        xmlns:mensa="clr-namespace:MensaPortable;assembly=MensaPortable"
+        xmlns:fonts="clr-namespace:Fonts"
+        xmlns:pageModels="clr-namespace:MensaApp.PageModels"
+        xmlns:shimmer="clr-namespace:Syncfusion.Maui.Toolkit.Shimmer;assembly=Syncfusion.Maui.Toolkit"
+        xmlns:util="clr-namespace:MensaApp.Utilities"
+        x:Class="MensaApp.Pages.Controls.DishCardView"
+        SemanticProperties.Description="{Binding AccessibilityDescription}"
+        Style="{StaticResource CardStyle}"
+        MinimumHeightRequest="250"
+        BackgroundColor="Transparent"
+        x:DataType="mensa:Dish">
+    <VerticalStackLayout Spacing="15">
+        <Image HorizontalOptions="Start" Aspect="Center">
+
+            <Image.Source>
+                <!-- Default: IsSideDish == false -->
+                <FontImageSource
+                        Glyph="{Binding Icon}"
+                        FontFamily="{x:Static fonts:FluentUI.FontFamily}"
+                        Color="{AppThemeBinding Light={StaticResource DarkOnLightBackground},
+                                            Dark={StaticResource LightOnDarkBackground}}"
+                        Size="{StaticResource IconSize}" />
+            </Image.Source>
+        </Image>
+        <Label Text="{Binding Kind}" TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray400}}" FontSize="14" TextTransform="Uppercase"/>
+        <Label Text="{Binding Name}" LineBreakMode="WordWrap"/>
+        <Label Text="{Binding Price}" Margin="20,0,0,0" TextColor="Grey" FontAttributes="Italic" FontSize="Small" HorizontalOptions="End" />
+        <HorizontalStackLayout Spacing="6"
+                       BindableLayout.ItemsSource="{Binding Tags}">
+            <BindableLayout.ItemTemplate>
+                <DataTemplate x:DataType="mensa:DishTag">
+                    <controls:TagView />
+                </DataTemplate>
+            </BindableLayout.ItemTemplate>
+        </HorizontalStackLayout>
+
+    </VerticalStackLayout>
+</Border>

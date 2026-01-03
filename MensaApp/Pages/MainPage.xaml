@@ -1,0 +1,153 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:pageModels="clr-namespace:MensaApp.PageModels"             
+             xmlns:controls="clr-namespace:MensaApp.Pages.Controls"
+             xmlns:pullToRefresh="clr-namespace:Syncfusion.Maui.Toolkit.PullToRefresh;assembly=Syncfusion.Maui.Toolkit"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:mensa="clr-namespace:MensaPortable;assembly=MensaPortable"
+             x:Class="MensaApp.Pages.MainPage"
+             x:DataType="pageModels:MainPageModel"
+             x:Name="OverviewPage"
+             Title="Mensa">
+
+    <ContentPage.Behaviors>
+        <toolkit:EventToCommandBehavior
+                BindingContext="{Binding Path=BindingContext, Source={x:Reference OverviewPage}, x:DataType=ContentPage}"
+                EventName="NavigatedTo"
+                Command="{Binding NavigatedToCommand}" />
+        <toolkit:EventToCommandBehavior
+                BindingContext="{Binding Path=BindingContext, Source={x:Reference OverviewPage}, x:DataType=ContentPage}"
+                EventName="NavigatedFrom"
+                Command="{Binding NavigatedFromCommand}" />
+        <toolkit:EventToCommandBehavior
+                BindingContext="{Binding Path=BindingContext, Source={x:Reference OverviewPage}, x:DataType=ContentPage}"
+                EventName="Appearing"                
+                Command="{Binding AppearingCommand}" />
+    </ContentPage.Behaviors>
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <toolkit:InvertedBoolConverter x:Key="InvertedBoolConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <Grid>
+        <pullToRefresh:SfPullToRefresh
+            IsRefreshing="{Binding IsRefreshing}">
+            <pullToRefresh:SfPullToRefresh.PullableContent>
+                <!--<ScrollView>-->
+                    <Grid Padding="{StaticResource LayoutPadding}" RowSpacing="{StaticResource LayoutSpacing}">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+
+                        <!--<Label Grid.Row="0" Text="Task Categories" Style="{StaticResource Title2}" SemanticProperties.HeadingLevel="Level1"/>
+                        <controls:CategoryChart Grid.Row="1" />-->
+                        <!--<Grid Grid.Row="0" ColumnDefinitions="Auto,*,Auto" Margin="0 0 10 0">
+                            <Button Grid.Column="0" Text="&lt;" Padding="0 30 0 30" Command="{Binding PreviousMensaCommand}" />
+                            <Label Grid.Column="1" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Style="{StaticResource Title2}" Text="{Binding CurrentMensa}" />
+                            <Button Grid.Column="2" Text="&gt;" Padding="0 30 0 30" Command="{Binding NextMensaCommand}" />
+                        </Grid>-->
+
+                    <Grid Grid.Row="0" ColumnDefinitions="*,*" Margin="0,0,10,0">
+                        <Label Padding="0,0,10,0" Grid.Column="0" HorizontalTextAlignment="Start" VerticalTextAlignment="Center" Style="{StaticResource Title2}" Text="{Binding CurrentMensa}" />
+                        <Button Grid.Column="2" Text="Select 🔻" Padding="0,30,0,30" Command="{Binding SelectMensaCommand}" />
+                    </Grid>
+
+                    <!--<StackLayout Grid.Row="0"
+                                     VerticalOptions="Center"
+                                     HorizontalOptions="Center"
+                                     Orientation="Horizontal">
+                            <Button Text="&lt;" />
+                            <Label Text="{Binding CurrentMensa}" />
+                            <Button Text="&gt;" />
+                        </StackLayout>-->
+                                     
+
+                                     
+                        <!--<Label Grid.Row="1" Text="Mensa XXX"  Style="{StaticResource Title2}" SemanticProperties.HeadingLevel="Level1"/>-->
+                        <!--
+                        <CollectionView Grid.Row="3" ItemsSource="{Binding Projects}"
+                                        Margin="-7.5,0"
+                                        MinimumHeightRequest="250"
+                                        x:Name="ProjectsCollectionView"
+                                        SelectionMode="Single"
+                                        SelectedItem="{Binding SelectedProject}"
+                                        SelectionChangedCommand="{Binding NavigateToProjectCommand, Source={RelativeSource AncestorType={x:Type pageModels:MainPageModel}}, x:DataType=pageModels:MainPageModel}"
+                                        SelectionChangedCommandParameter="{Binding SelectedProject}">
+                            <CollectionView.ItemsLayout>
+                                <LinearItemsLayout Orientation="Horizontal" ItemSpacing="7.5"/>
+                            </CollectionView.ItemsLayout>
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate x:DataType="models:Project">
+                                    <controls:ProjectCardView WidthRequest="200" />
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                        -->
+
+                        <CollectionView Grid.Row="1"
+                            ItemsSource="{Binding CurrentDishes}"
+                            Margin="-7.5,0"
+                            ItemSizingStrategy="MeasureAllItems"
+                            x:Name="DishCollectionView"
+                            SelectionMode="Single">
+
+                            <CollectionView.ItemsLayout>
+                                <!-- Vertical scroll, items flow left-to-right then wrap to next row -->
+                                <GridItemsLayout Orientation="Vertical"
+                                     Span="2"
+                                     HorizontalItemSpacing="7.5"
+                                     VerticalItemSpacing="7.5" />
+                            </CollectionView.ItemsLayout>
+
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate x:DataType="mensa:Dish">
+                                    <controls:DishCardView />
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+
+                        <Grid Grid.Row="2" ColumnDefinitions="Auto,*,Auto" Margin="10, 0, 0, 0">
+                            <Button Grid.Column="0" Text="&lt;" Padding="0, 30, 0, 30"  Command="{Binding PreviousDateCommand}" />
+                            <Label Grid.Column="1" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Style="{StaticResource Title2}" Text="{Binding Date, StringFormat='{0:d}'}" />
+                            <Button Grid.Column="2" Text="&gt;" Padding="0, 30, 0, 30" Command="{Binding NextDateCommand}" />
+                        </Grid>
+
+
+                        <!--<Grid Grid.Row="4" MinimumHeightRequest="44">
+                            <Label Text="Tasks" Style="{StaticResource Title2}" VerticalOptions="Center" SemanticProperties.HeadingLevel="Level1"/>
+                            <ImageButton 
+                                Source="{StaticResource IconClean}"
+                                HorizontalOptions="End"
+                                VerticalOptions="Center"
+                                Aspect="Center"
+                                HeightRequest="44"
+                                WidthRequest="44"
+                                IsVisible="{Binding HasCompletedTasks}"
+                                Command="{Binding CleanTasksCommand}"
+                                SemanticProperties.Description="Clean tasks" />
+                        </Grid>
+                        <VerticalStackLayout Grid.Row="5" Spacing="15"
+                            BindableLayout.ItemsSource="{Binding Tasks}">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate>
+                                    <controls:TaskView TaskCompletedCommand="{Binding TaskCompletedCommand, Source={RelativeSource AncestorType={x:Type pageModels:MainPageModel}}, x:DataType=pageModels:MainPageModel}" />
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </VerticalStackLayout>
+                        -->
+                    </Grid>
+                <!--</ScrollView>-->
+            </pullToRefresh:SfPullToRefresh.PullableContent>
+        </pullToRefresh:SfPullToRefresh>
+
+        <!--<controls:AddButton 
+            IsEnabled="{Binding IsBusy, Converter={StaticResource InvertedBoolConverter}}"
+            Command="{Binding AddTaskCommand}"
+            SemanticProperties.Description="Reload..." />-->
+    </Grid>
+</ContentPage>
