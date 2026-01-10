@@ -32,7 +32,7 @@
 		<ApplicationVersion>1</ApplicationVersion>
 
 		<!-- To develop, package, and publish an app to the Microsoft Store, see: https://aka.ms/MauiTemplateUnpackaged -->
-		<WindowsPackageType>None</WindowsPackageType>
+		<!--<WindowsPackageType>None</WindowsPackageType>-->
 
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">15.0</SupportedOSPlatformVersion>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst'">15.0</SupportedOSPlatformVersion>
@@ -40,6 +40,14 @@
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</SupportedOSPlatformVersion>
 		<TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
 		<DefaultLanguage>de-DE</DefaultLanguage>
+		<GenerateAppInstallerFile>False</GenerateAppInstallerFile>
+		<AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
+		<AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
+		<AppxSymbolPackageEnabled>False</AppxSymbolPackageEnabled>
+		<HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
+		<AppxPackageSigningEnabled>False</AppxPackageSigningEnabled>
+		<GenerateTestArtifacts>True</GenerateTestArtifacts>
+		<GenerateTemporaryStoreCertificate>True</GenerateTemporaryStoreCertificate>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="$([MSBuild]::IsOSPlatform('windows'))">
@@ -49,6 +57,7 @@
 	<ItemGroup>
 		<!-- App Icon -->
 		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#17171a" />
+		<MauiSplashScreen Include="Resources\Splash\splashround.png" />
 
 		<!-- Splash Screen -->
 		<MauiSplashScreen Include="Resources\Splash\splashround.svg" Color="#5856d6" BaseSize="432,432" />
@@ -63,6 +72,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <None Remove="Resources\Splash\splashround.png" />
 	  <None Remove="Resources\Splash\splashround.svg" />
 	</ItemGroup>
 
@@ -123,6 +133,7 @@
 
 	<ItemGroup>
 	  <Folder Include="Models\" />
+	  <Folder Include="Properties\PublishProfiles\" />
 	</ItemGroup>
 	
 </Project>

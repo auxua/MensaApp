@@ -205,3 +205,4 @@ AppPackages/
 
 # UWPartifacts
 BundleArtifacts/
+/MensaApp/Package.StoreAssociation.xml
