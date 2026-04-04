@@ -39,6 +39,7 @@ namespace MensaApp
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                     fonts.AddFont("SegoeUI-Semibold.ttf", "SegoeSemibold");
                     fonts.AddFont("FluentSystemIcons-Regular.ttf", FluentUI.FontFamily);
+                    //fonts.AddFont("FluentSystemIcons-Regular.ttf", "FluentUI");
                 });
 
 #if DEBUG

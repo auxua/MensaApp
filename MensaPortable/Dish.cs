@@ -52,15 +52,6 @@ namespace MensaPortable
 
         public bool IsSideDish => (Price == null);
 
-        public string Icon
-        {
-            get
-            {
-                if (this.Name == "Info") return DishIcons.TextBoxMore;
-                else if (this.IsSideDish) return DishIcons.LocationAdd;
-                else return DishIcons.Food;
-            }
-        }
             
 
         public Dish(string name, string kind, DateTime date, string mensa, string price = null, string NutritionString = null)

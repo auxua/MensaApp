@@ -51,7 +51,8 @@
 	</PropertyGroup>
 
 	<PropertyGroup Condition="$([MSBuild]::IsOSPlatform('windows'))">
-		<WindowsPackageType>MSIX</WindowsPackageType>
+		<!--<WindowsPackageType>MSIX</WindowsPackageType>-->
+		<WindowsPackageType>None</WindowsPackageType>
 	</PropertyGroup>
 
 	<ItemGroup>

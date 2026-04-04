@@ -50,6 +50,26 @@
         <OnIdiom.Desktop>15</OnIdiom.Desktop>
     </OnIdiom>
 
+
+    <FontImageSource x:Key="IconFood"
+                 Glyph="{x:Static f:FluentUI.food_24_regular}"
+                 FontFamily="{x:Static f:FluentUI.FontFamily}"
+                 Color="{AppThemeBinding Light={StaticResource DarkOnLightBackground}, Dark={StaticResource LightOnDarkBackground}}"
+                 Size="{StaticResource IconSize}" />
+
+    <FontImageSource x:Key="IconAddition"
+             Glyph="{x:Static f:FluentUI.location_add_24_regular}"
+             FontFamily="{x:Static f:FluentUI.FontFamily}"
+             Color="{AppThemeBinding Light={StaticResource DarkOnLightBackground}, Dark={StaticResource LightOnDarkBackground}}"
+             Size="{StaticResource IconSize}" />
+
+    <FontImageSource x:Key="IconMore"
+         Glyph="{x:Static f:FluentUI.textbox_more_24_regular}"
+         FontFamily="{x:Static f:FluentUI.FontFamily}"
+         Color="{AppThemeBinding Light={StaticResource DarkOnLightBackground}, Dark={StaticResource LightOnDarkBackground}}"
+         Size="{StaticResource IconSize}" />
+
+
     <FontImageSource x:Key="IconDashboard"
                      Glyph="{x:Static f:FluentUI.diagram_24_regular}"
                      FontFamily="{x:Static f:FluentUI.FontFamily}"
