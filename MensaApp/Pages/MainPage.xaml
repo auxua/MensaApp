@@ -94,7 +94,7 @@
                             Margin="-7.5,0"
                             ItemSizingStrategy="MeasureAllItems"
                             x:Name="DishCollectionView"
-                            SelectionMode="Single">
+                            SelectionMode="None">
 
                             <CollectionView.ItemsLayout>
                                 <!-- Vertical scroll, items flow left-to-right then wrap to next row -->
