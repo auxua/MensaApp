@@ -50,6 +50,10 @@
 		<GenerateTemporaryStoreCertificate>True</GenerateTemporaryStoreCertificate>
 	</PropertyGroup>
 
+	<PropertyGroup Condition="$(TargetFramework.Contains('-ios')) and '$(Configuration)' == 'Release'">
+		<TrimMode>partial</TrimMode>
+	</PropertyGroup>
+
 	<!--<PropertyGroup Condition="$([MSBuild]::IsOSPlatform('windows'))">
 		<WindowsPackageType>MSIX</WindowsPackageType>
 	</PropertyGroup>-->
@@ -95,7 +99,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\MensaPortable\MensaPortable.csproj" />
+	  <ProjectReference Include="..\MensaPortable\MensaPortable.csproj">
+	    <ReferenceSourceTarget></ReferenceSourceTarget>
+	  </ProjectReference>
 	</ItemGroup>
 
 	<ItemGroup>
