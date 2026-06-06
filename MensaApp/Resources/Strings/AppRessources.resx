@@ -237,4 +237,7 @@
   <data name="Yes" xml:space="preserve">
     <value>Yes</value>
   </data>
+  <data name="SelectionText" xml:space="preserve">
+    <value>Select</value>
+  </data>
 </root>
