@@ -123,6 +123,9 @@ namespace MensaApp.PageModels
                 this.CurrentDishes.Clear();
                 foreach (var item in dishes) this.CurrentDishes.Add(item);
             });
+
+            Preferences.Default.Set<string?>(Config_LastMensa, this.CurrentMensa);
+
             //this.CurrentDishes = dishes.ToList();
             //dialog.ShowSnackInfoAsync("updated");
             //sw.Stop();
@@ -262,8 +265,18 @@ namespace MensaApp.PageModels
             LoadData();
             if (MenuDB.Instance.IsOutdated())
                 dialog.ShowSnackInfoAsync(AppRessources.OutdatedLoading,10);
+
+            // Get the last selected Mensa
+            var lastMensa = Preferences.Default.Get<string?>(Config_LastMensa, null);
+
+            if (lastMensa == null) return;
+
+            this.CurrentMensa = lastMensa;
+            RefreshData();
+            
         }
 
+        private const string Config_LastMensa = "last_mensa";
 
 
     }

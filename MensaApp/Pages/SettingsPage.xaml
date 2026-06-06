@@ -80,7 +80,7 @@
         <VerticalStackLayout Padding="16" Spacing="12">
 
             <!-- Section 1 -->
-            <Label Text="Filter" Style="{StaticResource SectionTitleStyle}" />
+            <Label Text="{x:Static res:AppRessources.FilterTitle}" Style="{StaticResource SectionTitleStyle}" />
 
             <Border Style="{StaticResource CardStyle}">
                 <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto">
@@ -94,7 +94,7 @@
             </Border>
 
             <!-- Section 2 -->
-            <Label Text="Mensen auswählen" Style="{StaticResource SectionTitleStyle}" />
+            <Label Text="{x:Static res:AppRessources.MensenTitle}" Style="{StaticResource SectionTitleStyle}" />
 
             <Border Style="{StaticResource CardStyle}">
                 <VerticalStackLayout Spacing="0">
@@ -120,7 +120,7 @@
             </Border>
 
             <!-- Section 3 -->
-            <Label Text="Weiteres" Style="{StaticResource SectionTitleStyle}" />
+            <Label Text="{x:Static res:AppRessources.FurtherInfoTitle}" Style="{StaticResource SectionTitleStyle}" />
 
             <Border Style="{StaticResource CardStyle}">
                 <VerticalStackLayout Spacing="0">
