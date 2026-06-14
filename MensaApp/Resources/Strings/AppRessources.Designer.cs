@@ -91,6 +91,15 @@ namespace MensaApp.Resources.Strings {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Cancel ähnelt.
+        /// </summary>
+        public static string Cancel {
+            get {
+                return ResourceManager.GetString("Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Carbohydrates ähnelt.
         /// </summary>
         public static string Carbohydrates {
@@ -222,6 +231,15 @@ namespace MensaApp.Resources.Strings {
         public static string MainDishesOnly {
             get {
                 return ResourceManager.GetString("MainDishesOnly", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Select Mensa ähnelt.
+        /// </summary>
+        public static string MensaSelect {
+            get {
+                return ResourceManager.GetString("MensaSelect", resourceCulture);
             }
         }
         

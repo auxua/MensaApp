@@ -240,4 +240,10 @@
   <data name="SelectionText" xml:space="preserve">
     <value>Select</value>
   </data>
+  <data name="MensaSelect" xml:space="preserve">
+    <value>Select Mensa</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
 </root>

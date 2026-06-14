@@ -95,8 +95,8 @@ namespace MensaApp.PageModels
             {
                 //var mensen = mensaAdapter.Mensen.Keys.ToArray();
                 var mensen = mensaAdapter.GetActiveMensen();
-                var sel = await dialog.ShowSelectionAsync("Mensa Select", mensen.ToArray());
-                if (sel == "Cancel") return; // No Selection
+                var sel = await dialog.ShowSelectionAsync(AppRessources.MensaSelect, mensen.ToArray());
+                if (sel == AppRessources.Cancel) return; // No Selection
 
                 await MainThread.InvokeOnMainThreadAsync(() => CurrentMensa = sel);
                 this.RefreshData();

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using CommunityToolkit.Maui.Alerts;
+using MensaApp.Resources.Strings;
 using Microsoft.Maui.ApplicationModel;
 
 namespace MensaApp.Services
@@ -44,6 +45,6 @@ namespace MensaApp.Services
 #endif
         public Task<string> ShowSelectionAsync(string title, string[] options)
             => MainThread.InvokeOnMainThreadAsync(() =>
-                Shell.Current.DisplayActionSheetAsync(title, "Cancel", null, options));
+                Shell.Current.DisplayActionSheetAsync(title, AppRessources.Cancel, null, options));
     }
 }
