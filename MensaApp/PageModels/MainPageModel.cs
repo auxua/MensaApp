@@ -76,7 +76,7 @@ namespace MensaApp.PageModels
             _nextDateCommand = new Command(async () =>
             {
                 //TODO
-                var next = MenuDB.Instance.getNextAvailableDay(this.Date);
+                var next = MenuDB.Instance.getNextAvailableDay(this.Date.AddDays(1));
                 //dialog.ShowSnackInfoAsync("Next Day: " + next);
                 await MainThread.InvokeOnMainThreadAsync(() => this.Date = next);
                 this.RefreshData();
