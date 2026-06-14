@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 
@@ -372,29 +373,19 @@ namespace MensaPortable
         public DateTime getNextAvailableDay(DateTime dt)
         {
             // In case of empty set (e.g. holidays), return old value;
-            if (this.Dishes.Count == 0) return dt;
-            DateTime now = dt.AddMonths(1);
+            if (MenuDB.Instance.Dishes.Count == 0) return dt;
 
-            List<Dish> list = MenuDB.Instance.Dishes.FindAll((x) =>
-            {
+            // If there is an entry for today, return it
+            if (MenuDB.Instance.Dishes.Exists(x => x.Date == dt)) return dt;
 
-                // If Query-Date is set and the item is not matching
-                if (DateTime.Compare(dt, x.Date) < 0)
-                {
-                    if (DateTime.Compare(now, x.Date) > 0)
-                    {
-                        now = x.Date;
-                    }
-                    return true;
-                }
-                return false;
-            });
+            Dish? nextDish = MenuDB.Instance.Dishes
+                .Where(dish => dish.Date > dt)
+                .OrderBy(dish => dish.Date)
+                .FirstOrDefault();
 
-            if (now.Equals(dt.AddMonths(1)))
-            {
-                now = dt;
-            }
-            return now;
+            return nextDish?.Date ?? dt;
+
+
         }
 
         public DateTime getPreviousAvailableDay(DateTime dt)
