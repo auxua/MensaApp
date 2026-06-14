@@ -48,6 +48,7 @@
 		<AppxPackageSigningEnabled>False</AppxPackageSigningEnabled>
 		<GenerateTestArtifacts>True</GenerateTestArtifacts>
 		<GenerateTemporaryStoreCertificate>True</GenerateTemporaryStoreCertificate>
+		<Platforms>AnyCPU;x64</Platforms>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="$(TargetFramework.Contains('-ios')) and '$(Configuration)' == 'Release'">
@@ -60,6 +61,29 @@
 
 	<PropertyGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">
 		<WindowsPackageType>None</WindowsPackageType>
+		<!--<WindowsPackageType>MSIX</WindowsPackageType>
+		<PublishAppxPackage>true</PublishAppxPackage>
+		<GenerateAppxPackageOnBuild>true</GenerateAppxPackageOnBuild>-->
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)' == 'Release' and $([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">
+		<WindowsPackageType>MSIX</WindowsPackageType>
+		<PublishAppxPackage>true</PublishAppxPackage>
+		<GenerateAppxPackageOnBuild>true</GenerateAppxPackageOnBuild>
+
+		<WindowsAppSdkBootstrapInitialize>false</WindowsAppSdkBootstrapInitialize>
+		<WindowsAppSdkDeploymentManagerInitialize>false</WindowsAppSdkDeploymentManagerInitialize>
+		<WindowsAppSdkUndockedRegFreeWinRTInitialize>false</WindowsAppSdkUndockedRegFreeWinRTInitialize>
+		<WindowsAppSDKSelfContained>false</WindowsAppSDKSelfContained>
+
+
+		<AppxPackageSigningEnabled>false</AppxPackageSigningEnabled>
+		<GenerateTemporaryStoreCertificate>false</GenerateTemporaryStoreCertificate>
+
+		<PublishTrimmed>false</PublishTrimmed>
+		<TrimMode>copyused</TrimMode>
+		<RunAOTCompilation>false</RunAOTCompilation>
+		<Optimize>false</Optimize>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -94,17 +118,17 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
-		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="10.0.0" />
+		<PackageReference Include="Microsoft.Maui.Controls" Version="10.0.71" />
+		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="10.0.9" />
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.3.2" />
-		<PackageReference Include="CommunityToolkit.Maui" Version="12.3.0" />
-		<PackageReference Include="Microsoft.Data.Sqlite.Core" Version="8.0.8" />
+		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2" />
+		<PackageReference Include="CommunityToolkit.Maui" Version="14.2.0" />
+		<PackageReference Include="Microsoft.Data.Sqlite.Core" Version="10.0.9" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
-		<PackageReference Include="SQLitePCLRaw.bundle_green" Version="2.1.10" />
-		<PackageReference Include="Syncfusion.Maui.Toolkit" Version="1.0.7" />
+		<PackageReference Include="SQLitePCLRaw.bundle_green" Version="2.1.11" />
+		<PackageReference Include="Syncfusion.Maui.Toolkit" Version="1.0.10" />
 	</ItemGroup>
 
 	<ItemGroup>

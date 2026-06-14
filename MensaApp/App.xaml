@@ -10,7 +10,7 @@
                 <ResourceDictionary Source="Resources/Styles/Colors.xaml" />
                 <ResourceDictionary Source="Resources/Styles/Styles.xaml" />
                 <ResourceDictionary Source="Resources/Styles/AppStyles.xaml" />
-                
+
             </ResourceDictionary.MergedDictionaries>
             <conv:DishTagColorConverter x:Key="DishTagColorConverter" />
         </ResourceDictionary>

@@ -33,13 +33,17 @@ namespace MensaApp.Services
             => MainThread.InvokeOnMainThreadAsync(() =>
                 Shell.Current.DisplayAlertAsync(title, message, accept, cancel));
 
-        public Task ShowSnackInfoAsync(string message, int seconds = 3)
-            => Snackbar.Make(message, duration: TimeSpan.FromSeconds(seconds)).Show();
 #if WINDOWS
+
+        public Task ShowSnackInfoAsync(string message, int seconds = 3)
+            {return null; }
 
         public Task ShowSnackInfoAsync(string message, Action act, string actionText, int seconds = 3)
             { return null; }
 #else
+        public Task ShowSnackInfoAsync(string message, int seconds = 3)
+            => Snackbar.Make(message, duration: TimeSpan.FromSeconds(seconds)).Show();
+
         public Task ShowSnackInfoAsync(string message, Action act, string actionText, int seconds = 3)
             => Snackbar.Make(message, duration: TimeSpan.FromSeconds(seconds),action: act, actionButtonText: actionText).Show();
 #endif

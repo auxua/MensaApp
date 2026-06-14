@@ -128,8 +128,8 @@
                     <!-- Reload -->
                     <Grid Padding="0,10" ColumnDefinitions="*,Auto">
                         <VerticalStackLayout Spacing="0">
-                            <Label Text="Daten neu laden" Style="{StaticResource RowTitleStyle}" />
-                            <Label Text="Kann einige Sekunden dauern"
+                            <Label Text="{x:Static res:AppRessources.ReloadData}" Style="{StaticResource RowTitleStyle}" />
+                            <Label Text="{x:Static res:AppRessources.ReloadDataSubline}"
                                    Style="{StaticResource RowDetailStyle}" />
                         </VerticalStackLayout>
 
@@ -149,8 +149,8 @@
                     <!-- Privacy -->
                     <Grid Padding="0,10" ColumnDefinitions="*,Auto">
                         <VerticalStackLayout Spacing="0">
-                            <Label Text="Datenschutz" Style="{StaticResource RowTitleStyle}" />
-                            <Label Text="Tippen für Details (öffnet Browser)"
+                            <Label Text="{x:Static res:AppRessources.Privacy }" Style="{StaticResource RowTitleStyle}" />
+                            <Label Text="{x:Static res:AppRessources.PrivacySubline}"
                                    Style="{StaticResource RowDetailStyle}" />
                         </VerticalStackLayout>
 

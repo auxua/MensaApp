@@ -316,11 +316,29 @@ namespace MensaApp.Resources.Strings {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Privacy ähnelt.
+        /// </summary>
+        public static string Privacy {
+            get {
+                return ResourceManager.GetString("Privacy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Privacy Policy ähnelt.
         /// </summary>
         public static string PrivacyPolicy {
             get {
                 return ResourceManager.GetString("PrivacyPolicy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Tap for Details (opens Web) ähnelt.
+        /// </summary>
+        public static string PrivacySubline {
+            get {
+                return ResourceManager.GetString("PrivacySubline", resourceCulture);
             }
         }
         
@@ -366,6 +384,24 @@ namespace MensaApp.Resources.Strings {
         public static string RefreshDetail {
             get {
                 return ResourceManager.GetString("RefreshDetail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Reload Data ähnelt.
+        /// </summary>
+        public static string ReloadData {
+            get {
+                return ResourceManager.GetString("ReloadData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die May take some seconds ähnelt.
+        /// </summary>
+        public static string ReloadDataSubline {
+            get {
+                return ResourceManager.GetString("ReloadDataSubline", resourceCulture);
             }
         }
         

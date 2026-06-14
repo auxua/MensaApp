@@ -246,4 +246,16 @@
   <data name="Cancel" xml:space="preserve">
     <value>Cancel</value>
   </data>
+  <data name="Privacy" xml:space="preserve">
+    <value>Privacy</value>
+  </data>
+  <data name="PrivacySubline" xml:space="preserve">
+    <value>Tap for Details (opens Web)</value>
+  </data>
+  <data name="ReloadData" xml:space="preserve">
+    <value>Reload Data</value>
+  </data>
+  <data name="ReloadDataSubline" xml:space="preserve">
+    <value>May take some seconds</value>
+  </data>
 </root>

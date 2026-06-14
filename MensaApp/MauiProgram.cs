@@ -6,14 +6,52 @@ namespace MensaApp
 {
     public static class MauiProgram
     {
+
+        private static void RegisterGlobalExceptionHandlers()
+        {
+            AppDomain.CurrentDomain.UnhandledException += (_, e) =>
+            {
+                CrashLogger.Log(
+                    "AppDomain.CurrentDomain.UnhandledException",
+                    e.ExceptionObject as Exception,
+                    $"IsTerminating: {e.IsTerminating}");
+            };
+
+            TaskScheduler.UnobservedTaskException += (_, e) =>
+            {
+                CrashLogger.Log(
+                    "TaskScheduler.UnobservedTaskException",
+                    e.Exception);
+
+                e.SetObserved();
+            };
+
+#if WINDOWS
+        Microsoft.UI.Xaml.Application.Current.UnhandledException += (_, e) =>
+        {
+            CrashLogger.Log(
+                "Microsoft.UI.Xaml.Application.Current.UnhandledException",
+                e.Exception,
+                $"Message: {e.Message}");
+
+            // Nur zum Diagnostizieren eventuell auf true setzen.
+            // In Release normalerweise false lassen, sonst verschluckst du echte Crashes.
+            // e.Handled = true;
+        };
+#endif
+        }
+
         public static MauiApp CreateMauiApp()
         {
+
+            //RegisterGlobalExceptionHandlers();
+
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseMauiApp<App>()
                 .UseMauiCommunityToolkit(options =>
                 {
-                    options.SetShouldEnableSnackbarOnWindows(true);
+                    options.SetShouldEnableSnackbarOnWindows(false);
                 })
                 .ConfigureSyncfusionToolkit()
                 .ConfigureMauiHandlers(handlers =>

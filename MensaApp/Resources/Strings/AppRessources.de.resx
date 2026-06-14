@@ -246,4 +246,16 @@
   <data name="Cancel" xml:space="preserve">
     <value>Abbrechen</value>
   </data>
+  <data name="Privacy" xml:space="preserve">
+    <value>Datenschutz</value>
+  </data>
+  <data name="PrivacySubline" xml:space="preserve">
+    <value>Tippen für Details (öffnet Browser)</value>
+  </data>
+  <data name="ReloadData" xml:space="preserve">
+    <value>Daten neu laden</value>
+  </data>
+  <data name="ReloadDataSubline" xml:space="preserve">
+    <value>Kann einige Sekunden dauern</value>
+  </data>
 </root>

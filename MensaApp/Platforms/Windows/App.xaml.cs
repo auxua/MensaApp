@@ -17,6 +17,17 @@ namespace MensaApp.WinUI
         public App()
         {
             this.InitializeComponent();
+
+            //this.UnhandledException += (_, e) =>
+            //{
+            //    MensaApp.CrashLogger.Log(
+            //        "WinUI App.UnhandledException",
+            //        e.Exception,
+            //        $"Message: {e.Message}");
+
+            //    // Diagnoseweise:
+            //    // e.Handled = true;
+            //};
         }
 
         protected override MauiApp CreateMauiApp() => MauiProgram.CreateMauiApp();

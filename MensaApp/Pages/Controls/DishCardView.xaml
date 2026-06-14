@@ -2,7 +2,6 @@
 <Border xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
         xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
         xmlns:controls="clr-namespace:MensaApp.Pages.Controls"
-        xmlns:models="clr-namespace:MensaApp.Models"
         xmlns:mensa="clr-namespace:MensaPortable;assembly=MensaPortable"
         xmlns:fonts="clr-namespace:Fonts"
         xmlns:pageModels="clr-namespace:MensaApp.PageModels"

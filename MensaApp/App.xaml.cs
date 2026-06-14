@@ -9,6 +9,9 @@ namespace MensaApp
         public App()
         {
             InitializeComponent();
+
+
+            //MensaApp.CrashLogger.Log("Windows App constructor");
         }
 
         protected override Window CreateWindow(IActivationState? activationState)
