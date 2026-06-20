@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Maui.Alerts;
 using CommunityToolkit.Maui.Core;
+using Syncfusion.Maui.Toolkit.Themes;
 using Font = Microsoft.Maui.Font;
 
 namespace MensaApp
@@ -45,7 +46,21 @@ namespace MensaApp
 
         private void SfSegmentedControl_SelectionChanged(object? sender, Syncfusion.Maui.Toolkit.SegmentedControl.SelectionChangedEventArgs e)
         {
-            Application.Current!.UserAppTheme = e.NewIndex == 0 ? AppTheme.Light : AppTheme.Dark;
+            switch(e.NewIndex)
+            {
+                case 0:
+                    // Light theme
+                    Application.Current!.UserAppTheme = AppTheme.Light;
+                    break;
+                case 1:
+                    // System theme
+                    Application.Current!.UserAppTheme = AppTheme.Unspecified;
+                    break;
+                case 2:
+                    // Dark theme
+                    Application.Current!.UserAppTheme = AppTheme.Dark;
+                    break;
+            }
         }
     }
 }

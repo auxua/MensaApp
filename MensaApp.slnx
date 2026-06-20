@@ -5,11 +5,11 @@
   </Configurations>
   <Project Path="MensaApp/MensaApp.csproj">
     <Platform Solution="*|x64" Project="x64" />
-    <Deploy Solution="*|Any CPU" />
-    <Deploy Solution="Release|x64" />
+    <Deploy />
   </Project>
   <Project Path="MensaConsole/MensaConsole.csproj" Id="f11adfd2-0890-4804-85a6-9e146b423cb1">
-    <Platform Solution="*|x64" Project="x64" />
+    <Platform Solution="Debug|x64" Project="x64" />
+    <Build Solution="Release|*" Project="false" />
   </Project>
   <Project Path="MensaPortable/MensaPortable.csproj">
     <Platform Solution="*|x64" Project="x64" />
